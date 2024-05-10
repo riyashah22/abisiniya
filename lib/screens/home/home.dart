@@ -1,3 +1,7 @@
+import 'package:abisiniya/screens/about/about.dart';
+import 'package:abisiniya/screens/apartments/apartments.dart';
+import 'package:abisiniya/screens/flights/flights.dart';
+import 'package:abisiniya/screens/vehicles/vehicles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -14,22 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Apartments',
-      style: optionStyle,
-    ),
-    Text(
-      'Vehicles',
-      style: optionStyle,
-    ),
-    Text(
-      'Flights',
-      style: optionStyle,
-    ),
-    Text(
-      'About',
-      style: optionStyle,
-    ),
+    Apartments(),
+    VehicleScreen(),
+    FlightScreen(),
+    AboutScreen(),
   ];
 
   @override
