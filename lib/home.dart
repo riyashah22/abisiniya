@@ -15,23 +15,19 @@ class _HomeScreenState extends State<HomeScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Home',
+      'Apartments',
       style: optionStyle,
     ),
     Text(
-      'Likes',
+      'Vehicles',
       style: optionStyle,
     ),
     Text(
-      'Search',
+      'Flights',
       style: optionStyle,
     ),
     Text(
-      'Profile',
-      style: optionStyle,
-    ),
-    Text(
-      'Help',
+      'About',
       style: optionStyle,
     ),
   ];
@@ -39,6 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -58,29 +57,25 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GNav(
               rippleColor: Colors.grey[300]!,
               hoverColor: Colors.grey[100]!,
-              gap: 4,
-              activeColor: Colors.black,
-              iconSize: 18,
+              gap: 8,
+              activeColor: Colors.white,
+              iconSize: 24,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: const Duration(milliseconds: 400),
-              tabBackgroundColor: Colors.grey[100]!,
+              tabBackgroundColor: Theme.of(context).primaryColor,
               color: Colors.black,
               tabs: const [
                 GButton(
-                  icon: LineIcons.home,
-                  text: 'Home',
+                  icon: LineIcons.building,
+                  text: 'Apartments',
                 ),
                 GButton(
-                  icon: LineIcons.heart,
-                  text: 'Likes',
+                  icon: LineIcons.car,
+                  text: 'Vehicles',
                 ),
                 GButton(
-                  icon: LineIcons.search,
-                  text: 'Search',
-                ),
-                GButton(
-                  icon: LineIcons.user,
-                  text: 'Profile',
+                  icon: LineIcons.planeDeparture,
+                  text: 'Flights',
                 ),
                 GButton(
                   icon: LineIcons.infoCircle,
