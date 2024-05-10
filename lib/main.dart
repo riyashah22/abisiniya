@@ -1,7 +1,7 @@
-import 'package:abisiniya/home.dart';
+import 'package:abisiniya/screens/home/home.dart';
 import 'package:flutter/material.dart';
-import 'util.dart';
-import 'theme.dart';
+import 'themes/util.dart';
+import 'themes/theme.dart';
 
 void main() {
   runApp(const MyApp());
