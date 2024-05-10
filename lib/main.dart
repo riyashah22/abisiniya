@@ -1,4 +1,5 @@
-import 'package:abisiniya/screens/home/home.dart';
+import 'package:abisiniya/bottom_navigation.dart';
+import 'package:abisiniya/routes.dart';
 import 'package:flutter/material.dart';
 import 'themes/util.dart';
 import 'themes/theme.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
+      onGenerateRoute: (settings) => generateRoute(settings),
       home: const HomeScreen(),
     );
   }
