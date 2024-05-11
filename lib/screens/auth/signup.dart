@@ -4,6 +4,7 @@ import 'package:abisiniya/services/auth_services.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String routeName = '/singup-screen';
+
   const SignupScreen({Key? key}) : super(key: key);
 
   @override

@@ -51,7 +51,8 @@ class AuthServices {
         response: res,
         onSuccess: () async {
           print(jsonDecode(res.body));
-          Navigator.of(context).pushNamed(OtpVerificationScreen.routeName);
+          Navigator.of(context).pushNamed(OtpVerificationScreen.routeName,
+              arguments: {'email': email});
         },
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);

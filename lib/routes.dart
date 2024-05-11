@@ -27,9 +27,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         builder: (_) => const HomeScreen(),
       );
     case OtpVerificationScreen.routeName:
+      String email;
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const OtpVerificationScreen(),
+        builder: (_) => const OtpVerificationScreen(
+          email: '',
+        ),
       );
     default:
       return MaterialPageRoute(

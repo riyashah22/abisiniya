@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   static const String routeName = '/opt-screen';
-  final String email; // Pass email as an argument (optional)
-
+  final String email;
   const OtpVerificationScreen({super.key, required this.email});
 
   @override
