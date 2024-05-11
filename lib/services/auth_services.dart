@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:abisiniya/bottom_navigation.dart';
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:http/http.dart' as http;
