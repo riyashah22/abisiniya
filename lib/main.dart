@@ -1,24 +1,24 @@
 import 'package:abisiniya/bottom_navigation.dart';
+import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'themes/util.dart';
 import 'themes/theme.dart';
 
 void main() {
-  runApp(
-    ProviderScope(
-      child: MyApp(),
-      // Add your providers here
-    ),
-  );
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+    )
+  ], child: const MyApp()));
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final brightness = View.of(context).platformDispatcher.platformBrightness;
 
     // Retrieves the default theme for the platform

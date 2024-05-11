@@ -1,17 +1,18 @@
 import 'package:abisiniya/models/user.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
 
-final userProvider = Provider<User>((ref) {
-  return User(
+class UserProvider extends ChangeNotifier {
+  User _user = User(
     id: 0,
-    name: "",
-    token: "",
-    token_type: "",
+    name: '',
+    token: '',
+    token_type: '',
   );
-});
 
-class UserNotifier extends StateNotifier<User> {
-  UserNotifier(User initialState) : super(initialState);
+  User get user => _user;
+
+  void setUser(String user) {
+    _user = User.fromJson(user);
+    notifyListeners();
+  }
 }
-
-// To call Use final user = ref.watch(userProvider);
