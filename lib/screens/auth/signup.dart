@@ -16,10 +16,36 @@ class _SignupScreenState extends State<SignupScreen> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Container(
-        child: Column(
-          children: [
-            const Text("Sign up Screen"),
-          ],
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 48,
+              ),
+              Text(
+                "Craete An Account",
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Ready to roam? Join us today!",
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor, fontSize: 12),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: Divider(
+                  height: 10,
+                  color: Theme.of(context).primaryColor,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -1,19 +1,26 @@
 import 'package:abisiniya/bottom_navigation.dart';
+import 'package:abisiniya/provider/user.dart'; // Assuming user provider is here
 import 'package:abisiniya/routes.dart';
+import 'package:abisiniya/screens/auth/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'themes/util.dart';
 import 'themes/theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+      // Add your providers here
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final brightness = View.of(context).platformDispatcher.platformBrightness;
 
     // Retrieves the default theme for the platform
@@ -23,11 +30,12 @@ class MyApp extends StatelessWidget {
     TextTheme textTheme = createTextTheme(context, "Roboto", "Open Sans");
 
     MaterialTheme theme = MaterialTheme(textTheme);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const HomeScreen(),
+      home: const SignupScreen(),
     );
   }
 }
