@@ -48,7 +48,7 @@ class AuthServices {
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          print(jsonDecode(res.body));
+          print(res);
           // Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           // Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
         },

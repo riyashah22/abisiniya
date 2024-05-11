@@ -1,7 +1,5 @@
 import 'package:abisiniya/bottom_navigation.dart';
-import 'package:abisiniya/provider/user.dart'; // Assuming user provider is here
 import 'package:abisiniya/routes.dart';
-import 'package:abisiniya/screens/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'themes/util.dart';
@@ -35,7 +33,7 @@ class MyApp extends ConsumerWidget {
       title: 'Flutter Demo',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const SignupScreen(),
+      home: HomeScreen(),
     );
   }
 }
