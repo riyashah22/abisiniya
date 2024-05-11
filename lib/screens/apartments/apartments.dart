@@ -1,11 +1,14 @@
+import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Apartments extends StatelessWidget {
   const Apartments({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -49,7 +52,12 @@ class Apartments extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                print(user.token);
+              },
+              child: Text("Get provider data"))
         ],
       ),
     );

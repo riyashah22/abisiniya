@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:abisiniya/constants/error_handling.dart';
+import 'package:abisiniya/models/user.dart';
+import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthServices {
   void login(BuildContext context, String email, String password) async {
@@ -19,9 +22,17 @@ class AuthServices {
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          print(jsonDecode(res.body)['data']['token']);
-          // Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          // Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+          print(jsonDecode(res.body)['data']);
+          User user = User(
+            userId: jsonDecode(res.body)['data']['userID'],
+            name: jsonDecode(res.body)['data']['name'],
+            token: jsonDecode(res.body)['data']['token'],
+            token_type: jsonDecode(res.body)['data']['token_type'],
+          );
+          Provider.of<UserProvider>(context, listen: false).setUser(
+            user,
+          );
+          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
         },
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);
