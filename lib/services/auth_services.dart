@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:abisiniya/bottom_navigation.dart';
 import 'package:abisiniya/constants/error_handling.dart';
+import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,7 @@ class AuthServices {
         response: res,
         onSuccess: () async {
           print(jsonDecode(res.body));
-          Navigator.of(context).pushNamed(HomeScreen.routeName);
+          Navigator.of(context).pushNamed(OtpVerificationScreen.routeName);
         },
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);
