@@ -110,7 +110,6 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
                             }
-                            // You can add more complex email validation here if needed
                             return null;
                           },
                         ),
@@ -123,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your phone number';
                             }
-                            // You can add more phone number validation here if needed
+
                             return null;
                           },
                         ),
@@ -137,7 +136,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
                             }
-                            // You can add more complex password validation here if needed
+
                             return null;
                           },
                         ),
@@ -151,7 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please re-enter your password';
                             }
-                            // You can add more complex password confirmation validation here if needed
+
                             return null;
                           },
                         ),
@@ -159,8 +158,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              // If the form is valid, submit your data here
-                              // For example, you can call a function to send the data to your backend
                               signup();
                             }
                           },
@@ -197,7 +194,7 @@ class InputTextField extends StatelessWidget {
   final String label;
   final String hintText;
   final bool isPassword;
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final FormFieldValidator<String>? validator;
 
   const InputTextField({
@@ -205,7 +202,7 @@ class InputTextField extends StatelessWidget {
     required this.label,
     required this.hintText,
     this.isPassword = false,
-    this.controller,
+    required this.controller,
     this.validator,
   }) : super(key: key);
 

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:abisiniya/bottom_navigation.dart';
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -48,9 +49,8 @@ class AuthServices {
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          print(res);
-          // Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          // Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+          print(jsonDecode(res.body));
+          Navigator.of(context).pushNamed(HomeScreen.routeName);
         },
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);

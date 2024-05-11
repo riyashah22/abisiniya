@@ -7,6 +7,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String routeName = '/home-screen';
   const HomeScreen({super.key});
 
   @override
