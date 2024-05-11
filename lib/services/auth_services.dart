@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:abisiniya/bottom_navigation.dart';
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/user.dart';
 import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -62,6 +64,37 @@ class AuthServices {
           print(jsonDecode(res.body));
           Navigator.of(context).pushNamed(OtpVerificationScreen.routeName,
               arguments: {'email': email});
+        },
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      handleHttpError(errorMessage);
+    }
+  }
+
+  void otpVerify(
+    BuildContext context,
+    String email,
+    String otp,
+  ) async {
+    void handleHttpError(String errorMessage) {
+      showSnackBar(context, errorMessage);
+    }
+
+    try {
+      http.Response res = await http.post(
+        Uri.parse(
+            "https://www.abisiniya.com/api/v1/otpverify?email=$email&otp=$otp"),
+      );
+
+      httpErrorHandle(
+        response: res,
+        onSuccess: () async {
+          print(jsonDecode(res.body));
+          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         },
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);

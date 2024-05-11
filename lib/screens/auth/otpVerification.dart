@@ -1,9 +1,13 @@
+import 'dart:async';
+
+import 'package:abisiniya/models/user.dart';
+import 'package:abisiniya/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   static const String routeName = '/opt-screen';
-  final String email;
-  const OtpVerificationScreen({super.key, required this.email});
+
+  const OtpVerificationScreen({super.key});
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -12,15 +16,42 @@ class OtpVerificationScreen extends StatefulWidget {
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
-  int _resendOtpCooldown = 60; // Optional cooldown in seconds for resend button
+  AuthServices authServices = AuthServices();
+  int _resendOtpCooldown = 0;
+  late Timer _resendOtpTimer;
 
   @override
   void initState() {
     super.initState();
-    // Pre-fill email if provided (optional)
-    if (widget.email.isNotEmpty) {
-      _emailController.text = widget.email;
-    }
+    // Start the cooldown timer initially
+    _startResendOtpCooldown();
+  }
+
+  @override
+  void dispose() {
+    _resendOtpTimer.cancel(); // Cancel the timer when disposing the widget
+    super.dispose();
+  }
+
+  void _startResendOtpCooldown() {
+    _resendOtpCooldown = 60; // Set the cooldown time
+    _resendOtpTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_resendOtpCooldown > 0) {
+          _resendOtpCooldown--; // Decrease the cooldown time by 1 second
+        } else {
+          _resendOtpTimer.cancel(); // Cancel the timer when cooldown reaches 0
+        }
+      });
+    });
+  }
+
+  void _resendOtp() {
+    _startResendOtpCooldown();
+  }
+
+  void verifyOtp() async {
+    authServices.otpVerify(context, _emailController.text, _otpController.text);
   }
 
   @override
@@ -31,7 +62,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       ),
       body: Center(
         child: Container(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(40.0),
           constraints: const BoxConstraints(maxWidth: 500),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -65,8 +96,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText:
-                      "Email (optional)", // Editable if email not provided
+                  labelText: "Email ", // Editable if email not provided
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -89,7 +119,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      // Your verification logic using _emailController.text and _otpController.text
+                      verifyOtp();
                     },
                     child: const Text("Verify"),
                     style: ElevatedButton.styleFrom(
@@ -100,28 +130,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: _resendOtpCooldown > 0
-                        ? null
-                        : () {
-                            // Your resend OTP logic
-                            setState(() {
-                              _resendOtpCooldown = 60; // Reset cooldown
-                            });
-                          },
+                    onPressed: _resendOtpCooldown > 0 ? null : _resendOtp,
                     child: Text(
                       _resendOtpCooldown > 0
                           ? 'Resend OTP (in $_resendOtpCooldown s)'
                           : 'Resend OTP',
                       style: TextStyle(
-                          color: _resendOtpCooldown > 0
-                              ? Colors.grey
-                              : Colors.blue),
-                    ),
-                    style: TextButton.styleFrom(
-                      textStyle: TextStyle(
-                          color: _resendOtpCooldown > 0
-                              ? Colors.grey
-                              : Colors.blue),
+                        color:
+                            _resendOtpCooldown > 0 ? Colors.grey : Colors.blue,
+                      ),
                     ),
                   ),
                 ],

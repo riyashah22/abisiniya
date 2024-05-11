@@ -1,3 +1,4 @@
+import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/auth_services.dart';
@@ -31,6 +32,7 @@ class _SignupScreenState extends State<SignupScreen> {
       passwordController.text,
       confirmPasswordController.text,
     );
+    Navigator.of(context).pushNamed(OtpVerificationScreen.routeName);
   }
 
   @override
@@ -195,6 +197,7 @@ class InputTextField extends StatelessWidget {
   final String label;
   final String hintText;
   final bool isPassword;
+
   final TextEditingController controller;
   final FormFieldValidator<String>? validator;
 
