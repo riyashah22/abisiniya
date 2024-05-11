@@ -1,6 +1,8 @@
 import 'package:abisiniya/screens/auth/signup.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
@@ -29,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16),
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           width: double.maxFinite,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,21 +40,35 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 48,
               ),
-              Image.network(
-                "https://play-lh.googleusercontent.com/K3nH-iUkFXZBQ4ObTGeXDyZcyZ6vUwmk3MXFc8xG2VRPojLp-yWDkRtXoYhOZUi3B8g=w240-h480-rw",
-                height: 224,
+              const CircleAvatar(
+                minRadius: 124,
+                backgroundImage: NetworkImage(
+                  "https://play-lh.googleusercontent.com/K3nH-iUkFXZBQ4ObTGeXDyZcyZ6vUwmk3MXFc8xG2VRPojLp-yWDkRtXoYhOZUi3B8g=w240-h480-rw",
+                ),
               ),
               const SizedBox(
                 height: 36,
               ),
               Text(
-                "Sign In to continue",
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
+                "Welcome Back",
+                style: GoogleFonts.roboto(
+                  textStyle:
+                      Theme.of(context).textTheme.headlineLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                ),
+              ),
+              Text(
+                "Please login to your account",
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontWeight: FontWeight.w500,
+                      // letterSpacing: 0.5,
+                      color: Theme.of(context).primaryColor,
                     ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Form(
@@ -74,22 +90,34 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 16.0),
                     ElevatedButton.icon(
                       onPressed: login,
-                      icon: Icon(Icons.arrow_right_alt_outlined),
-                      label: Text("Login"),
+                      icon: const Icon(Icons.arrow_right_alt_outlined),
+                      label: const Text("Login"),
                       style: ElevatedButton.styleFrom(
                         // Add styling if needed
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             horizontal: 20.0), // Adjust padding as needed
                       ),
                     )
                   ],
                 ),
               ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(SignupScreen.routeName);
-                  },
-                  child: const Text("Sign up?"))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Don't have an account? "),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(SignupScreen.routeName);
+                    },
+                    child: Text("Sign up?",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              color: Theme.of(context).primaryColor,
+                            )),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
