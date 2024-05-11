@@ -32,4 +32,33 @@ class AuthServices {
       handleHttpError(errorMessage);
     }
   }
+
+  void signup(BuildContext context, String name, String surname, String email,
+      String phone, String password, String confirmPassword) async {
+    void handleHttpError(String errorMessage) {
+      showSnackBar(context, errorMessage);
+    }
+
+    try {
+      http.Response res = await http.post(
+        Uri.parse(
+            "https://www.abisiniya.com/api/v1/myregister?email=$email&password=$password&name=$name&surname=$surname&phone=$phone&password_confirmation=$confirmPassword"),
+      );
+
+      httpErrorHandle(
+        response: res,
+        onSuccess: () async {
+          print(jsonDecode(res.body));
+          // Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+          // Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+        },
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      handleHttpError(errorMessage);
+    }
+  }
 }
