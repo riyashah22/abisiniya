@@ -117,10 +117,22 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                         ),
                         const SizedBox(height: 15.0),
-                        InputTextField(
-                          label: 'Phone',
-                          hintText: 'Enter your phone number',
+                        Text(
+                          "Phone Number",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 5.0),
+                        TextFormField(
                           controller: phoneController,
+                          decoration: InputDecoration(
+                            hintText: 'Enter Your Phone Number',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your phone number';

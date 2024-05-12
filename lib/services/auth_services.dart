@@ -57,11 +57,10 @@ class AuthServices {
         Uri.parse(
             "https://www.abisiniya.com/api/v1/myregister?email=$email&password=$password&name=$name&surname=$surname&phone=$phone&password_confirmation=$confirmPassword"),
       );
-
+      print(jsonDecode(res.body));
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          print(jsonDecode(res.body));
           Navigator.of(context).pushNamed(OtpVerificationScreen.routeName,
               arguments: {'email': email});
         },
