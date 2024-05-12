@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:abisiniya/bottom_navigation.dart';
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/user.dart';
 import 'package:abisiniya/provider/user.dart';
