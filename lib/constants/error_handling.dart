@@ -15,7 +15,7 @@ void httpErrorHandle({
       onError(jsonDecode(response.body)['message']);
       break;
     case 400:
-      onError(jsonDecode(response.body)['message']);
+      onError(jsonDecode(response.body)['message']['email'][0]);
       break;
     case 500:
       onError(jsonDecode(response.body)['message']);

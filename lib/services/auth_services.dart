@@ -60,6 +60,8 @@ class AuthServices {
             "https://www.abisiniya.com/api/v1/myregister?email=$email&password=$password&name=$name&surname=$surname&phone=$phone&password_confirmation=$confirmPassword"),
       );
 
+      print(res.statusCode);
+      jsonDecode(res.body);
       httpErrorHandle(
         response: res,
         onSuccess: () async {
@@ -68,7 +70,7 @@ class AuthServices {
               arguments: {'email': email});
         },
         onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
+          showErrorMessage(context, errorMessage);
         },
       );
     } catch (e) {

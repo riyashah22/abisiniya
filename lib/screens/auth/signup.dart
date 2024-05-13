@@ -32,7 +32,6 @@ class _SignupScreenState extends State<SignupScreen> {
       passwordController.text,
       confirmPasswordController.text,
     );
-    Navigator.of(context).pushNamed(OtpVerificationScreen.routeName);
   }
 
   @override
