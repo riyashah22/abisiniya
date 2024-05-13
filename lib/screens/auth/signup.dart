@@ -1,4 +1,3 @@
-import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/auth_services.dart';
