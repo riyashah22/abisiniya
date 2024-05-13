@@ -7,16 +7,18 @@ void httpErrorHandle({
   required void Function(String) onError,
   required VoidCallback onSuccess,
 }) {
-  print("object");
   switch (response.statusCode) {
     case 200:
       onSuccess();
       break;
+    case 404:
+      onError(jsonDecode(response.body)['message']);
+      break;
     case 400:
-      onError(jsonDecode(response.body)['msg']);
+      onError(jsonDecode(response.body)['message']);
       break;
     case 500:
-      onError(jsonDecode(response.body)['error']);
+      onError(jsonDecode(response.body)['message']);
       break;
     default:
       onError(response.body);
@@ -28,5 +30,25 @@ void showSnackBar(BuildContext context, String text) {
     SnackBar(
       content: Text(text),
     ),
+  );
+}
+
+void showErrorMessage(BuildContext context, String errorMessage) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Error"),
+        content: Text(errorMessage),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("OK"),
+          ),
+        ],
+      );
+    },
   );
 }

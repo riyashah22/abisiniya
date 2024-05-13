@@ -11,7 +11,8 @@ import 'package:provider/provider.dart';
 class AuthServices {
   void login(BuildContext context, String email, String password) async {
     void handleHttpError(String errorMessage) {
-      showSnackBar(context, errorMessage);
+      // showSnackBar(context, errorMessage);
+      showErrorMessage(context, errorMessage);
     }
 
     try {
@@ -23,7 +24,6 @@ class AuthServices {
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          print(jsonDecode(res.body)['data']);
           User user = User(
             userId: jsonDecode(res.body)['data']['userID'],
             name: jsonDecode(res.body)['data']['name'],
@@ -33,10 +33,10 @@ class AuthServices {
           Provider.of<UserProvider>(context, listen: false).setUser(
             user,
           );
-          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
         },
         onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
+          // showSnackBar(context, errorMessage);
+          showErrorMessage(context, errorMessage);
         },
       );
     } catch (e) {
@@ -56,10 +56,11 @@ class AuthServices {
         Uri.parse(
             "https://www.abisiniya.com/api/v1/myregister?email=$email&password=$password&name=$name&surname=$surname&phone=$phone&password_confirmation=$confirmPassword"),
       );
-      print(jsonDecode(res.body));
+
       httpErrorHandle(
         response: res,
         onSuccess: () async {
+          print(jsonDecode(res.body));
           Navigator.of(context).pushNamed(OtpVerificationScreen.routeName,
               arguments: {'email': email});
         },

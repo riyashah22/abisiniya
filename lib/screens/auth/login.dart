@@ -20,7 +20,31 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthServices authServices = AuthServices();
 
   void login() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text("Logging in..."),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Simulate a delay for 5 seconds
+    await Future.delayed(const Duration(seconds: 1));
+
+    // Dismiss the loading dialog
+    Navigator.pop(context);
+
     authServices.login(context, email.text, password.text);
+
+    // Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
   }
 
   @override
@@ -76,12 +100,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     TextFieldInput(
+                      validator: (val) {
+                        List<String> temp;
+                        temp = val!.split("@");
+                        if (val.isEmpty) {
+                          return 'Please Enter Username';
+                        } else if (temp.length < 2) {
+                          return 'Enter valid email address';
+                        }
+                        return null;
+                      },
                       textEditingController: email,
                       label: 'Username',
                       icon: Icons.person,
                     ),
                     const SizedBox(height: 16.0),
                     TextFieldInput(
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return 'Please Enter Password';
+                        } else if (val.length < 8) {
+                          return 'Please Enter Valid Passowrd';
+                        }
+                        return null;
+                      },
                       textEditingController: password,
                       label: 'Password',
                       icon: Icons.lock,
@@ -89,7 +131,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 16.0),
                     ElevatedButton.icon(
-                      onPressed: login,
+                      onPressed: () {
+                        if (loginFormKey.currentState!.validate()) {
+                          login();
+                        }
+                      },
                       icon: const Icon(Icons.arrow_right_alt_outlined),
                       label: const Text("Login"),
                       style: ElevatedButton.styleFrom(
@@ -131,18 +177,21 @@ class TextFieldInput extends StatelessWidget {
   final IconData icon;
   final bool obscureText;
   final TextEditingController textEditingController;
+  final String? Function(String?) validator;
 
   const TextFieldInput(
       {Key? key,
       required this.label,
       required this.icon,
       this.obscureText = false,
+      required this.validator,
       required this.textEditingController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       controller: textEditingController,
       obscureText: obscureText,
       decoration: InputDecoration(
