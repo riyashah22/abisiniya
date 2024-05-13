@@ -2,6 +2,7 @@ import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/apartment_services.dart';
+import 'package:flutter/widgets.dart';
 
 class Apartments extends StatefulWidget {
   const Apartments({Key? key});
@@ -31,54 +32,54 @@ class _ApartmentsState extends State<Apartments> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xff3e6837),
-                borderRadius: BorderRadius.circular(16),
-                border: const Border(
-                  bottom: BorderSide(color: Colors.grey, width: 1.0),
-                ),
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xff3e6837),
+              borderRadius: BorderRadius.circular(16),
+              border: const Border(
+                bottom: BorderSide(color: Colors.grey, width: 1.0),
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      "Available Apartments",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    "Available Apartments",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white,
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacementNamed(LoginScreen.routeName);
-                        },
-                        icon: const Icon(Icons.person_2_rounded),
-                        color: Colors.white,
-                      ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(LoginScreen.routeName);
+                      },
+                      icon: const Icon(Icons.person_2_rounded),
+                      color: Colors.white,
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
-            SizedBox(
-              height: 18,
-            ),
-            // Display list of apartments
-
-            Container(
+          ),
+          SizedBox(
+            height: 18,
+          ),
+          // Display list of apartments
+          SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.64,
               margin: const EdgeInsets.symmetric(horizontal: 8),
               child: FutureBuilder(
                 future: fetchApartments(),
@@ -90,7 +91,7 @@ class _ApartmentsState extends State<Apartments> {
                   } else {
                     return ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      // physics: NeverScrollableScrollPhysics(),
                       itemCount: apartments.length,
                       itemBuilder: (context, index) {
                         return ApartmentItem(apartment: apartments[index]);
@@ -100,8 +101,8 @@ class _ApartmentsState extends State<Apartments> {
                 },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
