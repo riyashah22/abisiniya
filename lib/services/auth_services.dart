@@ -33,6 +33,8 @@ class AuthServices {
           Provider.of<UserProvider>(context, listen: false).setUser(
             user,
           );
+
+          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
         },
         onError: (errorMessage) {
           // showSnackBar(context, errorMessage); //new comment

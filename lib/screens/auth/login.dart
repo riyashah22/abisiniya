@@ -20,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthServices authServices = AuthServices();
 
   void login() async {
+    authServices.login(context, email.text, password.text);
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -41,10 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Dismiss the loading dialog
     Navigator.pop(context);
-
-    authServices.login(context, email.text, password.text);
-
-    // Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
   }
 
   @override
