@@ -35,7 +35,7 @@ class AuthServices {
           );
         },
         onError: (errorMessage) {
-          // showSnackBar(context, errorMessage);
+          // showSnackBar(context, errorMessage); //new comment
           showErrorMessage(context, errorMessage);
         },
       );

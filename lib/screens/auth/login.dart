@@ -103,9 +103,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: (val) {
                         List<String> temp;
                         temp = val!.split("@");
+                        print(temp.length);
                         if (val.isEmpty) {
                           return 'Please Enter Username';
-                        } else if (temp.length < 2) {
+                        } else if (temp.length != 2) {
                           return 'Enter valid email address';
                         }
                         return null;
