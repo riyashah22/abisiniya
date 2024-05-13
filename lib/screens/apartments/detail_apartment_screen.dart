@@ -16,6 +16,16 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
   DateTime? fromDate;
   DateTime? toDate;
 
+  double calculateTotalAmount(int price) {
+    if (fromDate != null && toDate != null) {
+      final duration = toDate!.difference(fromDate!);
+      final nights = duration.inDays;
+      return price * nights.toDouble();
+    } else {
+      return 0.0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Apartment apartment =
@@ -28,14 +38,14 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(2),
+          padding: const EdgeInsets.all(2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Image
               Container(
                 height: 350, // Adjust the height as needed
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8), // Adjust the padding as needed
                 child: ClipRRect(
@@ -47,20 +57,20 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ),
               ),
 
-              SizedBox(height: 16), // Added spacing
+              const SizedBox(height: 16), // Added spacing
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
                     child: Card(
-                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
+                            const Center(
                               child: Text(
                                 'Specs and Utilities',
                                 style: TextStyle(
@@ -69,19 +79,19 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 28),
+                            const SizedBox(height: 28),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 RichText(
                                   text: TextSpan(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
                                     ),
                                     children: [
-                                      TextSpan(
+                                      const TextSpan(
                                         text: 'Guest: ',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -95,12 +105,12 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
                                     ),
                                     children: [
-                                      TextSpan(
+                                      const TextSpan(
                                         text: 'Bathroom: ',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -114,19 +124,19 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
                                     ),
                                     children: [
-                                      TextSpan(
+                                      const TextSpan(
                                         text: 'Bedroom: ',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                       TextSpan(
-                                        text: '${apartment.bedroom}\n',
+                                        text: '${apartment.bedroom}',
                                       ),
                                     ],
                                   ),
@@ -138,16 +148,16 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Card(
-                      margin: EdgeInsets.symmetric(horizontal: 16),
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
+                            const Center(
                               child: Text(
                                 'Location',
                                 style: TextStyle(
@@ -156,15 +166,15 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 18),
+                            const SizedBox(height: 18),
                             RichText(
                               text: TextSpan(
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                 ),
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Address: ',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -173,7 +183,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                   TextSpan(
                                     text: '${apartment.address}\n\n',
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'City: ',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -182,7 +192,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                   TextSpan(
                                     text: '${apartment.location}\n\n',
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Country: ',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -202,31 +212,31 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ],
               ),
 
-              SizedBox(height: 16), // Added spacing
+              const SizedBox(height: 16), // Added spacing
 
               // Booking Details Form
               Card(
-                margin: EdgeInsets.symmetric(horizontal: 16),
+                margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Booking Details',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         children: [
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'From Date:',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -240,7 +250,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now(),
                                       lastDate: DateTime.now()
-                                          .add(Duration(days: 365)),
+                                          .add(const Duration(days: 365)),
                                     );
                                     if (selectedDate != null) {
                                       setState(() {
@@ -252,18 +262,18 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                     fromDate != null
                                         ? '${fromDate!.toString().split(' ')[0]}'
                                         : 'Select Date',
-                                    style: TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'To Date:',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -277,7 +287,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now(),
                                       lastDate: DateTime.now()
-                                          .add(Duration(days: 365)),
+                                          .add(const Duration(days: 365)),
                                     );
                                     if (selectedDate != null) {
                                       setState(() {
@@ -289,7 +299,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                     toDate != null
                                         ? '${toDate!.toString().split(' ')[0]}'
                                         : 'Select Date',
-                                    style: TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -297,12 +307,22 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: Text(
+                          'Total Amount: \$${calculateTotalAmount(apartment.price)}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
 
-              SizedBox(height: 16), // Added spacing
+              const SizedBox(height: 16), // Added spacing
             ],
           ),
         ),
@@ -310,13 +330,13 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
       bottomNavigationBar: BottomAppBar(
         height: 90,
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '\$${apartment.price} / night',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -324,12 +344,44 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (user.user.token.isEmpty) {
-                    print("Please do login first");
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Alert"),
+                          content: const Text("Please do login first"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
-                    print("Booked Successfully");
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Success"),
+                          content: const Text("Booked Successfully"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Book Now',
                   style: TextStyle(fontSize: 20),
                 ),
