@@ -42,8 +42,8 @@ class _VehicleScreenState extends State<VehicleScreen>
                 children: [
                   // Content of the first tab (Cars)
                   Container(
-                    child: Center(
-                      child: Text('Cars Tab Content'),
+                    child: Row(
+                      children: [Image(image: NetworkImage("url"))],
                     ),
                   ),
                   // Content of the second tab (Bus)
