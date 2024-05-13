@@ -151,7 +151,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 16),
+        margin: EdgeInsets.only(bottom: 10),
         child: Stack(
           children: [
             // Display the image
@@ -160,7 +160,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
               child: Image.network(
                 widget.apartment.image,
                 width: double.infinity,
-                height: 300,
+                height: 350,
                 fit: BoxFit.cover,
               ),
             ),
@@ -190,12 +190,13 @@ class _ApartmentItemState extends State<ApartmentItem> {
                     // Display address
                     Text(
                       widget.apartment.address,
+                      maxLines: 2,
                       style: TextStyle(
                         fontSize: 16,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 12),
                     // Display location with icon
                     Row(
                       children: [
@@ -214,6 +215,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 8), // Added SizedBox for spacing
                   ],
                 ),
               ),
@@ -221,7 +223,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
             // Display price
             Positioned(
               bottom: 20,
-              right: 20,
+              right: 18,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

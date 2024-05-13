@@ -20,6 +20,7 @@ class AuthServices {
         Uri.parse(
             "https://www.abisiniya.com/api/v1/login?email=$email&password=$password"),
       );
+      print(jsonDecode(res.body)['data']['token']);
 
       httpErrorHandle(
         response: res,
