@@ -1,6 +1,6 @@
+import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:flutter/material.dart';
-import 'package:abisiniya/screens/apartments/apartments.dart';
 import 'package:provider/provider.dart';
 
 class DetailApartmentScreen extends StatefulWidget {

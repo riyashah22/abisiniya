@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:abisiniya/constants/error_handling.dart';
-import 'package:abisiniya/screens/apartments/apartments.dart';
+import 'package:abisiniya/models/apartment.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,8 +1,8 @@
+import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/apartment_services.dart';
-import 'package:flutter/widgets.dart';
 
 class Apartments extends StatefulWidget {
   const Apartments({Key? key});
@@ -106,28 +106,6 @@ class _ApartmentsState extends State<Apartments> {
       ),
     );
   }
-}
-
-class Apartment {
-  final String image;
-  final String text;
-  final String address;
-  final String location;
-  final int guest;
-  final int bathroom;
-  final int bedroom;
-  final int price;
-
-  Apartment({
-    required this.image,
-    required this.text,
-    required this.address,
-    required this.location,
-    required this.guest,
-    required this.bathroom,
-    required this.bedroom,
-    required this.price,
-  });
 }
 
 class ApartmentItem extends StatefulWidget {
