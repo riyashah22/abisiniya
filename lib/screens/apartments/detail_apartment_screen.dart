@@ -44,10 +44,11 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
             children: [
               // Image
               Container(
-                height: 350, // Adjust the height as needed
+                height: 350,
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8), // Adjust the padding as needed
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
@@ -57,7 +58,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ),
               ),
 
-              const SizedBox(height: 16), // Added spacing
+              const SizedBox(height: 16),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -212,7 +213,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ],
               ),
 
-              const SizedBox(height: 16), // Added spacing
+              const SizedBox(height: 16),
 
               // Booking Details Form
               Card(
@@ -255,6 +256,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                     if (selectedDate != null) {
                                       setState(() {
                                         fromDate = selectedDate;
+                                        toDate = null; // Reset toDate
                                       });
                                     }
                                   },
@@ -282,17 +284,39 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () async {
-                                    final selectedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
-                                      lastDate: DateTime.now()
-                                          .add(const Duration(days: 365)),
-                                    );
-                                    if (selectedDate != null) {
-                                      setState(() {
-                                        toDate = selectedDate;
-                                      });
+                                    if (fromDate == null) {
+                                      // Check if 'from' date is selected first
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Select 'From' Date"),
+                                            content: Text(
+                                                "Please select 'from' date first."),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text("OK"),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      final selectedDate = await showDatePicker(
+                                        context: context,
+                                        initialDate: fromDate!,
+                                        firstDate: fromDate!,
+                                        lastDate: DateTime.now()
+                                            .add(const Duration(days: 365)),
+                                      );
+                                      if (selectedDate != null) {
+                                        setState(() {
+                                          toDate = selectedDate;
+                                        });
+                                      }
                                     }
                                   },
                                   child: Text(
@@ -322,7 +346,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ),
               ),
 
-              const SizedBox(height: 16), // Added spacing
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -343,42 +367,72 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (user.user.token.isEmpty) {
+                  double totalAmount = calculateTotalAmount(apartment.price);
+                  if (totalAmount <= 0) {
+                    // If totalAmount is non-positive, either dates are not selected or invalid
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text("Alert"),
-                          content: const Text("Please do login first"),
+                          title: Text("Select Dates"),
+                          content: Text(totalAmount == 0
+                              ? "Please select both 'from' and 'to' dates."
+                              : "Please select a valid date range."),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text("OK"),
+                              child: Text("OK"),
                             ),
                           ],
                         );
                       },
                     );
                   } else {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text("Success"),
-                          content: const Text("Booked Successfully"),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text("OK"),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    // Proceed with booking
+                    if (user.user.token.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Alert"),
+                            content: Text("Please log in first."),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      // Show success dialog and reset dates
+                      setState(() {
+                        fromDate = null;
+                        toDate = null;
+                      });
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Success"),
+                            content: Text("Booked Successfully"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   }
                 },
                 child: const Text(
