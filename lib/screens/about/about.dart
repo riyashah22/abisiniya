@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
-  const AboutScreen({Key? key});
+  const AboutScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,7 @@ class AboutScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 20),
             alignment: Alignment.center,
             child: ClipOval(
               child: Image.asset(
@@ -23,9 +25,9 @@ class AboutScreen extends StatelessWidget {
           ),
           Card(
             elevation: 4,
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -37,10 +39,10 @@ class AboutScreen extends StatelessWidget {
                         size: 30,
                         color: Theme.of(context).primaryColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
-                      Text(
+                      const Text(
                         "About Us",
                         style: TextStyle(
                           fontSize: 22,
@@ -49,8 +51,8 @@ class AboutScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 14),
-                  Text(
+                  const SizedBox(height: 14),
+                  const Text(
                     "We pride ourselves on our outstanding customer service. Let us take you across the world in easier and affordable ways.",
                     textAlign: TextAlign.justify,
                     style: TextStyle(fontSize: 18),
@@ -61,9 +63,9 @@ class AboutScreen extends StatelessWidget {
           ),
           Card(
             elevation: 4,
-            margin: EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -75,10 +77,10 @@ class AboutScreen extends StatelessWidget {
                         size: 35,
                         color: Theme.of(context).primaryColor,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
-                      Text(
+                      const Text(
                         "Contact Us",
                         style: TextStyle(
                           fontSize: 22,
@@ -87,71 +89,69 @@ class AboutScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Card(
                     elevation: 2,
                     child: Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Zimbabwe",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 8),
-                          Text("Phone: +263 777 223 158",
+                          const SizedBox(height: 8),
+                          const Text("Phone: +263 777 223 158",
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 17)),
-                          Text(
+                          const Text(
                               "New Office Address: Cnr Prince Edward and Lezard, Milton park",
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 17)),
-                          Text("Location: Harare, Zimbabwe",
+                          const Text("Location: Harare, Zimbabwe",
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 17)),
-                          Text("Email: info@abisiniya.com",
+                          Text('Email: info@abisiniya.com',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 17)),
-                          Text("Website: www.abisiniya.com",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 17)),
+                          _buildClickableText(context, 'Website: ',
+                              'www.abisiniya.com', 'https://www.abisiniya.com'),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Card(
                     elevation: 2,
                     child: Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "South Africa",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 8),
-                          Text("Phone: +27 65 532 6408",
+                          const SizedBox(height: 8),
+                          const Text("Phone: +27 65 532 6408",
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 17)),
-                          Text(
+                          const Text(
                               "Location: Add 28 Mint Road, 3rd Floor, Fordsburg, Johannesburg, South Africa",
                               textAlign: TextAlign.justify,
                               style: TextStyle(fontSize: 17)),
-                          Text("Email: info@abisiniya.com",
+                          Text('Email: info@abisiniya.com',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 17)),
-                          Text("Website: www.abisiniya.com",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 17)),
+                          _buildClickableText(context, 'Website: ',
+                              'www.abisiniya.com', 'https://www.abisiniya.com'),
                         ],
                       ),
                     ),
@@ -160,12 +160,15 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
-            margin: EdgeInsets.only(bottom: 20, left: 20, right: 20),
+            margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
             child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
+              onPressed: () {
+                _launchInBrowser(
+                    Uri.parse("https://www.abisiniya.com/privacy"));
+              },
+              child: const Text(
                 "Privacy Policy",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -174,5 +177,48 @@ class AboutScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildClickableText(
+      BuildContext context, String label, String text, String url) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        text: label,
+        style: const TextStyle(fontSize: 17, color: Colors.black),
+        children: [
+          TextSpan(
+            text: text,
+            style: TextStyle(
+                fontSize: 17,
+                color: Theme.of(context).primaryColor,
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                _launchURL(url);
+              },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _launchURL(String url) async {
+    if (!await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
   }
 }
