@@ -1,7 +1,6 @@
 import 'package:abisiniya/models/vehicles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class VehicleItem extends StatefulWidget {
   final Vehicle vehicle;
@@ -57,7 +56,7 @@ class _VehicleItemState extends State<VehicleItem> {
                     children: [
                       Row(
                         children: [
-                          Icon(FontAwesomeIcons.gear),
+                          // Icon(FontAwesomeIcons.gear),
                           SizedBox(width: 5),
                           Text(widget.vehicle.transmission),
                         ],
