@@ -12,32 +12,31 @@ class ApartmentServices {
       http.Response res = await http
           .get(Uri.parse("https://www.abisiniya.com/api/v1/apartment/list"));
       List<Apartment> fetchedApartments = [];
-      // print(fetchedApartments);
+
       httpErrorHandle(
         response: res,
         onSuccess: () {
           var data = jsonDecode(jsonEncode(jsonDecode(res.body)['data']));
 
           for (var i = 0; i < data.length; i++) {
-            var j = jsonDecode(
+            var pictures = jsonDecode(
                 jsonEncode(jsonDecode(res.body)['data'][i]['pictures']));
+
+            List<String> imageUrls = [];
+
+            for (var picture in pictures) {
+              imageUrls.add(picture['imageUrl']);
+            }
+
             Apartment apartment = Apartment(
-              image: jsonDecode(
-                  jsonEncode(jsonDecode(jsonEncode(j))[0]['imageUrl'])),
-              text: jsonDecode(
-                  jsonEncode(jsonDecode(res.body)['data'][i]['city'])),
-              address: jsonDecode(
-                  jsonEncode(jsonDecode(res.body)['data'][i]['address'])),
-              location: jsonDecode(
-                  jsonEncode(jsonDecode(res.body)['data'][i]['country'])),
-              guest: jsonDecode(
-                  jsonEncode(jsonDecode(res.body)['data'][i]['guest'])),
-              bathroom: jsonDecode(
-                  jsonEncode(jsonDecode(res.body)['data'][i]['bathroom'])),
-              bedroom: jsonDecode(
-                  jsonEncode(jsonDecode(res.body)['data'][i]['bedroom'])),
-              price: jsonDecode(
-                  jsonEncode(jsonDecode(res.body)['data'][i]['price'])),
+              images: imageUrls,
+              text: data[i]['city'],
+              address: data[i]['address'],
+              location: data[i]['country'],
+              guest: data[i]['guest'],
+              bathroom: data[i]['bathroom'],
+              bedroom: data[i]['bedroom'],
+              price: data[i]['price'],
             );
             fetchedApartments.add(apartment);
           }

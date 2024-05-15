@@ -136,7 +136,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                widget.apartment.image,
+                widget.apartment.images[0],
                 width: double.infinity,
                 height: 350,
                 fit: BoxFit.cover,

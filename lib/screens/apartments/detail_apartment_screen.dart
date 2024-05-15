@@ -1,12 +1,13 @@
 import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetailApartmentScreen extends StatefulWidget {
   static const String routeName = '/detail-apartment-screen';
 
-  const DetailApartmentScreen({Key? key}) : super(key: key);
+  const DetailApartmentScreen({super.key});
 
   @override
   _DetailApartmentScreenState createState() => _DetailApartmentScreenState();
@@ -51,10 +52,35 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    apartment.image,
-                    fit: BoxFit.cover,
-                  ),
+                  child: apartment.images.length > 1
+                      ? CarouselSlider(
+                          options: CarouselOptions(
+                            height: 350,
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                            viewportFraction: 1.0,
+                          ),
+                          items: apartment.images.map((imageUrl) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(imageUrl),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        )
+                      : Image.network(
+                          apartment.images[0],
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
                 ),
               ),
 
@@ -200,7 +226,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '${apartment.text}',
+                                    text: apartment.text,
                                   ),
                                 ],
                               ),
@@ -262,7 +288,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                   },
                                   child: Text(
                                     fromDate != null
-                                        ? '${fromDate!.toString().split(' ')[0]}'
+                                        ? fromDate!.toString().split(' ')[0]
                                         : 'Select Date',
                                     style: const TextStyle(fontSize: 16),
                                   ),
@@ -290,15 +316,16 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            title: Text("Select 'From' Date"),
-                                            content: Text(
+                                            title: const Text(
+                                                "Select 'From' Date"),
+                                            content: const Text(
                                                 "Please select 'from' date first."),
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
-                                                child: Text("OK"),
+                                                child: const Text("OK"),
                                               ),
                                             ],
                                           );
@@ -321,7 +348,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                                   },
                                   child: Text(
                                     toDate != null
-                                        ? '${toDate!.toString().split(' ')[0]}'
+                                        ? toDate!.toString().split(' ')[0]
                                         : 'Select Date',
                                     style: const TextStyle(fontSize: 16),
                                   ),
@@ -374,7 +401,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Select Dates"),
+                          title: const Text("Select Dates"),
                           content: Text(totalAmount == 0
                               ? "Please select both 'from' and 'to' dates."
                               : "Please select a valid date range."),
@@ -383,7 +410,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text("OK"),
+                              child: const Text("OK"),
                             ),
                           ],
                         );
@@ -396,14 +423,14 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Alert"),
-                            content: Text("Please log in first."),
+                            title: const Text("Alert"),
+                            content: const Text("Please log in first."),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               ),
                             ],
                           );
@@ -419,14 +446,14 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Success"),
-                            content: Text("Booked Successfully"),
+                            title: const Text("Success"),
+                            content: const Text("Booked Successfully"),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("OK"),
+                                child: const Text("OK"),
                               ),
                             ],
                           );
