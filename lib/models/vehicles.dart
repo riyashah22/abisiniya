@@ -6,13 +6,14 @@ class Vehicle {
   final String make;
   final String model;
   final int year;
-  final String engine_size;
+  final String engineSize;
+  final String fuelType;
   final String weight;
   final String color;
   final String transmission;
   final int price;
   final String status;
-  final List<String> images;
+  final String images;
 
   Vehicle(
       {required this.name,
@@ -22,7 +23,8 @@ class Vehicle {
       required this.make,
       required this.model,
       required this.year,
-      required this.engine_size,
+      required this.engineSize,
+      required this.fuelType,
       required this.weight,
       required this.color,
       required this.transmission,

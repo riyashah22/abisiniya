@@ -1,3 +1,6 @@
+import 'package:abisiniya/models/vehicles.dart';
+import 'package:abisiniya/screens/vehicles/vehicle_item.dart';
+import 'package:abisiniya/services/vehicle_services.dart';
 import 'package:flutter/material.dart';
 
 class VehicleScreen extends StatefulWidget {
@@ -10,10 +13,14 @@ class VehicleScreen extends StatefulWidget {
 class _VehicleScreenState extends State<VehicleScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  List<Vehicle> vehicleList = [];
+  VehicleServices vehicleServices = VehicleServices();
 
   @override
   void initState() {
     super.initState();
+    fetchVehicles();
+
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -21,6 +28,12 @@ class _VehicleScreenState extends State<VehicleScreen>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  Future<void> fetchVehicles() async {
+    List<Vehicle> fetchedVehicles =
+        await vehicleServices.getAllVehicles(context);
+    vehicleList = fetchedVehicles;
   }
 
   @override
@@ -42,8 +55,19 @@ class _VehicleScreenState extends State<VehicleScreen>
                 children: [
                   // Content of the first tab (Cars)
                   Container(
-                    child: Row(
-                      children: [Image(image: NetworkImage("url"))],
+                    child: Column(
+                      children: [
+                        Text("data"),
+                        Container(
+                          height: 550,
+                          child: ListView.builder(
+                            itemCount: vehicleList.length,
+                            itemBuilder: (context, index) => VehicleItem(
+                              vehicle: vehicleList[index],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   // Content of the second tab (Bus)
