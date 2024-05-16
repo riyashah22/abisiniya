@@ -1,4 +1,5 @@
 import 'package:abisiniya/models/vehicles.dart';
+import 'package:abisiniya/screens/vehicles/detail_vehicle_screen.dart';
 import 'package:flutter/material.dart';
 
 class VehicleItem extends StatefulWidget {
@@ -81,7 +82,12 @@ class _VehicleItemState extends State<VehicleItem> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                VehicleDetailScreen.routeName,
+                                arguments: widget.vehicle,
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Theme.of(context).primaryColor,
                               shape: RoundedRectangleBorder(
