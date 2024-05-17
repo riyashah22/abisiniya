@@ -1,8 +1,11 @@
 import 'package:abisiniya/models/apartment.dart';
+import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/screens/apartments/apartment_dashboard.dart';
 import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:abisiniya/screens/auth/login.dart';
+import 'package:flutter/material.dart';
 import 'package:abisiniya/services/apartment_services.dart';
+import 'package:provider/provider.dart';
 
 class Apartments extends StatefulWidget {
   const Apartments({Key? key});
@@ -34,7 +37,21 @@ class _ApartmentsState extends State<Apartments> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         children: [
-          ElevatedButton(onPressed: () {}, child: Text("Dashboard")),
+          Row(
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(LoginScreen.routeName);
+                  },
+                  child: Text("Login")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(ApartmentDashboard.routeName);
+                  },
+                  child: Text("Dashboard")),
+            ],
+          ),
           SizedBox(
             height: 18,
           ),
