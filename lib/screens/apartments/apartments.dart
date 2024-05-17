@@ -34,45 +34,7 @@ class _ApartmentsState extends State<Apartments> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xff3e6837),
-              borderRadius: BorderRadius.circular(16),
-              border: const Border(
-                bottom: BorderSide(color: Colors.grey, width: 1.0),
-              ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    "Available Apartments",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(LoginScreen.routeName);
-                      },
-                      icon: const Icon(Icons.person_2_rounded),
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+          ElevatedButton(onPressed: () {}, child: Text("Dashboard")),
           SizedBox(
             height: 18,
           ),

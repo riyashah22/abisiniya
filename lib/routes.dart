@@ -1,4 +1,5 @@
 import "package:abisiniya/bottom_navigation.dart";
+import "package:abisiniya/screens/apartments/apartment_dashboard.dart";
 import "package:abisiniya/screens/apartments/detail_apartment_screen.dart";
 import "package:abisiniya/screens/auth/login.dart";
 import "package:abisiniya/screens/auth/otpVerification.dart";
@@ -43,6 +44,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const DetailApartmentScreen(),
+      );
+    case ApartmentDashboard.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const ApartmentDashboard(),
       );
     default:
       return MaterialPageRoute(
