@@ -139,22 +139,22 @@ class ApartmentServices {
   }
 
   Future<void> updateApartments(
-    BuildContext context,
-    String name,
-    String address,
-    String city,
-    String country,
-    int guest,
-    int bedroom,
-    int bathroom,
-    int price,
-  ) async {
+      BuildContext context,
+      String name,
+      String address,
+      String city,
+      String country,
+      int guest,
+      int bedroom,
+      int bathroom,
+      int price,
+      int id) async {
     final user = Provider.of<UserProvider>(context, listen: false);
 
     try {
       final res = await http.post(
         Uri.parse(
-            "https://www.abisiniya.com/api/v1/apartment/update/164?name=$name&address=$address&city=$city&country=$country&guest=$guest&bedroom=$bedroom&bathroom=$bathroom&price=$price&property_type_id=null&status=pending"),
+            "https://www.abisiniya.com/api/v1/apartment/update/$id?name=$name&address=$address&city=$city&country=$country&guest=$guest&bedroom=$bedroom&bathroom=$bathroom&price=$price&property_type_id=null&status=pending"),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${user.user.token}',
