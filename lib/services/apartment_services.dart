@@ -96,21 +96,25 @@ class ApartmentServices {
     }
   }
 
-  usersApartment(BuildContext context) async {
+  Future<List<dynamic>?> usersApartment(BuildContext context) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.get(
         Uri.parse("https://www.abisiniya.com/api/v1/apartment/auth/list"),
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
 
-      print(jsonDecode(res.body)['data']);
+      if (res.statusCode == 200) {
+        return jsonDecode(res.body)['data'];
+      } else {
+        showSnackBar(context, 'Failed to load apartments');
+      }
     } catch (e) {
       final errorMessage = "Error occurred: ${e.toString()}";
       showSnackBar(context, errorMessage);
     }
+    return null;
   }
 }
