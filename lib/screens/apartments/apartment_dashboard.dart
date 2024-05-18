@@ -152,7 +152,8 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                             IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () {
-                                // Implement delete functionality
+                                apartmentServices.deleteApartment(
+                                    context, apartment['id']);
                               },
                             ),
                           ],

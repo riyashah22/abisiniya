@@ -102,7 +102,6 @@ class ApartmentServices {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
-
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];
       } else {
@@ -113,5 +112,29 @@ class ApartmentServices {
       showSnackBar(context, errorMessage);
     }
     return null;
+  }
+
+  void deleteApartment(BuildContext context, int id) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.delete(
+        Uri.parse("https://www.abisiniya.com/api/v1/apartment/delete/$id"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+      httpErrorHandle(
+        response: res,
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+        onSuccess: () {
+          showSnackBar(context, "Apartment Deleted Successfully");
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
   }
 }
