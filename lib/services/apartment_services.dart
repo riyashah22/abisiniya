@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/apartment.dart';
-
+import 'package:abisiniya/provider/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class ApartmentServices {
   Future<List<Apartment>> getAllApartments(BuildContext context) async {
@@ -12,7 +12,8 @@ class ApartmentServices {
       http.Response res = await http
           .get(Uri.parse("https://www.abisiniya.com/api/v1/apartment/list"));
       List<Apartment> fetchedApartments = [];
-
+      final user = Provider.of<UserProvider>(context, listen: false);
+      print(user.user.token);
       httpErrorHandle(
         response: res,
         onSuccess: () {
@@ -51,6 +52,128 @@ class ApartmentServices {
       final errorMessage = "Error occurred: ${e.toString()}";
       showSnackBar(context, errorMessage);
       return [];
+    }
+  }
+
+  Future<void> addApartments(
+      BuildContext context,
+      String name,
+      String address,
+      String city,
+      String country,
+      int guest,
+      int bedroom,
+      int bathroom,
+      int price,
+      List<String> images) async {
+    final user = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      final res = await http.post(
+        Uri.parse(
+            "https://www.abisiniya.com/api/v1/apartment/add?name=$name&address=$address&city=$city&country=$country&guest=$guest&bedroom=$bedroom&bathroom=$bathroom&price=$price"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+        onSuccess: () {
+          showSnackBar(context, "Apartment Added Successfully");
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+  }
+
+  Future<List<dynamic>?> usersApartment(BuildContext context) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.get(
+        Uri.parse("https://www.abisiniya.com/api/v1/apartment/auth/list"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+      if (res.statusCode == 200) {
+        return jsonDecode(res.body)['data'];
+      } else {
+        showSnackBar(context, 'Failed to load apartments');
+      }
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+    return null;
+  }
+
+  void deleteApartment(BuildContext context, int id) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.delete(
+        Uri.parse("https://www.abisiniya.com/api/v1/apartment/delete/$id"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+      httpErrorHandle(
+        response: res,
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+        onSuccess: () {
+          showSnackBar(context, "Apartment Deleted Successfully");
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+  }
+
+  Future<void> updateApartments(
+      BuildContext context,
+      String name,
+      String address,
+      String city,
+      String country,
+      int guest,
+      int bedroom,
+      int bathroom,
+      int price,
+      int id) async {
+    final user = Provider.of<UserProvider>(context, listen: false);
+
+    try {
+      final res = await http.post(
+        Uri.parse(
+            "https://www.abisiniya.com/api/v1/apartment/update/$id?name=$name&address=$address&city=$city&country=$country&guest=$guest&bedroom=$bedroom&bathroom=$bathroom&price=$price&property_type_id=null&status=pending"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+        onSuccess: () {
+          showSnackBar(context, "Apartment Updated Successfully");
+          Navigator.of(context).pop();
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
     }
   }
 }
