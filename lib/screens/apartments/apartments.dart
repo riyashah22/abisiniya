@@ -1,11 +1,9 @@
 import 'package:abisiniya/models/apartment.dart';
-import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/apartments/apartment_dashboard.dart';
 import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/services/apartment_services.dart';
-import 'package:provider/provider.dart';
 
 class Apartments extends StatefulWidget {
   const Apartments({Key? key});
@@ -43,16 +41,16 @@ class _ApartmentsState extends State<Apartments> {
                   onPressed: () {
                     Navigator.of(context).pushNamed(LoginScreen.routeName);
                   },
-                  child: Text("Login")),
+                  child: const Text("Login")),
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed(ApartmentDashboard.routeName);
                   },
-                  child: Text("Dashboard")),
+                  child: const Text("Dashboard")),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 18,
           ),
           // Display list of apartments
@@ -64,7 +62,7 @@ class _ApartmentsState extends State<Apartments> {
                 future: fetchApartments(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else {
@@ -108,7 +106,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         child: Stack(
           children: [
             // Display the image
@@ -138,12 +136,12 @@ class _ApartmentItemState extends State<ApartmentItem> {
                     // Display name
                     Text(
                       widget.apartment.text,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     // Display address
                     Text(
                       widget.apartment.address,
@@ -153,7 +151,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     // Display location with icon
                     Row(
                       children: [
@@ -162,7 +160,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
                           color: Theme.of(context).primaryColor,
                           size: 16,
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         Text(
                           widget.apartment.location,
                           style: TextStyle(
@@ -172,7 +170,7 @@ class _ApartmentItemState extends State<ApartmentItem> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 8), // Added SizedBox for spacing
+                    const SizedBox(height: 8), // Added SizedBox for spacing
                   ],
                 ),
               ),
@@ -184,21 +182,22 @@ class _ApartmentItemState extends State<ApartmentItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Starts From",
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Color(0xff265022),
+                      color: const Color(0xff265022),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
                       '\$${widget.apartment.price} / night',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

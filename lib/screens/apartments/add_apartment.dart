@@ -1,4 +1,3 @@
-import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/services/apartment_services.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +5,8 @@ import 'dart:io';
 
 class AddApartmentForm extends StatefulWidget {
   static const String routeName = '/add-apartment-screen';
+
+  const AddApartmentForm({super.key});
   @override
   _AddApartmentFormState createState() => _AddApartmentFormState();
 }
@@ -38,14 +39,13 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
 
   void selectImages() async {
     try {
-      final List<XFile>? selectedImages = await imagePicker.pickMultiImage();
-      if (selectedImages != null && selectedImages.isNotEmpty) {
+      final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+      if (selectedImages.isNotEmpty) {
         setState(() {
           imageFiles.addAll(selectedImages);
         });
       }
     } catch (e) {
-      print('Error picking images: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to pick images: $e')),
       );
@@ -87,7 +87,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Apartment'),
+        title: const Text('Add Apartment'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -98,7 +98,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
               children: [
                 TextFormField(
                   controller: _nameController,
-                  decoration: InputDecoration(labelText: 'Name'),
+                  decoration: const InputDecoration(labelText: 'Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the name';
@@ -108,7 +108,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 TextFormField(
                   controller: _addressController,
-                  decoration: InputDecoration(labelText: 'Address'),
+                  decoration: const InputDecoration(labelText: 'Address'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the address';
@@ -118,7 +118,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 TextFormField(
                   controller: _cityController,
-                  decoration: InputDecoration(labelText: 'City'),
+                  decoration: const InputDecoration(labelText: 'City'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the city';
@@ -128,7 +128,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 TextFormField(
                   controller: _countryController,
-                  decoration: InputDecoration(labelText: 'Country'),
+                  decoration: const InputDecoration(labelText: 'Country'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter the country';
@@ -138,7 +138,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 TextFormField(
                   controller: _guestController,
-                  decoration: InputDecoration(labelText: 'Guest'),
+                  decoration: const InputDecoration(labelText: 'Guest'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -149,7 +149,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 TextFormField(
                   controller: _bedroomController,
-                  decoration: InputDecoration(labelText: 'Bedroom'),
+                  decoration: const InputDecoration(labelText: 'Bedroom'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -160,7 +160,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 TextFormField(
                   controller: _bathroomController,
-                  decoration: InputDecoration(labelText: 'Bathroom'),
+                  decoration: const InputDecoration(labelText: 'Bathroom'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -171,7 +171,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 TextFormField(
                   controller: _priceController,
-                  decoration: InputDecoration(labelText: 'Price'),
+                  decoration: const InputDecoration(labelText: 'Price'),
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -180,12 +180,12 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: selectImages,
-                  child: Text('Select Images'),
+                  child: const Text('Select Images'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 imageFiles.isNotEmpty
                     ? Wrap(
                         spacing: 10,
@@ -198,11 +198,11 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                           );
                         }).toList(),
                       )
-                    : Text('No images selected'),
-                SizedBox(height: 20),
+                    : const Text('No images selected'),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _addApartment,
-                  child: Text('Add Apartment'),
+                  child: const Text('Add Apartment'),
                 ),
               ],
             ),
