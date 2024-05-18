@@ -94,27 +94,27 @@ class VehicleDetailScreen extends StatelessWidget {
                       '${vehicle.price} Per Day', context),
                   _buildDetailRow(Icons.calendar_today, 'Year',
                       vehicle.year.toString(), context),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Align(
                     alignment: Alignment.center,
                     child: ElevatedButton.icon(
-                      icon: Icon(Icons.car_rental),
+                      icon: const Icon(Icons.car_rental),
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             Theme.of(context).primaryColor, // Background color
                         foregroundColor: Theme.of(context)
                             .scaffoldBackgroundColor, // Text color
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 24), // Button padding
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(8), // Button border radius
                         ),
                       ),
-                      label: Text(
+                      label: const Text(
                         "Book Ride now",
                         style: TextStyle(
                           fontSize: 18,
