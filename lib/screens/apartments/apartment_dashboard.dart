@@ -321,23 +321,11 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                             Text('Status: ${vehicle['status']}'),
                           ],
                         ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                // showEditApartmentDialog(vehicle);
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                // apartmentServices.deleteApartment(
-                                //     context, vehicle['id']);
-                              },
-                            ),
-                          ],
+                        trailing: IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            // showEditApartmentDialog(vehicle);
+                          },
                         ),
                       ),
                     );
