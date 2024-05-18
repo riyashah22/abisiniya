@@ -168,6 +168,7 @@ class ApartmentServices {
         },
         onSuccess: () {
           showSnackBar(context, "Apartment Updated Successfully");
+          Navigator.of(context).pop();
         },
       );
     } catch (e) {

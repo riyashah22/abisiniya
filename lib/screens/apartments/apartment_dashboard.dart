@@ -127,7 +127,6 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                     int.parse(bathroomController.text),
                     int.parse(priceController.text),
                     apartment['id']);
-                Navigator.of(context).pop();
               },
               child: Text('Save'),
             ),

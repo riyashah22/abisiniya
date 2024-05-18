@@ -16,17 +16,17 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
   List<Apartment> apartments = [];
   ApartmentServices apartmentServices = ApartmentServices();
 
-  @override
-  void initState() {
-    super.initState();
-    fetchApartments();
-  }
-
   Future<void> fetchApartments() async {
     List<Apartment> fetchedApartments =
         await apartmentServices.getAllApartments(context);
 
     apartments = fetchedApartments;
+  }
+
+  @override
+  void initState() {
+    fetchApartments();
+    super.initState();
   }
 
   @override
@@ -60,7 +60,6 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
               height: MediaQuery.of(context).size.height * 0.64,
               margin: const EdgeInsets.symmetric(horizontal: 8),
               child: FutureBuilder(
-                initialData: apartments,
                 future: fetchApartments(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
