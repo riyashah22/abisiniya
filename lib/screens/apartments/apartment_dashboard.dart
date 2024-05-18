@@ -1,3 +1,4 @@
+import 'package:abisiniya/services/vehicle_services.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/services/apartment_services.dart';
 import 'package:abisiniya/screens/apartments/add_apartment.dart';
@@ -19,6 +20,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
   ];
 
   List<dynamic> myApartments = [];
+  List<dynamic> myVehicles = [];
 
   // Variables to store selected items and menu option
   String? selectedBooking;
@@ -29,15 +31,27 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
   void initState() {
     super.initState();
     fetchUserApartments();
+    fetchUserVehicle();
   }
 
   ApartmentServices apartmentServices = ApartmentServices();
+  VehicleServices vehicleServices = VehicleServices();
 
   Future<void> fetchUserApartments() async {
     final apartments = await apartmentServices.usersApartment(context);
     if (apartments != null) {
       setState(() {
         myApartments = apartments;
+      });
+    }
+  }
+
+  Future<void> fetchUserVehicle() async {
+    final vehicles = await vehicleServices.usersVehicles(context);
+    if (vehicles != null) {
+      print(vehicles);
+      setState(() {
+        myVehicles = vehicles;
       });
     }
   }
@@ -64,43 +78,43 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Apartment'),
+          title: const Text('Edit Apartment'),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: InputDecoration(labelText: 'Name'),
+                  decoration: const InputDecoration(labelText: 'Name'),
                 ),
                 TextField(
                   controller: addressController,
-                  decoration: InputDecoration(labelText: 'Address'),
+                  decoration: const InputDecoration(labelText: 'Address'),
                 ),
                 TextField(
                   controller: cityController,
-                  decoration: InputDecoration(labelText: 'City'),
+                  decoration: const InputDecoration(labelText: 'City'),
                 ),
                 TextField(
                   controller: countryController,
-                  decoration: InputDecoration(labelText: 'Country'),
+                  decoration: const InputDecoration(labelText: 'Country'),
                 ),
                 TextField(
                   controller: guestController,
-                  decoration: InputDecoration(labelText: 'Guest'),
+                  decoration: const InputDecoration(labelText: 'Guest'),
                 ),
                 TextField(
                   controller: bedroomController,
-                  decoration: InputDecoration(labelText: 'Bedrooms'),
+                  decoration: const InputDecoration(labelText: 'Bedrooms'),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: bathroomController,
-                  decoration: InputDecoration(labelText: 'Bathrooms'),
+                  decoration: const InputDecoration(labelText: 'Bathrooms'),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: priceController,
-                  decoration: InputDecoration(labelText: 'Price'),
+                  decoration: const InputDecoration(labelText: 'Price'),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -111,7 +125,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -128,7 +142,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                     int.parse(priceController.text),
                     apartment['id']);
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -149,7 +163,8 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
           children: [
             DropdownButton<String>(
               value: selectedMenu,
-              items: ['My Bookings', 'My Apartments'].map((String value) {
+              items: ['My Bookings', 'My Apartments', "My vehicles"]
+                  .map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -221,7 +236,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                         leading: apartment['pictures'].isNotEmpty
                             ? Image.network(apartment['pictures'][0]['url'],
                                 width: 50, height: 50, fit: BoxFit.cover)
-                            : Icon(Icons.image, size: 50),
+                            : const Icon(Icons.image, size: 50),
                         title: Text(apartment['name']),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,16 +254,87 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.edit),
+                              icon: const Icon(Icons.edit),
                               onPressed: () {
                                 showEditApartmentDialog(apartment);
                               },
                             ),
                             IconButton(
-                              icon: Icon(Icons.delete),
+                              icon: const Icon(Icons.delete),
                               onPressed: () {
                                 apartmentServices.deleteApartment(
                                     context, apartment['id']);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ] else if (selectedMenu == "My vehicles") ...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'My Vehicles',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigator.of(context)
+                      //     .pushReplacementNamed(AddApartmentForm.routeName);
+                    },
+                    child: const Text('Add Vehicle'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: myVehicles.length,
+                  itemBuilder: (context, index) {
+                    var vehicle = myVehicles[index];
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListTile(
+                        leading: vehicle['pictures'].isNotEmpty
+                            ? Image.network(vehicle['pictures'][0]['url'],
+                                width: 50, height: 50, fit: BoxFit.cover)
+                            : const Icon(Icons.image, size: 50),
+                        title: Text(vehicle['make']),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Address: ${vehicle['address']}'),
+                            Text('City: ${vehicle['city']}'),
+                            Text('Country: ${vehicle['country']}'),
+                            Text('Engine Size: ${vehicle['engine_size']}'),
+                            Text('Fuel Type: ${vehicle['fuel_type']}'),
+                            Text('Weight: ${vehicle['weight']}'),
+                            Text('Transmission: ${vehicle['transmission']}'),
+                            Text('Price: \$${vehicle['price']}'),
+                            Text('Status: ${vehicle['status']}'),
+                          ],
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                // showEditApartmentDialog(vehicle);
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                // apartmentServices.deleteApartment(
+                                //     context, vehicle['id']);
                               },
                             ),
                           ],

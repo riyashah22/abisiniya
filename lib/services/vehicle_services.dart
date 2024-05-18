@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/vehicles.dart';
+import 'package:abisiniya/provider/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class VehicleServices {
   Future<List<Vehicle>> getAllVehicles(BuildContext context) async {
@@ -53,5 +55,26 @@ class VehicleServices {
       showSnackBar(context, errorMessage);
       return [];
     }
+  }
+
+  Future<List<dynamic>?> usersVehicles(BuildContext context) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.get(
+        Uri.parse("https://www.abisiniya.com/api/v1/vehicle/auth/list"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+      if (res.statusCode == 200) {
+        return jsonDecode(res.body)['data'];
+      } else {
+        showSnackBar(context, 'Failed to load apartments');
+      }
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+    return null;
   }
 }
