@@ -48,6 +48,44 @@ class AuthServices {
     }
   }
 
+  void logout(BuildContext context, String token) async {
+    void handleHttpError(String errorMessage) {
+      // showSnackBar(context, errorMessage);
+      showErrorMessage(context, errorMessage);
+    }
+
+    try {
+      http.Response res = await http
+          .post(Uri.parse("https://www.abisiniya.com/api/v1/logout"), headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+      httpErrorHandle(
+        response: res,
+        onSuccess: () async {
+          User user = User(
+            userId: 0,
+            name: "",
+            token: "",
+            token_type: "",
+          );
+          Provider.of<UserProvider>(context, listen: false).setUser(
+            user,
+          );
+
+          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+        },
+        onError: (errorMessage) {
+          // showSnackBar(context, errorMessage); //new comment
+          showErrorMessage(context, errorMessage);
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      handleHttpError(errorMessage);
+    }
+  }
+
   void signup(BuildContext context, String name, String surname, String email,
       String phone, String password, String confirmPassword) async {
     void handleHttpError(String errorMessage) {

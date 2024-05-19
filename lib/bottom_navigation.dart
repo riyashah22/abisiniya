@@ -28,6 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Abisiniya",
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                color: Theme.of(context).secondaryHeaderColor,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Center(
