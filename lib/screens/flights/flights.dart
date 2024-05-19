@@ -142,7 +142,7 @@ class _FlightScreenState extends State<FlightScreen> {
                 'Flight Request',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
@@ -159,7 +159,7 @@ class _FlightScreenState extends State<FlightScreen> {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: '    Search',
                                 border: InputBorder.none,
                               ),
