@@ -142,25 +142,41 @@ class _FlightScreenState extends State<FlightScreen> {
                 'Flight Request',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 children: [
                   Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(labelText: 'Search'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your search query';
-                        }
-                        return null;
-                      },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor, width: 2),
+                        boxShadow: [],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: '    Search',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              // Implement your search logic here
+                            },
+                            icon: Icon(
+                              Icons.search,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    onPressed: () {
-                      // Implement your search logic here
-                    },
-                    icon: const Icon(Icons.search),
                   ),
                 ],
               ),
