@@ -142,7 +142,7 @@ class _FlightScreenState extends State<FlightScreen> {
                 'Flight Request',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Row(
@@ -151,41 +151,36 @@ class _FlightScreenState extends State<FlightScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.white,
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor, width: 2),
+                        boxShadow: [],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: '    Search',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              // Implement your search logic here
+                            },
+                            icon: Icon(
+                              Icons.search,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ],
                       ),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Search',
-                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                          border: InputBorder.none,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your search query';
-                          }
-                          return null;
-                        },
-                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    onPressed: () {
-                      // Implement your search logic here
-                    },
-                    icon: const Icon(Icons.search),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 value: _from,
                 decoration: const InputDecoration(labelText: 'From'),
