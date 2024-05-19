@@ -17,6 +17,7 @@ class _FlightScreenState extends State<FlightScreen> {
   String _tripType = 'One Way';
   DateTime? _departureDate;
   DateTime? _returnDate;
+  String _message = '';
 
   final List<String> _locations = [
     'New York',
