@@ -49,7 +49,7 @@ class _FlightScreenState extends State<FlightScreen> {
     bool isLoggedIn = false; // Example: false means not logged in
 
     if (!isLoggedIn) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Future.delayed(Duration.zero, () {
         _showLoginDialog();
       });
     }
@@ -146,7 +146,28 @@ class _FlightScreenState extends State<FlightScreen> {
                 'Flight Request',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(labelText: 'Search'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your search query';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    onPressed: () {
+                      // Implement your search logic here
+                    },
+                    icon: const Icon(Icons.search),
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
               DropdownButtonFormField<String>(
                 value: _from,
