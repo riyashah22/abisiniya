@@ -142,7 +142,7 @@ class _FlightScreenState extends State<FlightScreen> {
                 'Flight Request',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
@@ -152,7 +152,7 @@ class _FlightScreenState extends State<FlightScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.white,
                             spreadRadius: 2,
