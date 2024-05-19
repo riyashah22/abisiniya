@@ -142,17 +142,38 @@ class _FlightScreenState extends State<FlightScreen> {
                 'Flight Request',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 children: [
                   Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(labelText: 'Search'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your search query';
-                        }
-                        return null;
-                      },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white,
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Search',
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                          border: InputBorder.none,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your search query';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -164,7 +185,7 @@ class _FlightScreenState extends State<FlightScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _from,
                 decoration: const InputDecoration(labelText: 'From'),
