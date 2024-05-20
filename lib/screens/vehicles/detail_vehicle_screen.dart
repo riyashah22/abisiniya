@@ -35,8 +35,15 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
     final user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0,
+        centerTitle: true,
+        backgroundColor: const Color(0xff3e6837),
+        title: Text(
+          vehicle.make,
+          style: const TextStyle(
+            color: Color(0xfff8fbf1),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -253,6 +260,9 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 12,
+            ),
           ],
         ),
       ),
@@ -271,6 +281,9 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                 ),
               ),
               ElevatedButton(
+                style: const ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Color(0xFF3E6837))),
                 onPressed: () {
                   double totalAmount = calculateTotalAmount(vehicle.price);
                   if (totalAmount <= 0) {
@@ -342,7 +355,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                 },
                 child: const Text(
                   'Book Now',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Color(0xfff8fbf1)),
                 ),
               ),
             ],
@@ -394,12 +407,12 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Theme.of(context).primaryColor.withOpacity(0.85),
-            Theme.of(context).primaryColor.withOpacity(0.85),
+            Color(0xfff8fbf1),
+            Color(0xfff8fbf1),
           ],
         ),
         borderRadius: BorderRadius.circular(6),
@@ -412,7 +425,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
         children: [
           Icon(
             iconData,
-            color: Theme.of(context).secondaryHeaderColor.withOpacity(0.6),
+            color: const Color(0xFF3E6837),
           ),
           const SizedBox(width: 8),
           Expanded(

@@ -36,10 +36,10 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xff3e6837),
+        backgroundColor: const Color(0xff3e6837),
         title: Text(
           apartment.text,
-          style: TextStyle(
+          style: const TextStyle(
             color: Color(0xfff8fbf1),
             fontWeight: FontWeight.bold,
           ),
@@ -401,7 +401,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ),
               ),
               ElevatedButton(
-                style: ButtonStyle(
+                style: const ButtonStyle(
                     backgroundColor:
                         MaterialStatePropertyAll(Color(0xFF3E6837))),
                 onPressed: () {
