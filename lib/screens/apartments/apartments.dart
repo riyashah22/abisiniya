@@ -63,12 +63,14 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Username display
                 Row(
                   children: [
                     const Icon(Icons.person),
+                    SizedBox(
+                      width: 8,
+                    ),
                     Text(
-                      user.name,
+                      user.name == "" ? "Guest" : user.name,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold, // Making username bold
                         fontSize: 16, // Adjusting font size
@@ -78,7 +80,6 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                   ],
                 ),
                 const SizedBox(width: 20),
-
                 if (user.name != "")
                   ElevatedButton(
                     onPressed: () {
@@ -86,8 +87,8 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                       logoutAction(context, user.token);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.red, // Background color of the button
+                      backgroundColor: Theme.of(context)
+                          .primaryColor, // Background color of the button
                     ),
                     child: const Text(
                       "Logout",
@@ -102,8 +103,8 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                       Navigator.of(context).pushNamed(LoginScreen.routeName);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.blue, // Background color of the button
+                      backgroundColor: Theme.of(context)
+                          .primaryColor, // Background color of the button
                     ),
                     child: const Text(
                       "Login",
@@ -115,6 +116,32 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
               ],
             ),
           ),
+          SizedBox(
+            height: 12,
+          ),
+          user.token == ""
+              ? SizedBox()
+              : ElevatedButton.icon(
+                  icon: Icon(
+                    Icons.analytics,
+                    color: Theme.of(context).secondaryHeaderColor,
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context)
+                        .primaryColor, // Adjust button color as needed
+                    elevation: 0, // Remove button elevation
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Same as container
+                    ),
+                  ),
+                  label: Text(
+                    "Dashboard",
+                    style: TextStyle(
+                        color: Colors.white), // Adjust text color as needed
+                  ),
+                  onPressed: () {},
+                ),
 
           const SizedBox(
             height: 18,
@@ -122,7 +149,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
           // Display list of apartments
           SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.64,
+              height: MediaQuery.of(context).size.height * 0.60,
               margin: const EdgeInsets.symmetric(horizontal: 8),
               child: FutureBuilder(
                 future: fetchApartments(),
