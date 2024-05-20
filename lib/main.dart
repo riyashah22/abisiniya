@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'themes/util.dart';
 import 'themes/theme.dart';
+import 'splash_screen.dart'; // Import the splash screen
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -30,10 +31,11 @@ class MyApp extends StatelessWidget {
     MaterialTheme theme = MaterialTheme(textTheme);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: HomeScreen(),
+      home: SplashScreen(), // Set the splash screen as the initial screen
     );
   }
 }
