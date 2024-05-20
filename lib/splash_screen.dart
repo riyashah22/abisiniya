@@ -1,4 +1,3 @@
-import 'package:abisiniya/screens/flights/flights.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/bottom_navigation.dart';
 
@@ -26,8 +25,19 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/logo.png'), // Add your logo here
+            ClipOval(
+              child: Image.asset(
+                'assets/splash.jpeg',
+                width: 700, // Set the width of the circle
+                height: 700, // Set the height of the circle
+                fit: BoxFit.fill, // Ensure the image covers the circle
+              ),
+            ), // Add your logo here
             SizedBox(height: 20),
+            Text(
+              "Lets Make a Plan",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            )
           ],
         ),
       ),
