@@ -35,7 +35,15 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(apartment.text),
+        centerTitle: true,
+        backgroundColor: Color(0xff3e6837),
+        title: Text(
+          apartment.text,
+          style: TextStyle(
+            color: Color(0xfff8fbf1),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -393,6 +401,9 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ),
               ),
               ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStatePropertyAll(Color(0xFF3E6837))),
                 onPressed: () {
                   double totalAmount = calculateTotalAmount(apartment.price);
                   if (totalAmount <= 0) {
@@ -464,7 +475,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 },
                 child: const Text(
                   'Book Now',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Color(0xfff8fbf1)),
                 ),
               ),
             ],

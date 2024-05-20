@@ -6,7 +6,6 @@ import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/services/apartment_services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ApartmentScreen extends StatefulWidget {
@@ -50,7 +49,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[200], // Background color of the top bar
+              color: const Color(0xFF3E6837), // Primary color
               borderRadius: BorderRadius.circular(10), // Rounded corners
               boxShadow: [
                 BoxShadow(
@@ -69,7 +68,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.person),
+                    const Icon(Icons.person, color: Colors.white),
                     const SizedBox(
                       width: 8,
                     ),
@@ -78,7 +77,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                       style: const TextStyle(
                         fontWeight: FontWeight.bold, // Making username bold
                         fontSize: 16, // Adjusting font size
-                        color: Colors.black, // Username text color
+                        color: Colors.white, // Username text color
                       ),
                     ),
                   ],
@@ -91,13 +90,13 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                       logoutAction(context, user.token);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context)
-                          .primaryColor, // Background color of the button
+                      backgroundColor:
+                          const Color(0xfff8fbf1), // Secondary color
                     ),
                     child: const Text(
                       "Logout",
                       style: TextStyle(
-                        color: Colors.white, // Text color of the button
+                        color: Color(0xFF3E6837), // Text color of the button
                       ),
                     ),
                   )
@@ -107,13 +106,13 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                       Navigator.of(context).pushNamed(LoginScreen.routeName);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context)
-                          .primaryColor, // Background color of the button
+                      backgroundColor:
+                          const Color(0xfff8fbf1), // Secondary color
                     ),
                     child: const Text(
                       "Login",
                       style: TextStyle(
-                        color: Colors.white, // Text color of the button
+                        color: Color(0xFF3E6837), // Text color of the button
                       ),
                     ),
                   ),
@@ -126,13 +125,12 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
           user.token == ""
               ? const SizedBox()
               : ElevatedButton.icon(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.analytics,
-                    color: Theme.of(context).secondaryHeaderColor,
+                    color: Color(0xfff8fbf1), // Secondary color
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context)
-                        .primaryColor, // Adjust button color as needed
+                    backgroundColor: const Color(0xFF3E6837), // Primary color
                     elevation: 0, // Remove button elevation
                     shape: RoundedRectangleBorder(
                       borderRadius:
@@ -149,7 +147,6 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                         .pushNamed(ApartmentDashboard.routeName);
                   },
                 ),
-
           const SizedBox(
             height: 18,
           ),
@@ -160,7 +157,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+                    color: const Color(0xFF3E6837), // Primary color
                   ),
             ),
           ),
