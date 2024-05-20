@@ -44,6 +44,8 @@ dependencies:
   carousel_slider: ^4.2.1
   font_awesome_flutter: ^10.7.0
   image_picker: ^1.1.1
+  flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +57,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -70,6 +77,13 @@ flutter:
   assets:
     - assets/
   #   - images/a_dot_ham.jpeg
+flutter_native_splash:
+  color: "#ffffff" # Background color for the splash screen
+  image: assets/logo.png # Path to your splash image
+  android: true
+  ios: true
+  web: true
+  fullscreen: true
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
