@@ -1,6 +1,7 @@
 import 'package:abisiniya/bottom_navigation.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/routes.dart';
+import 'package:abisiniya/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'themes/util.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: HomeScreen(), // Set the splash screen as the initial screen
+      home: SplashScreen(), // Set the splash screen as the initial screen
     );
   }
 }

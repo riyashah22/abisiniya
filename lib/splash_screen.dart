@@ -25,19 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ClipOval(
-              child: Image.asset(
-                'assets/splash.jpeg',
-                width: 700, // Set the width of the circle
-                height: 700, // Set the height of the circle
-                fit: BoxFit.fill, // Ensure the image covers the circle
-              ),
+            Image.asset(
+              'assets/logo.png',
+              // Ensure the image covers the circle
             ), // Add your logo here
             SizedBox(height: 20),
-            Text(
-              "Lets Make a Plan",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            )
           ],
         ),
       ),
