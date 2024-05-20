@@ -1,5 +1,6 @@
 import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/screens/apartments/apartment_dashboard.dart';
 import 'package:abisiniya/screens/apartments/apartment_item.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/auth_services.dart';
@@ -140,7 +141,10 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                     style: TextStyle(
                         color: Colors.white), // Adjust text color as needed
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushNamed(ApartmentDashboard.routeName);
+                  },
                 ),
 
           const SizedBox(

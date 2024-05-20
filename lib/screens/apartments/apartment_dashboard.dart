@@ -286,8 +286,8 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed(AddApartmentForm.routeName);
+                      Navigator.of(context)
+                          .pushReplacementNamed(AddApartmentForm.routeName);
                     },
                     child: const Text('Add Vehicle'),
                   ),
@@ -324,7 +324,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                         trailing: IconButton(
                           icon: const Icon(Icons.edit),
                           onPressed: () {
-                            // showEditApartmentDialog(vehicle);
+                            showEditApartmentDialog(vehicle);
                           },
                         ),
                       ),
