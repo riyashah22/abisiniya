@@ -1,10 +1,10 @@
+import 'package:abisiniya/bottom_navigation.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'themes/util.dart';
 import 'themes/theme.dart';
-import 'splash_screen.dart'; // Import the splash screen
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: SplashScreen(), // Set the splash screen as the initial screen
+      home: HomeScreen(), // Set the splash screen as the initial screen
     );
   }
 }
