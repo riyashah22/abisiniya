@@ -6,10 +6,13 @@ import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/services/apartment_services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ApartmentScreen extends StatefulWidget {
-  const ApartmentScreen({Key? key});
+  const ApartmentScreen({
+    super.key,
+  });
 
   @override
   State<ApartmentScreen> createState() => _ApartmentScreenState();
@@ -67,7 +70,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                 Row(
                   children: [
                     const Icon(Icons.person),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Text(
@@ -117,11 +120,11 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           user.token == ""
-              ? SizedBox()
+              ? const SizedBox()
               : ElevatedButton.icon(
                   icon: Icon(
                     Icons.analytics,
@@ -136,7 +139,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                           BorderRadius.circular(10.0), // Same as container
                     ),
                   ),
-                  label: Text(
+                  label: const Text(
                     "Dashboard",
                     style: TextStyle(
                         color: Colors.white), // Adjust text color as needed
@@ -150,10 +153,21 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
           const SizedBox(
             height: 18,
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: Text(
+              "Find your Apartments",
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  ),
+            ),
+          ),
           // Display list of apartments
-          SingleChildScrollView(
+          Expanded(
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.60,
+              // height: MediaQuery.of(context).size.height * 0.48,
               margin: const EdgeInsets.symmetric(horizontal: 8),
               child: FutureBuilder(
                 future: fetchApartments(),
