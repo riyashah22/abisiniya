@@ -18,7 +18,7 @@ class AuthServices {
     try {
       http.Response res = await http.post(
         Uri.parse(
-            "https://www.abisiniya.com/api/v1/login?email=$email&password=$password"),
+            "https://staging.abisiniya.com/api/v1/login?email=$email&password=$password"),
       );
       print(jsonDecode(res.body)['data']['token']);
 
