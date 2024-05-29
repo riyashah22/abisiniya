@@ -1,12 +1,13 @@
-import 'package:abisiniya/services/apartment_services.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:abisiniya/services/apartment_services.dart';
 
 class AddApartmentForm extends StatefulWidget {
   static const String routeName = '/add-apartment-screen';
 
   const AddApartmentForm({super.key});
+
   @override
   _AddApartmentFormState createState() => _AddApartmentFormState();
 }
@@ -21,8 +22,8 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
   final _bedroomController = TextEditingController();
   final _bathroomController = TextEditingController();
   final _priceController = TextEditingController();
-  final ImagePicker imagePicker = ImagePicker();
-  List<XFile> imageFiles = [];
+  final ImagePicker _imagePicker = ImagePicker();
+  List<XFile> _imageFiles = [];
 
   @override
   void dispose() {
@@ -37,12 +38,12 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
     super.dispose();
   }
 
-  void selectImages() async {
+  void _selectImages() async {
     try {
-      final List<XFile> selectedImages = await imagePicker.pickMultiImage();
-      if (selectedImages.isNotEmpty) {
+      final List<XFile>? selectedImages = await _imagePicker.pickMultiImage();
+      if (selectedImages != null && selectedImages.isNotEmpty) {
         setState(() {
-          imageFiles.addAll(selectedImages);
+          _imageFiles.addAll(selectedImages);
         });
       }
     } catch (e) {
@@ -52,7 +53,7 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
     }
   }
 
-  ApartmentServices apartmentServices = ApartmentServices();
+  ApartmentServices _apartmentServices = ApartmentServices();
 
   Future<void> _addApartment() async {
     if (_formKey.currentState!.validate()) {
@@ -64,9 +65,10 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
       int bedroom = int.parse(_bedroomController.text);
       int bathroom = int.parse(_bathroomController.text);
       int price = int.parse(_priceController.text);
-      List<String> imagePaths = imageFiles.map((e) => '"${e.path}"').toList();
+      List<File> imageFilesAsFiles =
+          _imageFiles.map((e) => File(e.path)).toList();
 
-      await apartmentServices.addApartments(
+      await _apartmentServices.addApartments(
         context,
         name,
         address,
@@ -76,10 +78,8 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
         bedroom,
         bathroom,
         price,
-        imagePaths,
+        imageFilesAsFiles,
       );
-
-      // print(imagePaths);
     }
   }
 
@@ -182,14 +182,14 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: selectImages,
+                  onPressed: _selectImages,
                   child: const Text('Select Images'),
                 ),
                 const SizedBox(height: 20),
-                imageFiles.isNotEmpty
+                _imageFiles.isNotEmpty
                     ? Wrap(
                         spacing: 10,
-                        children: imageFiles.map((image) {
+                        children: _imageFiles.map((image) {
                           return Image.file(
                             File(image.path),
                             width: 100,

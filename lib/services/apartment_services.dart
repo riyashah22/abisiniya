@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:path/path.dart';
 
 class ApartmentServices {
   Future<List<Apartment>> getAllApartments(BuildContext context) async {
@@ -56,40 +58,63 @@ class ApartmentServices {
   }
 
   Future<void> addApartments(
-      BuildContext context,
-      String name,
-      String address,
-      String city,
-      String country,
-      int guest,
-      int bedroom,
-      int bathroom,
-      int price,
-      List<String> images) async {
+    BuildContext context,
+    String name,
+    String address,
+    String city,
+    String country,
+    int guest,
+    int bedroom,
+    int bathroom,
+    int price,
+    List<File> images,
+  ) async {
     final user = Provider.of<UserProvider>(context, listen: false);
 
     try {
-      final res = await http.post(
-        Uri.parse(
-            "https://www.abisiniya.com/api/v1/apartment/add?name=$name&address=$address&city=$city&country=$country&guest=$guest&bedroom=$bedroom&bathroom=$bathroom&price=$price"),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${user.user.token}',
-        },
-      );
+      var uri = Uri.parse("https://staging.abisiniya.com/api/v1/apartment/add");
+      var request = http.MultipartRequest('POST', uri)
+        ..fields['name'] = name
+        ..fields['address'] = address
+        ..fields['city'] = city
+        ..fields['country'] = country
+        ..fields['guest'] = guest.toString()
+        ..fields['bedroom'] = bedroom.toString()
+        ..fields['bathroom'] = bathroom.toString()
+        ..fields['price'] = price.toString();
 
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Apartment Added Successfully");
-        },
-      );
+      for (var image in images) {
+        var stream = http.ByteStream(image.openRead());
+        var length = await image.length();
+
+        var multipartFile = http.MultipartFile(
+          'pictures',
+          stream,
+          length,
+          filename: basename(image.path),
+        );
+        request.files.add(multipartFile);
+      }
+
+      request.headers['Authorization'] = 'Bearer ${user.user.token}';
+      print(request.headers);
+      var res = await request.send();
+
+      var response = await http.Response.fromStream(res);
+      print(response.body);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Apartment Added Successfully')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add apartment: ${response.body}')),
+        );
+      }
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error occurred: ${e.toString()}')),
+      );
     }
   }
 
@@ -102,6 +127,7 @@ class ApartmentServices {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
+      // print(res.body);
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];
       } else {
