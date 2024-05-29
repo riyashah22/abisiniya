@@ -1,4 +1,4 @@
-import 'package:abisiniya/bottom_navigation.dart';
+
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/routes.dart';
 import 'package:abisiniya/splash_screen.dart';
