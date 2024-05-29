@@ -230,13 +230,14 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                   itemCount: myApartments.length,
                   itemBuilder: (context, index) {
                     var apartment = myApartments[index];
+                    // print(apartment);
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: ListTile(
-                        leading: apartment['pictures'].isNotEmpty
-                            ? Image.network(apartment['pictures'][0]['url'],
-                                width: 50, height: 50, fit: BoxFit.cover)
-                            : const Icon(Icons.image, size: 50),
+                        // leading: apartment['pictures'].isNotEmpty
+                        //     ? Image.network(apartment['pictures'][0]['url'],
+                        //         width: 50, height: 50, fit: BoxFit.cover)
+                        //     : const Icon(Icons.image, size: 50),
                         title: Text(apartment['name']),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

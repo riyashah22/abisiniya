@@ -97,7 +97,7 @@ class ApartmentServices {
       }
 
       request.headers['Authorization'] =
-          'Bearer 307|4Ks0HRvkxLEWzr5QYbOmTvACdJR3cwLCaYt2vQVgc5091f7a';
+          '307|4Ks0HRvkxLEWzr5QYbOmTvACdJR3cwLCaYt2vQVgc5091f7a';
 
       var res = await request.send();
 
@@ -123,12 +123,16 @@ class ApartmentServices {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.get(
-        Uri.parse("https://www.abisiniya.com/api/v1/apartment/auth/list"),
+        Uri.parse("https://staging.abisiniya.com/api/v1/apartment/auth/list"),
         headers: {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
-      // print(res.body);
+      var dataset =
+          jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures'];
+      print(
+          jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures']);
+
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];
       } else {
