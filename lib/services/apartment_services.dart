@@ -128,10 +128,10 @@ class ApartmentServices {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
-      var dataset =
-          jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures'];
-      print(
-          jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures']);
+      // var dataset =
+      //     jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures'];
+      // print(
+      //     jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures']);
 
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];

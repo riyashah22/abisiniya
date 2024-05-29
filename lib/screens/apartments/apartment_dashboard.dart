@@ -31,7 +31,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
   void initState() {
     super.initState();
     fetchUserApartments();
-    fetchUserVehicle();
+    // fetchUserVehicle();
   }
 
   ApartmentServices apartmentServices = ApartmentServices();
@@ -234,10 +234,10 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: ListTile(
-                        // leading: apartment['pictures'].isNotEmpty
-                        //     ? Image.network(apartment['pictures'][0]['url'],
-                        //         width: 50, height: 50, fit: BoxFit.cover)
-                        //     : const Icon(Icons.image, size: 50),
+                        leading: apartment['pictures'].isNotEmpty
+                            ? Image.network(apartment['pictures'][0]['imageUrl'],
+                                width: 50, height: 50, fit: BoxFit.cover)
+                            : const Icon(Icons.image, size: 50),
                         title: Text(apartment['name']),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,10 +303,10 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: ListTile(
-                        leading: vehicle['pictures'].isNotEmpty
-                            ? Image.network(vehicle['pictures'][0]['url'],
-                                width: 50, height: 50, fit: BoxFit.cover)
-                            : const Icon(Icons.image, size: 50),
+                        // leading: vehicle['pictures'].isNotEmpty
+                        //     ? Image.network(vehicle['pictures'][0]['url'],
+                        //         width: 50, height: 50, fit: BoxFit.cover)
+                        //     : const Icon(Icons.image, size: 50),
                         title: Text(vehicle['make']),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
