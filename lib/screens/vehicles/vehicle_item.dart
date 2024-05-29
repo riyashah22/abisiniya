@@ -74,7 +74,7 @@ class _VehicleItemState extends State<VehicleItem> {
                         children: [
                           Expanded(
                             child: Text(
-                              '${widget.vehicle.price}/day',
+                              '\$${widget.vehicle.price}/day',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,

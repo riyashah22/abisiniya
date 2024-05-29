@@ -1,5 +1,6 @@
 import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/services/vehicle_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +17,13 @@ class VehicleDetailScreen extends StatefulWidget {
 }
 
 class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
+  VehicleServices vehicleServices = VehicleServices();
   DateTime? fromDate;
   DateTime? toDate;
+
+  void bookVehicle() async {
+     vehicleServices.bookVehicle(context, fromDate.toString(), toDate.toString(), 5);
+  }
 
   double calculateTotalAmount(int price) {
     if (fromDate != null && toDate != null) {
@@ -328,28 +334,29 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                         },
                       );
                     } else {
+                      bookVehicle();
                       // Show success dialog and reset dates
                       setState(() {
                         fromDate = null;
                         toDate = null;
                       });
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Success"),
-                            content: const Text("Booked Successfully"),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (BuildContext context) {
+                      //     return AlertDialog(
+                      //       title: const Text("Success"),
+                      //       content: const Text("Booked Successfully"),
+                      //       actions: <Widget>[
+                      //         TextButton(
+                      //           onPressed: () {
+                      //             Navigator.of(context).pop();
+                      //           },
+                      //           child: const Text("OK"),
+                      //         ),
+                      //       ],
+                      //     );
+                      //   },
+                      // );
                     }
                   }
                 },
