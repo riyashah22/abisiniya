@@ -1,4 +1,7 @@
+import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/screens/auth/login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FlightScreen extends StatefulWidget {
   const FlightScreen({Key? key}) : super(key: key);
@@ -9,6 +12,7 @@ class FlightScreen extends StatefulWidget {
 
 class _FlightScreenState extends State<FlightScreen> {
   final _formKey = GlobalKey<FormState>();
+  bool isLoggedIn = false;
 
   String _from = 'New York';
   String _to = 'Los Angeles';
@@ -34,17 +38,9 @@ class _FlightScreenState extends State<FlightScreen> {
   final List<String> _classes = ['Economy', 'Business', 'First Class'];
   final List<String> _tripTypes = ['One Way', 'Round Trip', 'Multi-City'];
 
-  @override
-  void initState() {
-    super.initState();
-    _checkLoginStatus();
-  }
-
-  Future<void> _checkLoginStatus() async {
-    // Replace this with your actual login check logic
-    bool isLoggedIn = false; // Example: false means not logged in
-
-    if (!isLoggedIn) {
+  Future<void> _checkLoginStatus(BuildContext context) async {
+    final user = Provider.of<UserProvider>(context, listen: false);
+    if (user.user.token.isEmpty) {
       Future.delayed(Duration.zero, () {
         _showLoginDialog();
       });
@@ -61,7 +57,7 @@ class _FlightScreenState extends State<FlightScreen> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // Redirect to login screen
+              Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
             },
             child: const Text('Login'),
           ),
@@ -131,6 +127,12 @@ class _FlightScreenState extends State<FlightScreen> {
 
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      super.initState();
+      _checkLoginStatus(context);
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
