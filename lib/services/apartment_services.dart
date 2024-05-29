@@ -96,12 +96,13 @@ class ApartmentServices {
         request.files.add(multipartFile);
       }
 
-      request.headers['Authorization'] = 'Bearer ${user.user.token}';
-      print(request.headers);
+      request.headers['Authorization'] =
+          'Bearer 307|4Ks0HRvkxLEWzr5QYbOmTvACdJR3cwLCaYt2vQVgc5091f7a';
+
       var res = await request.send();
 
       var response = await http.Response.fromStream(res);
-      print(response.body);
+      print(response.statusCode);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Apartment Added Successfully')),
