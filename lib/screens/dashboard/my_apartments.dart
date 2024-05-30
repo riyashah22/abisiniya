@@ -10,14 +10,13 @@ class MyApartments extends StatefulWidget {
 }
 
 class _MyApartmentsState extends State<MyApartments> {
-
-
   @override
   void initState() {
     super.initState();
     fetchUserApartments();
     // TODO: implement initState
   }
+
   void showEditApartmentDialog(Map<String, dynamic> apartment) {
     TextEditingController nameController =
         TextEditingController(text: apartment['name']);

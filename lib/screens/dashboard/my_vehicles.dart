@@ -177,9 +177,9 @@ class _MyVehiclesState extends State<MyVehicles> {
               ),
             ),
             ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      WidgetStatePropertyAll(Theme.of(context).primaryColor)),
+              // style: ButtonStyle(
+              //     backgroundColor:
+              //         WidgetStatePropertyAll(Theme.of(context).primaryColor)),
               onPressed: () {
                 Navigator.of(context)
                     .pushReplacementNamed(AddVehicleScreen.routeName);
