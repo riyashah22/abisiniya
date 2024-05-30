@@ -10,10 +10,8 @@ class MyVehicles extends StatefulWidget {
 }
 
 class _MyVehiclesState extends State<MyVehicles> {
-
   VehicleServices vehicleServices = VehicleServices();
 
-  
   List<dynamic> myVehicles = [];
 
   Future<void> fetchUserVehicle() async {
@@ -163,83 +161,276 @@ class _MyVehiclesState extends State<MyVehicles> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'My Vehicles',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(AddVehicleScreen.routeName);
-                    },
-                    child: const Text('Add Vehicle'),
-                  ),
-                ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'My Vehicles',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 10),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.7,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: myVehicles.length,
-                  itemBuilder: (context, index) {
-                    var vehicle = myVehicles[index];
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: ListTile(
-                        leading: vehicle['pictures'].isNotEmpty
-                            ? Image.network(vehicle['pictures'][0]['imageUrl'],
-                                width: 50, height: 50, fit: BoxFit.cover)
-                            : const Icon(Icons.image, size: 50),
-                        title: Text(vehicle['name']),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Address: ${vehicle['address']}'),
-                            Text('City: ${vehicle['city']}'),
-                            Text('Country: ${vehicle['country']}'),
-                            Text('Engine Size: ${vehicle['engine_size']}'),
-                            Text('Fuel Type: ${vehicle['fuel_type']}'),
-                            Text('Makex: ${vehicle['make']}'),
-                            Text('Weight: ${vehicle['weight']}'),
-                            Text('Transmission: ${vehicle['transmission']}'),
-                            Text('Price: \$${vehicle['price']}'),
-                            Text('Status: ${vehicle['status']}'),
-                          ],
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                showEditVehicleDialog(vehicle);
-                              },
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(AddVehicleScreen.routeName);
+              },
+              child: const Text('Add Vehicle'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.7,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: myVehicles.length,
+            itemBuilder: (context, index) {
+              var vehicle = myVehicles[index];
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: vehicle['pictures'].isNotEmpty
+                    ? Stack(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(0, 2),
+                                  blurRadius: 6,
+                                ),
+                              ],
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                vehicleServices.deleteApartment(
-                                    context, vehicle['id']);
-                              },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                vehicle['pictures'][0]['imageUrl'],
+                                height: 300,
+                                fit: BoxFit.cover,
+                                color: Color.fromRGBO(0, 0, 0,
+                                    0.5), // Black color with 50% opacity
+                                colorBlendMode: BlendMode.srcOver,
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(
+                                    0.7), // Semi-transparent background
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset(0, 2),
+                                    blurRadius: 6,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        vehicle['model'],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${vehicle['make']}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 14,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.local_gas_station,
+                                            color: Colors.red,
+                                          ),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            '${vehicle['fuel_type']}',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.settings_input_component,
+                                            color: Colors.yellowAccent,
+                                          ),
+                                          SizedBox(
+                                            width: 6,
+                                          ),
+                                          Text(
+                                            '${vehicle['transmission']}',
+                                            style: TextStyle(
+                                              color: Colors.yellowAccent,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.public,
+                                            color: Colors.lightBlueAccent,
+                                          ),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Text(
+                                            '${vehicle['country']}',
+                                            style: TextStyle(
+                                              color: Colors.lightBlueAccent,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.price_change_rounded,
+                                            color: Colors.green,
+                                          ),
+                                          SizedBox(
+                                            width: 6,
+                                          ),
+                                          Text(
+                                            '\$${vehicle['price']}/day',
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      OutlinedButton.icon(
+                                        icon: Icon(
+                                          Icons.remove_red_eye_outlined,
+                                          color: Colors.grey,
+                                        ),
+                                        label: Text(
+                                          "View",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                      OutlinedButton.icon(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.grey,
+                                        ),
+                                        label: Text(
+                                          "Edit",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          showEditVehicleDialog(vehicle);
+                                        },
+                                      ),
+                                      OutlinedButton.icon(
+                                        icon: Icon(
+                                          Icons.delete_forever,
+                                          color: Colors.grey,
+                                        ),
+                                        label: Text(
+                                          "Delete",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          vehicleServices.deleteApartment(
+                                            context,
+                                            vehicle['id'],
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : const Icon(Icons.image, size: 50),
+              );
+            },
+          ),
+        ),
       ],
     );
   }
