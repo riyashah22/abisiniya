@@ -1,4 +1,5 @@
 import 'package:abisiniya/screens/dashboard/my_apartments.dart';
+import 'package:abisiniya/screens/dashboard/my_bookings.dart';
 import 'package:abisiniya/screens/dashboard/my_vehicles.dart';
 import 'package:flutter/material.dart';
 
@@ -67,30 +68,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
             ),
             const SizedBox(height: 20),
             if (selectedMenu == 'My Bookings') ...[
-              const Text(
-                'My Bookings',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: myBookings.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(myBookings[index]),
-                      onTap: () {
-                        setState(() {
-                          selectedBooking = myBookings[index];
-                        });
-                      },
-                      selected: myBookings[index] == selectedBooking,
-                    );
-                  },
-                ),
-              ),
+              MyBookings()
             ] else if (selectedMenu == 'My Apartments') ...[
               MyApartments()
             ] else if (selectedMenu == "My vehicles") ...[

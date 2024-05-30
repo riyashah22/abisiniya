@@ -1,3 +1,4 @@
+import 'package:abisiniya/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 
@@ -10,13 +11,25 @@ class MyBookings extends StatefulWidget {
 
 class _MyBookingsState extends State<MyBookings> {
   // Sample data for bookings
-  final List<String> myBookings = [
-    'Booking 1',
-    'Booking 2',
-    'Booking 3',
-  ];
+   List<dynamic> myBookings = [];
+ AuthServices authServices = AuthServices();
+  
+  Future<void> myBookingsList() async {
+    final bookingList = await authServices.userBookings(context);
+    setState(() {
+      
+      myBookings = bookingList!;
+    });
+  }
 
   String? selectedBooking;
+
+
+  @override
+  void initState() {
+    super.initState();
+    myBookingsList();
+  }
   @override
   Widget build(BuildContext context) {
     return  Column(
@@ -29,16 +42,17 @@ class _MyBookingsState extends State<MyBookings> {
                 ),
               ),
               const SizedBox(height: 10),
-              Expanded(
+              Container(
+                height: MediaQuery.of(context).size.height * 0.7,
                 child: ListView.builder(
                   itemCount: myBookings.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(myBookings[index]),
+                      title: Text("myBookings[index]"),
                       onTap: () {
-                        setState(() {
-                          selectedBooking = myBookings[index];
-                        });
+                        // setState(() {
+                        //   selectedBooking = myBookings[index];
+                        // });
                       },
                       selected: myBookings[index] == selectedBooking,
                     );

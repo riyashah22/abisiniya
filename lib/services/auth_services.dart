@@ -118,6 +118,28 @@ class AuthServices {
     }
   }
 
+  Future<List<dynamic>?> userBookings(BuildContext context) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.get(
+        Uri.parse("https://staging.abisiniya.com/api/v1/booking/apartment/mybookings"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+      if (res.statusCode == 200) {
+        print(jsonDecode(res.body)['data']);
+        return jsonDecode(res.body)['data'];
+      } else {
+        showSnackBar(context, 'Failed to load apartments');
+      }
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+    return null;
+  }
+
   void otpVerify(
     BuildContext context,
     String email,
