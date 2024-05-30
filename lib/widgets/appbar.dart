@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget CustomAppbar(BuildContext context, String title) {
+PreferredSizeWidget CustomAppbar(BuildContext context, String title) {
   return AppBar(
     centerTitle: true,
     title: Text(
@@ -13,3 +13,4 @@ Widget CustomAppbar(BuildContext context, String title) {
     backgroundColor: Theme.of(context).primaryColor,
   );
 }
+//new commit
