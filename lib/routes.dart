@@ -1,6 +1,6 @@
 import "package:abisiniya/bottom_navigation.dart";
 import "package:abisiniya/screens/apartments/add_apartment.dart";
-import "package:abisiniya/screens/apartments/apartment_dashboard.dart";
+import "package:abisiniya/screens/dashboard/dashboard_screen.dart";
 import "package:abisiniya/screens/apartments/detail_apartment_screen.dart";
 import "package:abisiniya/screens/auth/login.dart";
 import "package:abisiniya/screens/auth/otpVerification.dart";
