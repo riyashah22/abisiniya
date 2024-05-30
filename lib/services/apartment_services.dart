@@ -84,25 +84,21 @@ class ApartmentServices {
         ..fields['price'] = price.toString();
 
       for (var image in images) {
-        var stream = http.ByteStream(image.openRead());
-        var length = await image.length();
-
-        var multipartFile = http.MultipartFile(
-          'pictures',
-          stream,
-          length,
+        var multipartFile = await http.MultipartFile.fromPath(
+          'pictures[]',
+          image.path,
           filename: basename(image.path),
         );
         request.files.add(multipartFile);
       }
 
-      request.headers['Authorization'] =
-          '307|4Ks0HRvkxLEWzr5QYbOmTvACdJR3cwLCaYt2vQVgc5091f7a';
+      request.headers['Authorization'] = 'Bearer ${user.user.token}';
 
       var res = await request.send();
 
       var response = await http.Response.fromStream(res);
       print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Apartment Added Successfully')),
@@ -149,7 +145,7 @@ class ApartmentServices {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.delete(
-        Uri.parse("https://www.abisiniya.com/api/v1/apartment/delete/$id"),
+        Uri.parse("https://staging.abisiniya.com/api/v1/apartment/delete/$id"),
         headers: {
           'Authorization': 'Bearer ${user.user.token}',
         },
@@ -170,26 +166,44 @@ class ApartmentServices {
   }
 
   Future<void> updateApartments(
-      BuildContext context,
-      String name,
-      String address,
-      String city,
-      String country,
-      int guest,
-      int bedroom,
-      int bathroom,
-      int price,
-      int id) async {
+    BuildContext context,
+    String name,
+    String address,
+    String city,
+    String country,
+    int guest,
+    int bedroom,
+    int bathroom,
+    int price,
+    int id,
+  ) async {
     final user = Provider.of<UserProvider>(context, listen: false);
 
     try {
-      final res = await http.post(
-        Uri.parse(
-            "https://www.abisiniya.com/api/v1/apartment/update/$id?name=$name&address=$address&city=$city&country=$country&guest=$guest&bedroom=$bedroom&bathroom=$bathroom&price=$price&property_type_id=null&status=pending"),
+      final updatedData = {
+        'name': name,
+        'address': address,
+        'city': city,
+        'country': country,
+        'guest': guest,
+        'bedroom': bedroom,
+        'bathroom': bathroom,
+        'price': price,
+        'property_type_id': null,
+        'status': 'pending',
+      };
+
+      final uri = Uri.parse(
+        "https://staging.abisiniya.com/api/v1/apartment/update/$id",
+      );
+
+      final res = await http.put(
+        uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${user.user.token}',
         },
+        body: jsonEncode(updatedData),
       );
 
       httpErrorHandle(
