@@ -5,6 +5,7 @@ import "package:abisiniya/screens/apartments/detail_apartment_screen.dart";
 import "package:abisiniya/screens/auth/login.dart";
 import "package:abisiniya/screens/auth/otpVerification.dart";
 import "package:abisiniya/screens/auth/signup.dart";
+import "package:abisiniya/screens/vehicles/add_vehicle.dart";
 import "package:abisiniya/screens/vehicles/detail_vehicle_screen.dart";
 import "package:flutter/material.dart";
 
@@ -40,6 +41,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const VehicleDetailScreen(),
+      );
+    case AddVehicleScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AddVehicleScreen(),
       );
     case DetailApartmentScreen.routeName:
       return MaterialPageRoute(

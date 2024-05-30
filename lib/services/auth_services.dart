@@ -55,10 +55,11 @@ class AuthServices {
     }
 
     try {
-      http.Response res = await http
-          .post(Uri.parse("https://www.abisiniya.com/api/v1/logout"), headers: {
-        'Authorization': 'Bearer $token',
-      });
+      http.Response res = await http.post(
+          Uri.parse("https://staging.abisiniya.com/api/v1/logout"),
+          headers: {
+            'Authorization': 'Bearer $token',
+          });
 
       httpErrorHandle(
         response: res,
