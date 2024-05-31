@@ -182,7 +182,7 @@ class _FlightScreenState extends State<FlightScreen> {
                 _buildDateSelection(
                   enabled: true,
                   context,
-                  label: 'From Date:',
+                  label: 'Departure Date:',
                   date: fromDate,
                   onSelectDate: () async {
                     final selectedDate = await showDatePicker(
@@ -202,7 +202,7 @@ class _FlightScreenState extends State<FlightScreen> {
                 const SizedBox(height: 10),
                 _buildDateSelection(
                   context,
-                  label: 'To Date:',
+                  label: 'Return Date:',
                   date: toDate,
                   onSelectDate: () async {
                     if (fromDate == null) {
