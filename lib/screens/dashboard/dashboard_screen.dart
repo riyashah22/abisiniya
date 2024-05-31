@@ -38,7 +38,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppbar(context, "Dashboard"),
+        appBar: CustomAppbarSecondaryScreen(context, "Dashboard"),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

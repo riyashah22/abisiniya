@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-PreferredSizeWidget CustomAppbar(BuildContext context, String title) {
+PreferredSizeWidget CustomAppbarSecondaryScreen(
+    BuildContext context, String title) {
   return AppBar(
     centerTitle: true,
     title: Text(

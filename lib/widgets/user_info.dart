@@ -1,6 +1,6 @@
 import 'package:abisiniya/provider/user.dart';
-import 'package:abisiniya/screens/auth/login.dart';
-import 'package:abisiniya/services/auth_services.dart';
+import 'package:abisiniya/screens/dashboard/dashboard_screen.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -10,16 +10,10 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthServices authServices = AuthServices();
-
-    void logoutAction(BuildContext context, String token) {
-      authServices.logout(context, token);
-    }
-
     final user = Provider.of<UserProvider>(context).user;
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xffEBAD3F), // Primary color
+        color: const Color(0xffA3AF9F), // Primary color
         borderRadius: BorderRadius.circular(10), // Rounded corners
         boxShadow: [
           BoxShadow(
@@ -32,13 +26,15 @@ class UserInfo extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.symmetric(
-          horizontal: 20, vertical: 10), // Padding for inner content
+        horizontal: 20,
+        vertical: 10,
+      ), // Padding for inner content
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
-              const Icon(Icons.person, color: Colors.white),
+              const Icon(Icons.person, color: Color(0xff000000)),
               const SizedBox(
                 width: 8,
               ),
@@ -46,49 +42,32 @@ class UserInfo extends StatelessWidget {
                 user.name == "" ? "Guest" : user.name,
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.bold, // Making username bold
-                  fontSize: 18, // Adjusting font size
-                  color: Color(0xff010B13), // Username text color
+                  fontSize: 22, // Adjusting font size
+                  color: Color(0xff000000), // Username text color
                 ),
-                // style: const TextStyle(
-                //   fontWeight: FontWeight.bold, // Making username bold
-                //   fontSize: 16, // Adjusting font size
-                //   color: Color(0xff010B13), // Username text color
-                // ),
               ),
             ],
           ),
           const SizedBox(width: 20),
-          if (user.name != "")
-            ElevatedButton(
+          if (user.token != "")
+            ElevatedButton.icon(
+              icon: Icon(
+                Icons.analytics,
+                color: Colors.white,
+              ),
               onPressed: () {
-                // Handle logout
-                logoutAction(context, user.token);
+                Navigator.of(context).pushNamed(ApartmentDashboard.routeName);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xfff8fbf1), // Secondary color
+                backgroundColor: Color(0xff004162), // Secondary color
               ),
-              child: const Text(
-                "Logout",
+              label: const Text(
+                "Dashboard",
                 style: TextStyle(
-                  color: Color(0xFF3E6837), // Text color of the button
+                  color: Colors.white, // Text color of the button
                 ),
               ),
             )
-          else
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(LoginScreen.routeName);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xfff8fbf1), // Secondary color
-              ),
-              child: const Text(
-                "Login",
-                style: TextStyle(
-                  color: Color(0xFF3E6837), // Text color of the button
-                ),
-              ),
-            ),
         ],
       ),
     );
