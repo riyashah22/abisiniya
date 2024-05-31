@@ -112,8 +112,6 @@ class AuthServices {
         },
         body: jsonEncode(data),
       );
-      print(res.statusCode);
-      jsonDecode(res.body);
       httpErrorHandle(
         response: res,
         onSuccess: () async {
@@ -177,6 +175,51 @@ class AuthServices {
         },
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      handleHttpError(errorMessage);
+    }
+  }
+
+  void contactUs(
+    BuildContext context,
+    String name,
+    String email,
+    String subject,
+    String message,
+  ) async {
+    void handleHttpError(String errorMessage) {
+      showSnackBar(context, errorMessage);
+    }
+
+    try {
+      final data = {
+        'name': name,
+        'subject': subject,
+        'email': email,
+        'message': message,
+      };
+
+      final uri = Uri.parse("https://staging.abisiniya.com/api/common/contact");
+
+      final res = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+
+      httpErrorHandle(
+        response: res,
+        onSuccess: () async {
+          showSnackBar(context, "Form Submitted Successfully!");
+        },
+        onError: (errorMessage) {
+          showErrorMessage(context, errorMessage);
         },
       );
     } catch (e) {
