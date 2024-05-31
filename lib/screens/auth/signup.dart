@@ -66,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(18.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Divider(
                     height: 10,
                     color: Theme.of(context).primaryColor,
@@ -90,7 +90,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 15.0),
+                        const SizedBox(height: 8.0),
                         InputTextField(
                           label: 'Surname',
                           hintText: 'Enter your surname',
@@ -102,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 15.0),
+                        const SizedBox(height: 8.0),
                         InputTextField(
                           label: 'Email',
                           hintText: 'Enter your email',
@@ -114,7 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 15.0),
+                        const SizedBox(height: 8.0),
                         Text(
                           "Phone Number",
                           style: TextStyle(
@@ -167,7 +167,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: 15.0),
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {

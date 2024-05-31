@@ -11,8 +11,8 @@ import 'package:path/path.dart';
 class ApartmentServices {
   Future<List<Apartment>> getAllApartments(BuildContext context) async {
     try {
-      http.Response res = await http
-          .get(Uri.parse("https://www.abisiniya.com/api/v1/apartment/list"));
+      http.Response res = await http.get(
+          Uri.parse("https://staging.abisiniya.com/api/v1/apartment/list"));
       List<Apartment> fetchedApartments = [];
       final user = Provider.of<UserProvider>(context, listen: false);
       print(user.user.token);

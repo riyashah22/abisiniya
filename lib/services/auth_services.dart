@@ -94,11 +94,24 @@ class AuthServices {
     }
 
     try {
-      http.Response res = await http.post(
-        Uri.parse(
-            "https://www.abisiniya.com/api/v1/myregister?email=$email&password=$password&name=$name&surname=$surname&phone=$phone&password_confirmation=$confirmPassword"),
-      );
+      final data = {
+        'name': name,
+        'surname': surname,
+        'email': email,
+        'phone': phone,
+        'password': password,
+        'password_confirmation': confirmPassword,
+      };
 
+      final uri = Uri.parse("https://staging.abisiniya.com/api/v1/myregister");
+
+      final res = await http.post(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
       print(res.statusCode);
       jsonDecode(res.body);
       httpErrorHandle(
@@ -122,7 +135,8 @@ class AuthServices {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.get(
-        Uri.parse("https://staging.abisiniya.com/api/v1/booking/apartment/mybookings"),
+        Uri.parse(
+            "https://staging.abisiniya.com/api/v1/booking/apartment/mybookings"),
         headers: {
           'Authorization': 'Bearer ${user.user.token}',
         },
