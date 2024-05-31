@@ -171,6 +171,7 @@ class ApartmentServices {
     String address,
     String city,
     String country,
+    String status,
     int guest,
     int bedroom,
     int bathroom,
@@ -190,7 +191,7 @@ class ApartmentServices {
         'bathroom': bathroom,
         'price': price,
         'property_type_id': null,
-        'status': 'pending',
+        'status': status,
       };
 
       final uri = Uri.parse(

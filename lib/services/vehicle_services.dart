@@ -223,6 +223,7 @@ class VehicleServices {
     String country,
     String make,
     String model,
+    String status,
     int year,
     int engineSize,
     String fuelType,
@@ -249,7 +250,7 @@ class VehicleServices {
         'color': color,
         'transmission': transmission,
         'price': price,
-        'status': 'pending', // Assuming status is needed
+        'status': status
       };
 
       final uri = Uri.parse(

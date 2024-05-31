@@ -14,7 +14,6 @@ class _MyApartmentsState extends State<MyApartments> {
   void initState() {
     super.initState();
     fetchUserApartments();
-    // TODO: implement initState
   }
 
   void showEditApartmentDialog(Map<String, dynamic> apartment) {
@@ -35,77 +34,119 @@ class _MyApartmentsState extends State<MyApartments> {
     TextEditingController priceController =
         TextEditingController(text: apartment['price'].toString());
 
+    String selectedStatus = "Pending";
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Edit Apartment'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Edit Apartment'),
+              content: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: nameController,
+                        decoration: const InputDecoration(labelText: 'Name'),
+                      ),
+                      TextField(
+                        controller: addressController,
+                        decoration: const InputDecoration(labelText: 'Address'),
+                      ),
+                      TextField(
+                        controller: cityController,
+                        decoration: const InputDecoration(labelText: 'City'),
+                      ),
+                      TextField(
+                        controller: countryController,
+                        decoration: const InputDecoration(labelText: 'Country'),
+                      ),
+                      TextField(
+                        controller: guestController,
+                        decoration: const InputDecoration(labelText: 'Guest'),
+                      ),
+                      TextField(
+                        controller: bedroomController,
+                        decoration:
+                            const InputDecoration(labelText: 'Bedrooms'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      TextField(
+                        controller: bathroomController,
+                        decoration:
+                            const InputDecoration(labelText: 'Bathrooms'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      TextField(
+                        controller: priceController,
+                        decoration: const InputDecoration(labelText: 'Price'),
+                        keyboardType: TextInputType.number,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Status",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          DropdownButton(
+                            value: selectedStatus,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text("Pending"),
+                                value: "Pending",
+                              ),
+                              DropdownMenuItem(
+                                child: Text("Inactive"),
+                                value: "Inactive",
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                selectedStatus = value!;
+                              });
+                            },
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                TextField(
-                  controller: addressController,
-                  decoration: const InputDecoration(labelText: 'Address'),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel'),
                 ),
-                TextField(
-                  controller: cityController,
-                  decoration: const InputDecoration(labelText: 'City'),
-                ),
-                TextField(
-                  controller: countryController,
-                  decoration: const InputDecoration(labelText: 'Country'),
-                ),
-                TextField(
-                  controller: guestController,
-                  decoration: const InputDecoration(labelText: 'Guest'),
-                ),
-                TextField(
-                  controller: bedroomController,
-                  decoration: const InputDecoration(labelText: 'Bedrooms'),
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  controller: bathroomController,
-                  decoration: const InputDecoration(labelText: 'Bathrooms'),
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  controller: priceController,
-                  decoration: const InputDecoration(labelText: 'Price'),
-                  keyboardType: TextInputType.number,
+                ElevatedButton(
+                  onPressed: () {
+                    apartmentServices.updateApartments(
+                        context,
+                        nameController.text,
+                        addressController.text,
+                        cityController.text,
+                        countryController.text,
+                        selectedStatus,
+                        int.parse(guestController.text),
+                        int.parse(bedroomController.text),
+                        int.parse(bathroomController.text),
+                        int.parse(priceController.text),
+                        apartment['id']);
+                  },
+                  child: const Text('Save'),
                 ),
               ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Call update apartment service here
-                apartmentServices.updateApartments(
-                    context,
-                    nameController.text,
-                    addressController.text,
-                    cityController.text,
-                    countryController.text,
-                    int.parse(guestController.text),
-                    int.parse(bedroomController.text),
-                    int.parse(bathroomController.text),
-                    int.parse(priceController.text),
-                    apartment['id']);
-              },
-              child: const Text('Save'),
-            ),
-          ],
+            );
+          },
         );
       },
     );

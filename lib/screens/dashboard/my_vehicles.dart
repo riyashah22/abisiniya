@@ -58,6 +58,7 @@ class _MyVehiclesState extends State<MyVehicles> {
         TextEditingController(text: vehicle['transmission']);
     TextEditingController priceController =
         TextEditingController(text: vehicle['price'].toString());
+    String selectedStatus = 'Pending';
 
     showDialog(
       context: context,
@@ -123,6 +124,38 @@ class _MyVehiclesState extends State<MyVehicles> {
                   decoration: const InputDecoration(labelText: 'Price'),
                   keyboardType: TextInputType.number,
                 ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Status",
+                      style: TextStyle(fontSize: 14),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    DropdownButton(
+                      value: selectedStatus,
+                      items: [
+                        DropdownMenuItem(
+                          child: Text("Pending"),
+                          value: "Pending",
+                        ),
+                        DropdownMenuItem(
+                          child: Text("Inactive"),
+                          value: "Inactive",
+                        ),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          selectedStatus = value!;
+                        });
+                      },
+                    )
+                  ],
+                ),
               ],
             ),
           ),
@@ -144,6 +177,7 @@ class _MyVehiclesState extends State<MyVehicles> {
                   countryController.text,
                   makeController.text,
                   modelController.text,
+                  selectedStatus,
                   int.parse(yearController.text),
                   int.parse(engineSizeController.text),
                   fuelTypeController.text,
