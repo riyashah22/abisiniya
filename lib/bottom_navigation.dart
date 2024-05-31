@@ -2,7 +2,9 @@ import 'package:abisiniya/screens/about/about.dart';
 import 'package:abisiniya/screens/apartments/apartments.dart';
 import 'package:abisiniya/screens/flights/flights.dart';
 import 'package:abisiniya/screens/vehicles/vehicles.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -28,15 +30,34 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.12,
         centerTitle: true,
-        title: Text(
-          "Abisiniya",
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                color: Theme.of(context).secondaryHeaderColor,
+        title: Column(
+          children: [
+            Text(
+              "Abisiniya",
+              style: GoogleFonts.lato(
+                color: CustomColors.textPrimaryColor,
                 fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+                fontSize: 28,
               ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              "Travels & Tourism",
+              style: GoogleFonts.openSans(
+                color: CustomColors.textPrimaryColor,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                fontSize: 20,
+              ),
+            ),
+          ],
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: CustomColors.backgroundPrimaryColor,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

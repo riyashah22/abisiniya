@@ -2,6 +2,7 @@ import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class UserInfo extends StatelessWidget {
@@ -18,7 +19,7 @@ class UserInfo extends StatelessWidget {
     final user = Provider.of<UserProvider>(context).user;
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF3E6837), // Primary color
+        color: const Color(0xffEBAD3F), // Primary color
         borderRadius: BorderRadius.circular(10), // Rounded corners
         boxShadow: [
           BoxShadow(
@@ -43,11 +44,16 @@ class UserInfo extends StatelessWidget {
               ),
               Text(
                 user.name == "" ? "Guest" : user.name,
-                style: const TextStyle(
+                style: GoogleFonts.roboto(
                   fontWeight: FontWeight.bold, // Making username bold
-                  fontSize: 16, // Adjusting font size
-                  color: Colors.white, // Username text color
+                  fontSize: 18, // Adjusting font size
+                  color: Color(0xff010B13), // Username text color
                 ),
+                // style: const TextStyle(
+                //   fontWeight: FontWeight.bold, // Making username bold
+                //   fontSize: 16, // Adjusting font size
+                //   color: Color(0xff010B13), // Username text color
+                // ),
               ),
             ],
           ),
