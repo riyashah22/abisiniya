@@ -189,20 +189,20 @@ class AboutScreen extends StatelessWidget {
       duration: const Duration(milliseconds: 500),
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: color ?? Colors.white,
+        color: color ?? CustomColors.lightPrimaryColor,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 2,
+          color: Colors.grey,
+          width: 1,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(0.5),
+        //     spreadRadius: 5,
+        //     blurRadius: 7,
+        //     offset: const Offset(0, 3), // changes position of shadow
+        //   ),
+        // ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),

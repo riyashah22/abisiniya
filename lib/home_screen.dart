@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(
-              width: 8,
+              width: 12,
             ),
             Column(
               children: [
@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 2,
                 ),
                 Text(
-                  "  Travels & Tourism",
+                  "Travels & Tourism",
                   style: GoogleFonts.raleway(
                     color: CustomColors.lightPrimaryColor,
                     fontWeight: FontWeight.w500,
@@ -416,6 +416,33 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      child: OutlinedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            CustomColors.primaryColor,
+                          ),
+                        ),
+                        icon: Icon(
+                          Icons.warehouse_rounded,
+                          color: CustomColors.lightPrimaryColor,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(AboutScreen.routeName);
+                        },
+                        label: Text(
+                          "Know more about us",
+                          style: GoogleFonts.roboto(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: CustomColors.lightPrimaryColor,
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
