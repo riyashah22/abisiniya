@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:abisiniya/constants/error_handling.dart';
+import 'package:abisiniya/models/bus.dart';
 import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,56 @@ class VehicleServices {
       );
 
       return fetchedVehicles;
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+      return [];
+    }
+  }
+
+  Future<List<Bus>> getAllBuses(BuildContext context) async {
+    try {
+      http.Response res = await http.get(
+        Uri.parse(
+          "https://staging.abisiniya.com/api/v1/bus/list",
+        ),
+      );
+      List<Bus> fetchedBus = [];
+      // print(fetchedApartments);
+      httpErrorHandle(
+        response: res,
+        onSuccess: () {
+          var data = jsonDecode(jsonEncode(jsonDecode(res.body)['data']));
+          // print(jsonDecode(res.body)['data'][0]['model']);
+          for (var i = 0; i < data.length; i++) {
+            Bus bus = Bus(
+              name: jsonDecode(res.body)['data'][i]['name'].toString(),
+              seater: jsonDecode(res.body)['data'][i]['seater'],
+              address: jsonDecode(res.body)['data'][i]['address'],
+              city: jsonDecode(res.body)['data'][i]['city'],
+              country: jsonDecode(res.body)['data'][i]['country'],
+              make: jsonDecode(res.body)['data'][i]['make'],
+              model: jsonDecode(res.body)['data'][i]['model'],
+              year: jsonDecode(res.body)['data'][i]['year'],
+              engineSize: jsonDecode(res.body)['data'][i]['engine_size'],
+              fuelType: jsonDecode(res.body)['data'][i]['fuel_type'],
+              weight: jsonDecode(res.body)['data'][i]['weight'],
+              color: jsonDecode(res.body)['data'][i]['color'],
+              transmission: jsonDecode(res.body)['data'][i]['transmission'],
+              price: jsonDecode(res.body)['data'][i]['price'],
+              status: jsonDecode(res.body)['data'][i]['status'],
+              images: jsonDecode(res.body)['data'][i]['pictures'][0]
+                  ['imageUrl'],
+            );
+            fetchedBus.add(bus);
+          }
+        },
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+      );
+
+      return fetchedBus;
     } catch (e) {
       final errorMessage = "Error occurred: ${e.toString()}";
       showSnackBar(context, errorMessage);

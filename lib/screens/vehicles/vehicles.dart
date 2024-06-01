@@ -1,9 +1,13 @@
+import 'package:abisiniya/models/bus.dart';
 import 'package:abisiniya/models/vehicles.dart';
+import 'package:abisiniya/screens/vehicles/bus_item.dart';
 import 'package:abisiniya/screens/vehicles/vehicle_item.dart';
 import 'package:abisiniya/services/vehicle_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 
 class VehicleScreen extends StatefulWidget {
   static const String routeName = "/vehicle-screen";
@@ -16,18 +20,22 @@ class VehicleScreen extends StatefulWidget {
 class _VehicleScreenState extends State<VehicleScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  TextEditingController keywordController = TextEditingController();
   List<Vehicle> vehicleList = [];
+  List<Bus> busList = [];
   VehicleServices vehicleServices = VehicleServices();
 
   @override
   void initState() {
     super.initState();
+    fetchBuses();
     fetchVehicles();
     _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
+    keywordController.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -40,17 +48,35 @@ class _VehicleScreenState extends State<VehicleScreen>
     });
   }
 
+  Future<void> fetchBuses() async {
+    List<Bus> fetchedBus = await vehicleServices.getAllBuses(context);
+    setState(() {
+      busList = fetchedBus;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppbarSecondaryScreen(context, "Book Vehicle"),
       body: Column(
         children: <Widget>[
           TabBar(
             controller: _tabController,
+            labelStyle: GoogleFonts.raleway(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
             tabs: const [
-              Tab(text: 'Cars'),
-              Tab(text: 'Bus'),
+              Tab(
+                text: 'Cars',
+                icon: Icon(LineIcons.car),
+              ),
+              Tab(
+                text: 'Bus',
+                icon: Icon(LineIcons.bus),
+              ),
             ],
           ),
           Expanded(
@@ -58,12 +84,8 @@ class _VehicleScreenState extends State<VehicleScreen>
               controller: _tabController,
               children: [
                 // Content of the first tab (Cars)
-                _buildVehicleList(),
-                Container(
-                  child: const Center(
-                    child: Text('Bus Tab Content'),
-                  ),
-                ),
+                _carScreen(),
+                _BusScreen(),
               ],
             ),
           ),
@@ -72,7 +94,7 @@ class _VehicleScreenState extends State<VehicleScreen>
     );
   }
 
-  Widget _buildVehicleList() {
+  Widget _carScreen() {
     if (vehicleList.isEmpty) {
       return Center(
         child: Image.asset(
@@ -87,19 +109,155 @@ class _VehicleScreenState extends State<VehicleScreen>
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Text(
-              "Find your car",
-              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Rent a Car ",
+                        style: GoogleFonts.roboto(
+                          color: CustomColors.smokyBlackColor,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "Anytime",
+                        style: GoogleFonts.roboto(
+                          color: CustomColors.smokyBlackColor,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                Text(
+                  "Anywhere",
+                  style: GoogleFonts.roboto(
+                    color: CustomColors.smokyBlackColor,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
             ),
+          ),
+          // search bar
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: SearchBar(
+              controller: keywordController,
+              backgroundColor: WidgetStatePropertyAll(
+                Colors.white,
+              ),
+              trailing: [
+                Icon(
+                  Icons.search,
+                ),
+                SizedBox(
+                  width: 12,
+                )
+              ],
+              hintText: "Search car...",
+            ),
+          ),
+          SizedBox(
+            height: 20,
           ),
           Expanded(
             child: ListView.builder(
               itemCount: vehicleList.length,
               itemBuilder: (context, index) => VehicleItem(
                 vehicle: vehicleList[index],
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+  }
+
+  Widget _BusScreen() {
+    if (vehicleList.isEmpty) {
+      return Center(
+        child: Image.asset(
+          'assets/loading.gif',
+          width: 100,
+          height: 100,
+        ),
+      );
+    } else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Rent a Bus ",
+                        style: GoogleFonts.roboto(
+                          color: CustomColors.smokyBlackColor,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "Anytime",
+                        style: GoogleFonts.roboto(
+                          color: CustomColors.smokyBlackColor,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  "Anywhere",
+                  style: GoogleFonts.roboto(
+                    color: CustomColors.smokyBlackColor,
+                    fontSize: 32,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // search bar
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: SearchBar(
+              controller: keywordController,
+              backgroundColor: WidgetStatePropertyAll(
+                Colors.white,
+              ),
+              trailing: [
+                Icon(
+                  Icons.search,
+                ),
+                SizedBox(
+                  width: 12,
+                )
+              ],
+              hintText: "Search car...",
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: busList.length,
+              itemBuilder: (context, index) => BusItem(
+                bus: busList[index],
               ),
             ),
           ),

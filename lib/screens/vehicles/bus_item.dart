@@ -1,16 +1,16 @@
-import 'package:abisiniya/models/vehicles.dart';
-import 'package:abisiniya/screens/vehicles/detail_vehicle_screen.dart';
+import 'package:abisiniya/models/bus.dart';
+import 'package:abisiniya/screens/vehicles/bus_detail_screen.dart';
 import 'package:flutter/material.dart';
 
-class VehicleItem extends StatefulWidget {
-  final Vehicle vehicle;
-  const VehicleItem({super.key, required this.vehicle});
+class BusItem extends StatefulWidget {
+  final Bus bus;
+  const BusItem({super.key, required this.bus});
 
   @override
-  State<VehicleItem> createState() => _VehicleItemState();
+  State<BusItem> createState() => _BusItemState();
 }
 
-class _VehicleItemState extends State<VehicleItem> {
+class _BusItemState extends State<BusItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +36,7 @@ class _VehicleItemState extends State<VehicleItem> {
               height: 120,
               width: 180,
               child: Image.network(
-                widget.vehicle.images,
+                widget.bus.images,
                 fit: BoxFit.cover,
               ),
             ),
@@ -51,7 +51,7 @@ class _VehicleItemState extends State<VehicleItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    widget.vehicle.model,
+                    widget.bus.model,
                     style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -61,7 +61,7 @@ class _VehicleItemState extends State<VehicleItem> {
                     height: 4,
                   ),
                   Text(
-                    widget.vehicle.make,
+                    widget.bus.make,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.grey[600],
                         ),
@@ -74,7 +74,7 @@ class _VehicleItemState extends State<VehicleItem> {
                         children: [
                           Expanded(
                             child: Text(
-                              '\$${widget.vehicle.price}/day',
+                              '\$${widget.bus.price}/day',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -84,8 +84,8 @@ class _VehicleItemState extends State<VehicleItem> {
                           ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).pushNamed(
-                                VehicleDetailScreen.routeName,
-                                arguments: widget.vehicle,
+                                BusDetailScreen.routeName,
+                                arguments: widget.bus,
                               );
                             },
                             style: ElevatedButton.styleFrom(
