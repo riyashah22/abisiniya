@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class VehicleScreen extends StatefulWidget {
+  static const String routeName = "/vehicle-screen";
   const VehicleScreen({Key? key}) : super(key: key);
 
   @override

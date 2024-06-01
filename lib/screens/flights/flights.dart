@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FlightScreen extends StatefulWidget {
+  static const String routeName = "/flight-screen";
   const FlightScreen({super.key});
 
   @override

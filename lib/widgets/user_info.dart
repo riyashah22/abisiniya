@@ -1,5 +1,6 @@
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/dashboard/dashboard_screen.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,17 +13,17 @@ class UserInfo extends StatelessWidget {
     final user = Provider.of<UserProvider>(context).user;
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xffA3AF9F), // Primary color
-        borderRadius: BorderRadius.circular(10), // Rounded corners
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // Shadow color
-            spreadRadius: 2, // Spread radius
-            blurRadius: 5, // Blur radius
-            offset:
-                const Offset(0, 3), // Shadow position, changes height of shadow
-          ),
-        ],
+        color: CustomColors.secondaryColor,
+        borderRadius: BorderRadius.circular(10),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(0.5), // Shadow color
+        //     spreadRadius: 2, // Spread radius
+        //     blurRadius: 5, // Blur radius
+        //     offset:
+        //         const Offset(0, 3), // Shadow position, changes height of shadow
+        //   ),
+        // ],
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
@@ -33,16 +34,16 @@ class UserInfo extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.person, color: Color(0xff000000)),
+              Icon(Icons.person, color: CustomColors.smokyBlackColor),
               const SizedBox(
                 width: 8,
               ),
               Text(
                 user.name == "" ? "Guest" : user.name,
                 style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.bold, // Making username bold
-                  fontSize: 22, // Adjusting font size
-                  color: Color(0xff000000), // Username text color
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: CustomColors.smokyBlackColor,
                 ),
               ),
             ],
@@ -58,12 +59,12 @@ class UserInfo extends StatelessWidget {
                 Navigator.of(context).pushNamed(ApartmentDashboard.routeName);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xff004162), // Secondary color
+                backgroundColor: CustomColors.blueColor,
               ),
               label: const Text(
                 "Dashboard",
                 style: TextStyle(
-                  color: Colors.white, // Text color of the button
+                  color: Colors.white,
                 ),
               ),
             )

@@ -1,43 +1,54 @@
 import 'package:abisiniya/provider/user.dart';
-import 'package:abisiniya/screens/about/about.dart';
 import 'package:abisiniya/screens/apartments/apartments.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/screens/flights/flights.dart';
 import 'package:abisiniya/screens/vehicles/vehicles.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
+import 'package:abisiniya/widgets/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
-class BottomNav extends StatefulWidget {
-  static const String routeName = '/home-screen';
-  const BottomNav({super.key});
+class HomeScreen extends StatefulWidget {
+  static const String routeName = "/home-screens";
+  const HomeScreen({super.key});
 
   @override
-  State<BottomNav> createState() => _BottomNavState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _BottomNavState extends State<BottomNav> {
+class _HomeScreenState extends State<HomeScreen> {
   AuthServices authServices = AuthServices();
   void logoutAction(BuildContext context, String token) {
     authServices.logout(context, token);
   }
 
-  int _selectedIndex = 0;
+  double _scale = 1.0;
+  Duration _duration = Duration(milliseconds: 200);
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    ApartmentScreen(),
-    VehicleScreen(),
-    FlightScreen(),
-    AboutScreen(),
-  ];
+  void _onTapDown(TapDownDetails details) {
+    setState(() {
+      _scale = 0.9;
+    });
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() {
+      _scale = 1.0;
+    });
+  }
+
+  void _onTapCancel() {
+    setState(() {
+      _scale = 1.0;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -135,58 +146,108 @@ class _BottomNavState extends State<BottomNav> {
         ),
         backgroundColor: CustomColors.primaryColor,
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(.1),
-            )
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // User information bar
+            UserInfo(),
+            SizedBox(
+              height: 20,
+            ),
+            // Message
+            Text(
+              "Begin your Voyage Here",
+              style: GoogleFonts.openSans(
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+                color: CustomColors.smokyBlackColor,
+              ),
+            ),
+            Text(
+              "Unlock your next level experience",
+              style: GoogleFonts.openSans(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                color: Color(0xff91A3B0),
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            // Services menu options
+            Container(
+              height: 148,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildServicesCard("Flights", "assets/airplane-ticket.png",
+                      FlightScreen.routeName),
+                  _buildServicesCard(
+                      "Cars", "assets/car.png", VehicleScreen.routeName),
+                  _buildServicesCard("Apartments", "assets/apartments.png",
+                      ApartmentScreen.routeName),
+                  _buildServicesCard(
+                      "Buses", "assets/transport.png", VehicleScreen.routeName),
+                  _buildServicesCard("Airport Shuttles",
+                      "assets/airport-shuttle.png", VehicleScreen.routeName),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Most Featured Properties",
+              style: GoogleFonts.raleway(
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
+              ),
+            ),
           ],
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
-              gap: 8,
-              activeColor: Colors.white,
-              iconSize: 24,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: const Duration(milliseconds: 400),
-              tabBackgroundColor: Theme.of(context).primaryColor,
-              color: Colors.black,
-              tabs: const [
-                GButton(
-                  icon: LineIcons.building,
-                  text: 'Apartments',
-                ),
-                GButton(
-                  icon: LineIcons.car,
-                  text: 'Vehicles',
-                ),
-                GButton(
-                  icon: LineIcons.planeDeparture,
-                  text: 'Flights',
-                ),
-                GButton(
-                  icon: LineIcons.infoCircle,
-                  text: 'About',
-                ),
-              ],
-              selectedIndex: _selectedIndex,
-              onTabChange: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
+      ),
+    );
+  }
+
+  Widget _buildServicesCard(String label, String path, String route) {
+    return GestureDetector(
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      onTapCancel: _onTapCancel,
+      onTap: () {
+        Navigator.of(context).pushNamed(route);
+      },
+      child: AnimatedContainer(
+        duration: _duration,
+        transform: Matrix4.identity()..scale(_scale),
+        padding: EdgeInsets.all(16),
+        margin: EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          color: Color(0xffF5F5F5),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              path,
+              height: 72,
+              width: 72,
             ),
-          ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              label,
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+              ),
+            )
+          ],
         ),
       ),
     );

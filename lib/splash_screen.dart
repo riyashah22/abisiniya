@@ -1,5 +1,5 @@
+import 'package:abisiniya/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:abisiniya/bottom_navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
