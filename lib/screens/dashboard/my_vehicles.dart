@@ -452,7 +452,7 @@ class _MyVehiclesState extends State<MyVehicles> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          vehicleServices.deleteApartment(
+                                          vehicleServices.deleteVehicle(
                                             context,
                                             vehicle['id'],
                                           );

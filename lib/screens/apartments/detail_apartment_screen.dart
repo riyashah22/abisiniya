@@ -1,5 +1,7 @@
 import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/screens/apartments/apartments.dart';
+import 'package:abisiniya/services/apartment_services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +16,14 @@ class DetailApartmentScreen extends StatefulWidget {
 }
 
 class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
+  ApartmentServices apartmentServices = ApartmentServices();
   DateTime? fromDate;
   DateTime? toDate;
+
+  void bookApartment() {
+    apartmentServices.bookApartment(
+        context, fromDate.toString(), toDate.toString(), 45);
+  }
 
   double calculateTotalAmount(int price) {
     if (fromDate != null && toDate != null) {
@@ -448,28 +456,11 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                         },
                       );
                     } else {
-                      // Show success dialog and reset dates
+                      bookApartment();
                       setState(() {
                         fromDate = null;
                         toDate = null;
                       });
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Success"),
-                            content: const Text("Booked Successfully"),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text("OK"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
                     }
                   }
                 },

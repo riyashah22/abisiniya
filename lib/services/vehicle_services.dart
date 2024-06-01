@@ -241,7 +241,7 @@ class VehicleServices {
     }
   }
 
-  void deleteApartment(BuildContext context, int id) async {
+  void deleteVehicle(BuildContext context, int id) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.delete(
@@ -257,7 +257,7 @@ class VehicleServices {
           showSnackBar(context, errorMessage);
         },
         onSuccess: () {
-          showSnackBar(context, "Apartment Deleted Successfully");
+          showSnackBar(context, "Vehicle Deleted Successfully");
         },
       );
     } catch (e) {

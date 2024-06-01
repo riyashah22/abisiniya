@@ -271,4 +271,44 @@ class ApartmentServices {
     }
     return [];
   }
+
+  void bookApartment(BuildContext context, String start_date, String end_date,
+      int apartment_id) async {
+    void handleHttpError(String errorMessage) {
+      // showSnackBar(context, errorMessage);
+      showErrorMessage(context, errorMessage);
+    }
+
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    print(start_date.split(" ")[0]);
+    try {
+      http.Response res = await http.post(
+          headers: {
+            'Authorization': 'Bearer ${user.token}',
+          },
+          Uri.parse(
+            "https://staging.abisiniya.com/api/v1/booking/vehicle/booking/authuser",
+          ),
+          body: {
+            "start_date": start_date.split(" ")[0],
+            "end_date": end_date.split(" ")[0],
+            "bookable_type": "Apartment",
+            "bookable_id": apartment_id.toString(),
+          });
+
+      httpErrorHandle(
+        response: res,
+        onSuccess: () async {
+          print("booking successful");
+        },
+        onError: (errorMessage) {
+          // showSnackBar(context, errorMessage); //new comment
+          showErrorMessage(context, errorMessage);
+        },
+      );
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      handleHttpError(errorMessage);
+    }
+  }
 }
