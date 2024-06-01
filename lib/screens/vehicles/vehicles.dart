@@ -72,8 +72,12 @@ class _VehicleScreenState extends State<VehicleScreen>
 
   Widget _buildVehicleList() {
     if (vehicleList.isEmpty) {
-      return const Center(
-        child: CircularProgressIndicator(), // Show loading indicator
+      return Center(
+        child: Image.asset(
+          'assets/loading.gif',
+          width: 100,
+          height: 100,
+        ),
       );
     } else {
       return Column(

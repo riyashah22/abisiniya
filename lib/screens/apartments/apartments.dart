@@ -72,7 +72,13 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                   future: fetchApartments(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: Image.asset(
+                          'assets/loading.gif',
+                          width: 100,
+                          height: 100,
+                        ),
+                      );
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else {
