@@ -86,7 +86,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: CustomColors.primaryColor,
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(LoginScreen.routeName);
+                Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      LoginScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin =
+                        Offset(1.0, 0.0); // Change for different animation
+                    const end = Offset.zero;
+                    const curve = Curves.ease;
+
+                    var tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+                    var offsetAnimation = animation.drive(tween);
+
+                    return SlideTransition(
+                      position: offsetAnimation,
+                      child: child,
+                    );
+                  },
+                ));
               },
               label: Text(
                 "Login",
