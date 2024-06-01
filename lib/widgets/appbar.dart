@@ -5,7 +5,7 @@ PreferredSizeWidget CustomAppbarSecondaryScreen(
   return AppBar(
     centerTitle: true,
     title: Text(
-      "Abisiniya",
+      title,
       style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             color: Theme.of(context).secondaryHeaderColor,
             fontWeight: FontWeight.bold,

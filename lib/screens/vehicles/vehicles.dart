@@ -1,6 +1,7 @@
 import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/screens/vehicles/vehicle_item.dart';
 import 'package:abisiniya/services/vehicle_services.dart';
+import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -42,6 +43,7 @@ class _VehicleScreenState extends State<VehicleScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppbarSecondaryScreen(context, "Book Vehicle"),
       body: Column(
         children: <Widget>[
           TabBar(
