@@ -1,4 +1,6 @@
 import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
+import 'package:abisiniya/screens/vehicles/detail_vehicle_screen.dart';
 import 'package:abisiniya/services/apartment_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,6 +66,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+
+    // Sample airline images, replace with your actual image URLs
+    List<String> airlineImages = [
+      'assets/airnamibia.png',
+      'assets/fastjet.png',
+      'assets/iata.png',
+      'assets/kenya.jpeg',
+      'assets/rwand.png',
+      'assets/southAfrican.png',
+      'assets/ethiopian.png',
+    ];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -267,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Most Popular Apartmnet",
+                          "Most Popular Apartments",
                           style: GoogleFonts.raleway(
                             fontWeight: FontWeight.w700,
                             fontSize: 24,
@@ -364,6 +377,36 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    // "Most Popular Airlines" section
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Most Popular Airlines",
+                          style: GoogleFonts.raleway(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 24,
+                          ),
+                        ),
+                        // No need for a "View all" option if only images are displayed
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      height: 120,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: airlineImages.length,
+                        itemBuilder: (context, index) {
+                          return _buildAirlineCard(airlineImages[index]);
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -419,156 +462,189 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildApartmentCard(BuildContext context, Apartment apartment) {
-    return Container(
-      width: 160,
-      margin: EdgeInsets.only(right: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: apartment.images.isNotEmpty
-                ? Image.network(
-                    apartment.images[0],
-                    height: 120,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  )
-                : Container(
-                    width: double.infinity,
-                    height: 120,
-                    color: Colors.grey,
-                    child: const Icon(
-                      Icons.image,
-                      size: 100,
-                      color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          DetailApartmentScreen.routeName,
+          arguments: apartment,
+        );
+      },
+      child: Container(
+        width: 160,
+        margin: EdgeInsets.only(right: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: apartment.images.isNotEmpty
+                  ? Image.network(
+                      apartment.images[0],
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  : Container(
+                      width: double.infinity,
+                      height: 120,
+                      color: Colors.grey,
+                      child: const Icon(
+                        Icons.image,
+                        size: 100,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            "  ${apartment.text}",
-            style: GoogleFonts.openSans(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
             ),
-          ),
-          SizedBox(height: 4),
-          Text(
-            "   ${apartment.address}",
-            style: GoogleFonts.openSans(
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-              color: Colors.grey[600],
+            SizedBox(height: 8),
+            Text(
+              "  ${apartment.text}",
+              style: GoogleFonts.openSans(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
-          ),
-          SizedBox(height: 4),
-          Text(
-            "   \$${apartment.price} / night",
-            style: GoogleFonts.openSans(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: CustomColors.primaryColor,
+            SizedBox(height: 4),
+            Text(
+              "   ${apartment.address}",
+              style: GoogleFonts.openSans(
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
             ),
-          ),
-        ],
+            SizedBox(height: 4),
+            Text(
+              "   \$${apartment.price} / night",
+              style: GoogleFonts.openSans(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: CustomColors.primaryColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildVehicleCard(BuildContext context, Vehicle vehicle) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          VehicleDetailScreen.routeName,
+          arguments: vehicle,
+        );
+      },
+      child: Container(
+        width: 160,
+        margin: EdgeInsets.only(right: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: vehicle.images.isNotEmpty
+                      ? Image.network(
+                          vehicle.images,
+                          height: 120,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        )
+                      : Container(
+                          width: double.infinity,
+                          height: 120,
+                          color: Colors.grey,
+                          child: const Icon(
+                            Icons.image,
+                            size: 100,
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.local_gas_station,
+                            size: 14, color: Colors.white),
+                        SizedBox(width: 4),
+                        Text(
+                          vehicle.fuelType,
+                          style: GoogleFonts.openSans(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Text(
+              "  ${vehicle.make}",
+              style: GoogleFonts.openSans(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 4),
+            Row(
+              children: [
+                SizedBox(
+                  width: 6,
+                ),
+                Icon(Icons.location_city, size: 14, color: Colors.grey[600]),
+                SizedBox(width: 4),
+                Text(
+                  vehicle.country,
+                  style: GoogleFonts.openSans(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 4),
+            Text(
+              "  \$${vehicle.price} / day",
+              style: GoogleFonts.openSans(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: CustomColors.primaryColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAirlineCard(String imagePath) {
     return Container(
-      width: 160,
+      width: 120,
       margin: EdgeInsets.only(right: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: vehicle.images.isNotEmpty
-                    ? Image.network(
-                        vehicle.images,
-                        height: 120,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      )
-                    : Container(
-                        width: double.infinity,
-                        height: 120,
-                        color: Colors.grey,
-                        child: const Icon(
-                          Icons.image,
-                          size: 100,
-                          color: Colors.white,
-                        ),
-                      ),
-              ),
-              Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.black54,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.local_gas_station,
-                          size: 14, color: Colors.white),
-                      SizedBox(width: 4),
-                      Text(
-                        vehicle.fuelType,
-                        style: GoogleFonts.openSans(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Text(
-            "  ${vehicle.make}",
-            style: GoogleFonts.openSans(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          SizedBox(height: 4),
-          Row(
-            children: [
-              SizedBox(
-                width: 6,
-              ),
-              Icon(Icons.location_city, size: 14, color: Colors.grey[600]),
-              SizedBox(width: 4),
-              Text(
-                vehicle.country,
-                style: GoogleFonts.openSans(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 4),
-          Text(
-            "  \$${vehicle.price} / day",
-            style: GoogleFonts.openSans(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: CustomColors.primaryColor,
-            ),
-          ),
-        ],
+      decoration: BoxDecoration(
+        border: Border.all(color: CustomColors.primaryColor, width: 2),
+        borderRadius: BorderRadius.circular(16),
+        image: DecorationImage(
+          image: AssetImage(imagePath),
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }
