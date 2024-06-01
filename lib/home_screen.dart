@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 2,
                 ),
                 Text(
-                  "Travels & Tourism",
+                  "  Travels & Tourism",
                   style: GoogleFonts.raleway(
                     color: CustomColors.lightPrimaryColor,
                     fontWeight: FontWeight.w500,
