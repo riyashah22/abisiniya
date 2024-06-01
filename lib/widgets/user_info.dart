@@ -40,7 +40,7 @@ class UserInfo extends StatelessWidget {
               ),
               Text(
                 user.name == "" ? "Guest" : user.name,
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.raleway(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
                   color: CustomColors.smokyBlackColor,
@@ -61,9 +61,9 @@ class UserInfo extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: CustomColors.blueColor,
               ),
-              label: const Text(
+              label: Text(
                 "Dashboard",
-                style: TextStyle(
+                style: GoogleFonts.raleway(
                   color: Colors.white,
                 ),
               ),

@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               label: Text(
                 "Logout",
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.raleway(
                   color: CustomColors.primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Text(
                   "Travels & Tourism",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.raleway(
                     color: CustomColors.lightPrimaryColor,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0.5,
@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // Message
                     Text(
                       "Begin your Voyage Here",
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.raleway(
                         fontWeight: FontWeight.w600,
                         fontSize: 22,
                         color: CustomColors.smokyBlackColor,
@@ -238,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Text(
                       "Unlock your next level experience",
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.raleway(
                         fontWeight: FontWeight.w600,
                         fontSize: 18,
                         color: Color(0xff91A3B0),
@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Most Popular Apartments",
+                          "Elite Residences",
                           style: GoogleFonts.raleway(
                             fontWeight: FontWeight.w700,
                             fontSize: 24,
@@ -333,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Most Popular Cars",
+                          "Premier Rides",
                           style: GoogleFonts.raleway(
                             fontWeight: FontWeight.w700,
                             fontSize: 24,
@@ -380,19 +380,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 16,
                     ),
-                    // "Most Popular Airlines" section
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Most Popular Airlines",
-                          style: GoogleFonts.raleway(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 24,
+                    Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Popular Airlines",
+                            style: GoogleFonts.raleway(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 30,
+                            ),
                           ),
-                        ),
-                        // No need for a "View all" option if only images are displayed
-                      ],
+                          Text(
+                            "we are affliated with",
+                            style: GoogleFonts.raleway(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 8,
@@ -448,7 +456,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(height: 8),
               Text(
                 label,
-                style: GoogleFonts.openSans(
+                style: GoogleFonts.raleway(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   color: CustomColors.smokyBlackColor,
@@ -499,7 +507,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 8),
             Text(
               "  ${apartment.text}",
-              style: GoogleFonts.openSans(
+              style: GoogleFonts.raleway(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -507,7 +515,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 4),
             Text(
               "   ${apartment.address}",
-              style: GoogleFonts.openSans(
+              style: GoogleFonts.raleway(
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
                 color: Colors.grey[600],
@@ -516,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 4),
             Text(
               "   \$${apartment.price} / night",
-              style: GoogleFonts.openSans(
+              style: GoogleFonts.raleway(
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
                 color: CustomColors.primaryColor,
@@ -581,7 +589,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(width: 4),
                         Text(
                           vehicle.fuelType,
-                          style: GoogleFonts.openSans(
+                          style: GoogleFonts.raleway(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
                             color: Colors.white,
@@ -596,7 +604,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 8),
             Text(
               "  ${vehicle.make}",
-              style: GoogleFonts.openSans(
+              style: GoogleFonts.raleway(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -611,7 +619,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(width: 4),
                 Text(
                   vehicle.country,
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.raleway(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -622,7 +630,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 4),
             Text(
               "  \$${vehicle.price} / day",
-              style: GoogleFonts.openSans(
+              style: GoogleFonts.raleway(
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
                 color: CustomColors.primaryColor,
