@@ -1,5 +1,6 @@
 import "package:abisiniya/bottom_navigation.dart";
 import "package:abisiniya/home_screen.dart";
+import "package:abisiniya/screens/about/about.dart";
 import "package:abisiniya/screens/apartments/add_apartment.dart";
 import "package:abisiniya/screens/apartments/apartments.dart";
 import "package:abisiniya/screens/dashboard/dashboard_screen.dart";
@@ -41,7 +42,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => const BottomNav(),
       );
-
+    case AboutScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AboutScreen(),
+      );
     case OtpVerificationScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,

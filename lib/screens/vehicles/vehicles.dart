@@ -21,6 +21,8 @@ class _VehicleScreenState extends State<VehicleScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   TextEditingController keywordController = TextEditingController();
+  TextEditingController searchControllerCar = TextEditingController();
+
   List<Vehicle> vehicleList = [];
   List<Bus> busList = [];
   VehicleServices vehicleServices = VehicleServices();
@@ -30,12 +32,14 @@ class _VehicleScreenState extends State<VehicleScreen>
     super.initState();
     fetchBuses();
     fetchVehicles();
+
     _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
     keywordController.dispose();
+    searchControllerCar.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -43,6 +47,7 @@ class _VehicleScreenState extends State<VehicleScreen>
   Future<void> fetchVehicles() async {
     List<Vehicle> fetchedVehicles =
         await vehicleServices.getAllVehicles(context);
+
     setState(() {
       vehicleList = fetchedVehicles;
     });
@@ -53,6 +58,20 @@ class _VehicleScreenState extends State<VehicleScreen>
     setState(() {
       busList = fetchedBus;
     });
+  }
+
+  void onSearchCar() async {
+    // Add your search logic here
+    String search = searchControllerCar.text;
+    if (search.isNotEmpty) {
+      List<Vehicle> searchedVehicles =
+          await vehicleServices.searchCar(context, search);
+      setState(() {
+        vehicleList = searchedVehicles;
+      });
+    } else {
+      fetchVehicles();
+    }
   }
 
   @override
@@ -148,20 +167,24 @@ class _VehicleScreenState extends State<VehicleScreen>
           // search bar
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 12),
-            child: SearchBar(
-              controller: keywordController,
-              backgroundColor: WidgetStatePropertyAll(
-                Colors.white,
-              ),
-              trailing: [
-                Icon(
-                  Icons.search,
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: searchControllerCar,
+                    decoration: InputDecoration(
+                      hintText: 'Search cars...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
                 ),
-                SizedBox(
-                  width: 12,
-                )
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: onSearchCar,
+                ),
               ],
-              hintText: "Search car...",
             ),
           ),
           SizedBox(
@@ -181,7 +204,7 @@ class _VehicleScreenState extends State<VehicleScreen>
   }
 
   Widget _BusScreen() {
-    if (vehicleList.isEmpty) {
+    if (busList.isEmpty) {
       return Center(
         child: Image.asset(
           'assets/loading.gif',
@@ -229,25 +252,6 @@ class _VehicleScreenState extends State<VehicleScreen>
                   ),
                 ),
               ],
-            ),
-          ),
-          // search bar
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: SearchBar(
-              controller: keywordController,
-              backgroundColor: WidgetStatePropertyAll(
-                Colors.white,
-              ),
-              trailing: [
-                Icon(
-                  Icons.search,
-                ),
-                SizedBox(
-                  width: 12,
-                )
-              ],
-              hintText: "Search car...",
             ),
           ),
           SizedBox(

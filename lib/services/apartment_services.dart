@@ -222,4 +222,53 @@ class ApartmentServices {
       showSnackBar(context, errorMessage);
     }
   }
+
+  Future<List<Apartment>> searchApartment(
+      BuildContext context, String search) async {
+    try {
+      List<Apartment> fetchedApartments = [];
+      final res = await http.post(
+        Uri.parse(
+            "https://staging.abisiniya.com/api/v1/common/search?type=apartment&keyword=$search"),
+      );
+
+      httpErrorHandle(
+        response: res,
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+        onSuccess: () {
+          var data = jsonDecode(jsonEncode(jsonDecode(res.body)['data']));
+
+          for (var i = 0; i < data.length; i++) {
+            var pictures = jsonDecode(
+                jsonEncode(jsonDecode(res.body)['data'][i]['pictures']));
+
+            List<String> imageUrls = [];
+
+            for (var picture in pictures) {
+              imageUrls.add(picture['imageUrl']);
+            }
+
+            Apartment apartment = Apartment(
+              images: imageUrls,
+              text: data[i]['city'],
+              address: data[i]['address'],
+              location: data[i]['country'],
+              guest: data[i]['guest'],
+              bathroom: data[i]['bathroom'],
+              bedroom: data[i]['bedroom'],
+              price: data[i]['price'],
+            );
+            fetchedApartments.add(apartment);
+          }
+        },
+      );
+      return fetchedApartments;
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+    return [];
+  }
 }

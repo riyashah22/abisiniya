@@ -1,4 +1,5 @@
 import 'package:abisiniya/provider/user.dart';
+import 'package:abisiniya/screens/about/about.dart';
 import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
 import 'package:abisiniya/screens/vehicles/detail_vehicle_screen.dart';
 import 'package:abisiniya/services/apartment_services.dart';
@@ -256,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           _buildServicesCard(
                               "Flights",
                               "assets/airplane-ticket.png",
-                              FlightScreen.routeName),
+                              AboutScreen.routeName),
                           _buildServicesCard("Cars", "assets/car.png",
                               VehicleScreen.routeName),
                           _buildServicesCard(
@@ -458,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 label,
                 style: GoogleFonts.raleway(
                   fontWeight: FontWeight.w600,
-                  fontSize: 14,
+                  fontSize: label == 'Airport Shuttles' ? 11 : 14,
                   color: CustomColors.smokyBlackColor,
                 ),
               ),

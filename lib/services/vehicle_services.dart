@@ -332,4 +332,51 @@ class VehicleServices {
       showSnackBar(context, errorMessage);
     }
   }
+
+  Future<List<Vehicle>> searchCar(BuildContext context, String search) async {
+    try {
+      List<Vehicle> fetchedVehicles = [];
+      final res = await http.post(
+        Uri.parse(
+            "https://staging.abisiniya.com/api/v1/common/search?type=vehicle&keyword=$search"),
+      );
+
+      httpErrorHandle(
+        response: res,
+        onError: (errorMessage) {
+          showSnackBar(context, errorMessage);
+        },
+        onSuccess: () {
+          var data = jsonDecode(jsonEncode(jsonDecode(res.body)['data']));
+          // print(jsonDecode(res.body)['data'][0]['model']);
+          for (var i = 0; i < data.length; i++) {
+            Vehicle vehicle = Vehicle(
+              name: jsonDecode(res.body)['data'][i]['name'].toString(),
+              address: jsonDecode(res.body)['data'][i]['address'],
+              city: jsonDecode(res.body)['data'][i]['city'],
+              country: jsonDecode(res.body)['data'][i]['country'],
+              make: jsonDecode(res.body)['data'][i]['make'],
+              model: jsonDecode(res.body)['data'][i]['model'],
+              year: jsonDecode(res.body)['data'][i]['year'],
+              engineSize: jsonDecode(res.body)['data'][i]['engine_size'],
+              fuelType: jsonDecode(res.body)['data'][i]['fuel_type'],
+              weight: jsonDecode(res.body)['data'][i]['weight'],
+              color: jsonDecode(res.body)['data'][i]['color'],
+              transmission: jsonDecode(res.body)['data'][i]['transmission'],
+              price: jsonDecode(res.body)['data'][i]['price'],
+              status: jsonDecode(res.body)['data'][i]['status'],
+              images: jsonDecode(res.body)['data'][i]['pictures'][0]
+                  ['imageUrl'],
+            );
+            fetchedVehicles.add(vehicle);
+          }
+        },
+      );
+      return fetchedVehicles;
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+    return [];
+  }
 }

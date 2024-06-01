@@ -20,12 +20,24 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
   List<Apartment> apartments = [];
   ApartmentServices apartmentServices = ApartmentServices();
   AuthServices authServices = AuthServices();
+  TextEditingController searchController = TextEditingController();
+  bool isLoading = true;
 
   Future<void> fetchApartments() async {
-    List<Apartment> fetchedApartments =
-        await apartmentServices.getAllApartments(context);
-
-    apartments = fetchedApartments;
+    try {
+      List<Apartment> fetchedApartments =
+          await apartmentServices.getAllApartments(context);
+      setState(() {
+        apartments = fetchedApartments;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      // Handle error by showing a dialog or a snackbar
+      print('Error fetching apartments: $e');
+    }
   }
 
   void logoutAction(BuildContext context, String token) {
@@ -34,8 +46,25 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
 
   @override
   void initState() {
-    fetchApartments();
     super.initState();
+    fetchApartments();
+  }
+
+  void onSearch() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    List<Apartment> searchedApartments =
+        await apartmentServices.searchApartment(
+      context,
+      searchController.text,
+    );
+
+    setState(() {
+      apartments = searchedApartments;
+      isLoading = false;
+    });
   }
 
   @override
@@ -50,7 +79,6 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             UserInfo(),
-
             const SizedBox(
               height: 18,
             ),
@@ -65,37 +93,47 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
             const SizedBox(
               height: 18,
             ),
+            // Search bar with button
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Search apartments...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: onSearch,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 18,
+            ),
             // Display list of apartments
             Expanded(
-              child: Container(
-                // height: MediaQuery.of(context).size.height * 0.48,
-                margin: const EdgeInsets.symmetric(horizontal: 8),
-                child: FutureBuilder(
-                  future: fetchApartments(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: Image.asset(
-                          'assets/loading.gif',
-                          width: 100,
-                          height: 100,
+              child: isLoading
+                  ? Center(
+                      child: Image.asset(
+                        'assets/loading.gif',
+                        width: 100,
+                        height: 100,
+                      ),
+                    )
+                  : apartments.isEmpty
+                      ? Center(child: Text('No apartments found'))
+                      : ListView.builder(
+                          itemCount: apartments.length,
+                          itemBuilder: (context, index) {
+                            return ApartmentItem(apartment: apartments[index]);
+                          },
                         ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        // physics: NeverScrollableScrollPhysics(),
-                        itemCount: apartments.length,
-                        itemBuilder: (context, index) {
-                          return ApartmentItem(apartment: apartments[index]);
-                        },
-                      );
-                    }
-                  },
-                ),
-              ),
             ),
           ],
         ),
