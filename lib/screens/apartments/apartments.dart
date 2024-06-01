@@ -41,6 +41,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppbarSecondaryScreen(context, "Apartments"),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
