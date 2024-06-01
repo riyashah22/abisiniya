@@ -2,6 +2,7 @@ import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/flight_services.dart';
+import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -112,6 +113,7 @@ class _FlightScreenState extends State<FlightScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppbarSecondaryScreen(context, 'Flights'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Container(

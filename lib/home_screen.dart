@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (user.name != "")
             ElevatedButton.icon(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(
                   CustomColors.lightPrimaryColor,
                 ),
               ),
@@ -257,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           _buildServicesCard(
                               "Flights",
                               "assets/airplane-ticket.png",
-                              AboutScreen.routeName),
+                              FlightScreen.routeName),
                           _buildServicesCard("Cars", "assets/car.png",
                               VehicleScreen.routeName),
                           _buildServicesCard(
