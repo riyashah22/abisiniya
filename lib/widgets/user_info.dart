@@ -1,6 +1,5 @@
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/dashboard/dashboard_screen.dart';
-import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
