@@ -187,7 +187,13 @@ class _HomeScreenState extends State<HomeScreen> {
         future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: Image.asset(
+                'assets/loading.gif',
+                width: 100,
+                height: 100,
+              ),
+            );
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData) {
@@ -441,7 +447,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 8),
           Text(
-            apartment.text,
+            "  ${apartment.text}",
             style: GoogleFonts.openSans(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -449,7 +455,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 4),
           Text(
-            apartment.address,
+            "   ${apartment.address}",
             style: GoogleFonts.openSans(
               fontWeight: FontWeight.w600,
               fontSize: 12,
@@ -458,7 +464,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 4),
           Text(
-            "\$${apartment.price} / night",
+            "   \$${apartment.price} / night",
             style: GoogleFonts.openSans(
               fontWeight: FontWeight.w600,
               fontSize: 14,
@@ -529,7 +535,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 8),
           Text(
-            vehicle.make,
+            "  ${vehicle.make}",
             style: GoogleFonts.openSans(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -538,6 +544,9 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: 4),
           Row(
             children: [
+              SizedBox(
+                width: 6,
+              ),
               Icon(Icons.location_city, size: 14, color: Colors.grey[600]),
               SizedBox(width: 4),
               Text(
@@ -552,7 +561,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 4),
           Text(
-            "\$${vehicle.price} / day",
+            "  \$${vehicle.price} / day",
             style: GoogleFonts.openSans(
               fontWeight: FontWeight.w600,
               fontSize: 14,
