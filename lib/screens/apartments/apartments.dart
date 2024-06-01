@@ -47,22 +47,23 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             UserInfo(),
 
             const SizedBox(
               height: 18,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-              child: Text(
-                "Most Frequent Properties",
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFF3E6837), // Primary color
-                    ),
-              ),
+            Text(
+              " Elite Residences",
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF3E6837), // Primary color
+                  ),
+            ),
+            const SizedBox(
+              height: 18,
             ),
             // Display list of apartments
             Expanded(
