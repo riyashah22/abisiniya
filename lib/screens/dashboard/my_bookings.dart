@@ -54,71 +54,77 @@ class _MyBookingsState extends State<MyBookings> {
 
   Widget CardItem({required dynamic booking}) {
     return Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.black),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.black),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      padding: EdgeInsets.all(2),
+      margin: EdgeInsets.only(bottom: 10),
+      child: Card(
+        color: CustomColors.lightPrimaryColor,
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-        padding: EdgeInsets.all(2),
-        margin: EdgeInsets.only(bottom: 10),
-        child: Card(
-            color: CustomColors.lightPrimaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            elevation: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Type: ${booking["type"]}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      RichTextCustom("Reference", booking["reference"])
-                    ],
+                  Text(
+                    'Type: ${booking["type"]}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichTextCustom("CheckIn", booking['checkIn']),
-                        RichTextCustom(
-                          "CheckOut",
-                          booking['checkOut'],
-                        ),
-                      ]),
-                  SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RichTextCustom(
-                        "Pyment Status",
-                        booking['paymentStatus'],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RichTextCustom(
-                          "Booking Date", "${booking['date'].split(" ")[0]}"),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(BookingDetails.routeName);
-                        },
-                        child: Text('View'),
-                      ),
-                    ],
+                  RichTextCustom("Reference", booking["reference"])
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichTextCustom("CheckIn", booking['checkIn']),
+                  RichTextCustom(
+                    "CheckOut",
+                    booking['checkOut'],
                   ),
                 ],
               ),
-            )));
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RichTextCustom(
+                    "Payment Status",
+                    booking['paymentStatus'],
+                  )
+                ],
+              ),
+              SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichTextCustom(
+                      "Booking Date", "${booking['date'].split(" ")[0]}"),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        BookingDetails.routeName,
+                        arguments: booking['id'],
+                      );
+                      print(booking['id']);
+                    },
+                    child: Text('View'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget RichTextCustom(String label, String value) {

@@ -151,12 +151,13 @@ class AuthServices {
     return null;
   }
 
-  Future<List<dynamic>?> userDetailBookings(BuildContext context) async {
+  Future<List<dynamic>?> userDetailBookings(
+      BuildContext context, String id) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.get(
         Uri.parse(
-            "https://staging.abisiniya.com/api/v1/booking/apartment/mybookingdetail/258"),
+            "https://staging.abisiniya.com/api/v1/booking/apartment/mybookingdetail/$id"),
         headers: {
           'Authorization': 'Bearer ${user.user.token}',
         },
@@ -165,12 +166,14 @@ class AuthServices {
         // print(jsonDecode(res.body)['data']['booking'][0]['ownerDetail']);
         // print(jsonDecode(res.body)['data']['booking'][0]['customerDetail']
         //     ['Payment Status']);
-        // print(jsonDecode(res.body)['data']['booking'][0]['price']);
+        print(jsonDecode(res.body)['data']['booking'][0]['checkIn']);
         return [
           jsonDecode(res.body)['data']['booking'][0]['ownerDetail'],
           jsonDecode(res.body)['data']['booking'][0]['customerDetail']
               ['Payment Status'],
-          jsonDecode(res.body)['data']['booking'][0]['price']
+          jsonDecode(res.body)['data']['booking'][0]['price'],
+          jsonDecode(res.body)['data']['booking'][0]['checkIn'],
+          jsonDecode(res.body)['data']['booking'][0]['checkOut']
         ];
       } else {
         showSnackBar(context, 'Failed to load apartments');
