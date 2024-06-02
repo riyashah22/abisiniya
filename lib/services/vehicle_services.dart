@@ -27,6 +27,7 @@ class VehicleServices {
           // print(jsonDecode(res.body)['data'][0]['model']);
           for (var i = 0; i < data.length; i++) {
             Vehicle vehicle = Vehicle(
+              id: jsonDecode(res.body)['data'][i]['id'],
               name: jsonDecode(res.body)['data'][i]['name'].toString(),
               address: jsonDecode(res.body)['data'][i]['address'],
               city: jsonDecode(res.body)['data'][i]['city'],

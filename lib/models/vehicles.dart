@@ -1,4 +1,5 @@
 class Vehicle {
+  final int id;
   final String name;
   final String address;
   final String city;
@@ -16,7 +17,8 @@ class Vehicle {
   final String images;
 
   Vehicle(
-      {required this.name,
+      {this.id = 0,
+      required this.name,
       required this.address,
       required this.city,
       required this.country,

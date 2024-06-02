@@ -23,9 +23,9 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
   DateTime? fromDate;
   DateTime? toDate;
 
-  void bookVehicle() async {
+  void bookVehicle(int vehicleId) async {
     vehicleServices.bookVehicle(
-        context, fromDate.toString(), toDate.toString(), 5);
+        context, fromDate.toString(), toDate.toString(), vehicleId);
   }
 
   double calculateTotalAmount(int price) {
@@ -357,7 +357,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
                         },
                       );
                     } else {
-                      bookVehicle();
+                      bookVehicle(vehicle.id);
                       // Show success dialog and reset dates
                       setState(() {
                         fromDate = null;
