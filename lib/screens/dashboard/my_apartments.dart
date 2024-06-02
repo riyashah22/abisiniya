@@ -278,14 +278,14 @@ class _MyApartmentsState extends State<MyApartments> {
                             children: [
                               IconButton(
                                 icon:
-                                    const Icon(Icons.edit, color: Colors.black),
+                                    const Icon(Icons.edit, color: Colors.green),
                                 onPressed: () {
                                   showEditApartmentDialog(apartment);
                                 },
                               ),
                               IconButton(
-                                icon: const Icon(Icons.delete,
-                                    color: Colors.black),
+                                icon:
+                                    const Icon(Icons.delete, color: Colors.red),
                                 onPressed: () {
                                   apartmentServices.deleteApartment(
                                       context, apartment['id']);
