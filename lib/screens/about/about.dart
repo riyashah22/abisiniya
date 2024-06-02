@@ -76,25 +76,7 @@ class _AboutScreenState extends State<AboutScreen> {
             // Reach Us
             _buildCard(
               context,
-              // margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-              // decoration: BoxDecoration(
-              //   color: Colors.white,
-              //   borderRadius: BorderRadius.circular(10),
-              //   border: Border.all(
-              //     color: Theme.of(context).primaryColor,
-              //     width: 2,
-              // ),
-              // boxShadow: [
-              //   BoxShadow(
-              //     color: Colors.grey.withOpacity(0.5),
-              //     spreadRadius: 5,
-              //     blurRadius: 7,
-              //     offset: const Offset(0, 3), // changes position of shadow
-              //   ),
-              // ],
-              // ),
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -142,35 +124,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 ],
               ),
             ),
-            // _buildCard(
-            //   context,
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.stretch,
-            //     children: [
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         children: [
-            //           Icon(
-            //             Icons.contact_support,
-            //             size: 35,
-            //             color: Theme.of(context).primaryColor,
-            //           ),
-            //           const SizedBox(width: 8),
-            //           const Text(
-            //             "Contact Us",
-            //             style: TextStyle(
-            //               fontSize: 22,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //       const SizedBox(height: 8),
-            //       _buildContactForm(context),
-            //       const SizedBox(height: 16),
-            //     ],
-            //   ),
-            // ),
+
             Container(
               margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
               child: ElevatedButton.icon(

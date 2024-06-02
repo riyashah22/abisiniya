@@ -1,7 +1,7 @@
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/about/about.dart';
 import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
-import 'package:abisiniya/screens/vehicles/detail_vehicle_screen.dart';
+import 'package:abisiniya/screens/vehicles/vehicle_detail_screen.dart';
 import 'package:abisiniya/services/apartment_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

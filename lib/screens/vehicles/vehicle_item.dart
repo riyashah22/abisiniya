@@ -1,5 +1,5 @@
 import 'package:abisiniya/models/vehicles.dart';
-import 'package:abisiniya/screens/vehicles/detail_vehicle_screen.dart';
+import 'package:abisiniya/screens/vehicles/vehicle_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class VehicleItem extends StatefulWidget {

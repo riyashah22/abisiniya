@@ -12,7 +12,7 @@ import "package:abisiniya/screens/dashboard/detailBookings.dart";
 import "package:abisiniya/screens/flights/flights.dart";
 import "package:abisiniya/screens/vehicles/add_vehicle.dart";
 import "package:abisiniya/screens/vehicles/bus_detail_screen.dart";
-import "package:abisiniya/screens/vehicles/detail_vehicle_screen.dart";
+import "package:abisiniya/screens/vehicles/vehicle_detail_screen.dart";
 import "package:abisiniya/screens/vehicles/vehicles.dart";
 import "package:flutter/material.dart";
 
