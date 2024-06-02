@@ -337,7 +337,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                 labelData("Year:", year),
                 labelData("Fuel Type:", fuel_type),
                 labelData("Color:", color),
-                labelData("Price:", price),
+                labelData("Price:", "\$${price}"),
               ],
             ),
           ),
