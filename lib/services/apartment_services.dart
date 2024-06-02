@@ -295,6 +295,7 @@ class ApartmentServices {
             "bookable_type": "Apartment",
             "bookable_id": apartment_id.toString(),
           });
+      print(res.body);
 
       httpErrorHandle(
         response: res,

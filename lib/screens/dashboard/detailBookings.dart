@@ -62,6 +62,7 @@ class _BookingDetailsState extends State<BookingDetails> {
       child: Container(
         margin: EdgeInsets.only(top: 40),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             type == 'Apartment'
                 ? OwnerCard(
@@ -74,14 +75,14 @@ class _BookingDetailsState extends State<BookingDetails> {
                     myBookings[0]['phone'] == null
                         ? "Unknown"
                         : myBookings[0]['phone'].toString(),
+                    myBookings[0]['address'],
+                    myBookings[0]['city'],
+                    myBookings[0]['country'],
                   )
                 : SizedBox(),
             SizedBox(height: 40),
             type == 'Apartment'
                 ? ApartmentCard(
-                    myBookings[0]['address'],
-                    myBookings[0]['city'],
-                    myBookings[0]['country'],
                     myBookings[3].toString(),
                     myBookings[4].toString(),
                   )
@@ -110,7 +111,14 @@ class _BookingDetailsState extends State<BookingDetails> {
     );
   }
 
-  Widget OwnerCard(String name, String email, String phone) {
+  Widget OwnerCard(
+    String name,
+    String email,
+    String phone,
+    String address,
+    String city,
+    String country,
+  ) {
     return Center(
       child: Stack(
         clipBehavior: Clip.none,
@@ -134,7 +142,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                   ),
                 ),
                 SizedBox(height: 8),
-                labelData("Name", name),
+                labelData("Name:", name),
                 Row(
                   children: [
                     Text(
@@ -154,7 +162,28 @@ class _BookingDetailsState extends State<BookingDetails> {
                     ),
                   ],
                 ),
-                labelData('phone', phone.toString()),
+                labelData('Phone:', phone.toString()),
+                Row(
+                  children: [
+                    Text(
+                      'Address:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        address,
+                        style: TextStyle(
+                            fontSize: 16, overflow: TextOverflow.visible),
+                      ),
+                    ),
+                  ],
+                ),
+                labelData('City:', city),
+                labelData('Country:', country),
               ],
             ),
           ),
@@ -185,9 +214,6 @@ class _BookingDetailsState extends State<BookingDetails> {
   }
 
   Widget ApartmentCard(
-    String address,
-    String city,
-    String country,
     String checkIn,
     String checkOut,
   ) {
@@ -214,29 +240,9 @@ class _BookingDetailsState extends State<BookingDetails> {
                   ),
                 ),
                 SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      'Address:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        address,
-                        style: TextStyle(
-                            fontSize: 16, overflow: TextOverflow.visible),
-                      ),
-                    ),
-                  ],
-                ),
-                labelData('City', city),
-                labelData('Country', country),
-                labelData("CheckIn", checkIn),
-                labelData("CheckOut", checkOut),
+
+                labelData("CheckIn:", checkIn),
+                labelData("CheckOut:", checkOut),
               ],
             ),
           ),
