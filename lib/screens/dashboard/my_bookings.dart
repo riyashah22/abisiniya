@@ -92,7 +92,7 @@ class _MyBookingsState extends State<MyBookings> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -112,7 +112,10 @@ class _MyBookingsState extends State<MyBookings> {
                     onPressed: () {
                       Navigator.of(context).pushNamed(
                         BookingDetails.routeName,
-                        arguments: booking['id'],
+                        arguments: {
+                          'id': booking['id'],
+                          'type': booking['type']
+                        },
                       );
                       print(booking['id']);
                     },

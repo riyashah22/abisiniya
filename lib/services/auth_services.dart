@@ -162,11 +162,12 @@ class AuthServices {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
+
       if (res.statusCode == 200) {
         // print(jsonDecode(res.body)['data']['booking'][0]['ownerDetail']);
         // print(jsonDecode(res.body)['data']['booking'][0]['customerDetail']
         //     ['Payment Status']);
-        print(jsonDecode(res.body)['data']['booking'][0]['checkIn']);
+        print(jsonDecode(res.body)['data']['booking'][0]);
         return [
           jsonDecode(res.body)['data']['booking'][0]['ownerDetail'],
           jsonDecode(res.body)['data']['booking'][0]['customerDetail']
