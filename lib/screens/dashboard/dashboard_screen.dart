@@ -38,6 +38,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: CustomAppbarSecondaryScreen(context, "Dashboard"),
         body: SingleChildScrollView(
           child: Padding(

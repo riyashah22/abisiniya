@@ -1,5 +1,6 @@
 import 'package:abisiniya/screens/apartments/add_apartment.dart';
 import 'package:abisiniya/services/apartment_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class MyApartments extends StatefulWidget {
@@ -42,6 +43,7 @@ class _MyApartmentsState extends State<MyApartments> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
+              backgroundColor: Colors.white,
               title: const Text('Edit Apartment'),
               content: SingleChildScrollView(
                 child: Container(
@@ -84,21 +86,21 @@ class _MyApartmentsState extends State<MyApartments> {
                         decoration: const InputDecoration(labelText: 'Price'),
                         keyboardType: TextInputType.number,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             "Status",
                             style: TextStyle(fontSize: 14),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           DropdownButton(
                             value: selectedStatus,
-                            items: [
+                            items: const [
                               DropdownMenuItem(
                                 child: Text("Pending"),
                                 value: "Pending",
@@ -154,6 +156,7 @@ class _MyApartmentsState extends State<MyApartments> {
 
   ApartmentServices apartmentServices = ApartmentServices();
   List<dynamic> myApartments = [];
+
   Future<void> fetchUserApartments() async {
     final apartments = await apartmentServices.usersApartment(context);
     if (apartments != null) {
@@ -189,50 +192,111 @@ class _MyApartmentsState extends State<MyApartments> {
         const SizedBox(height: 10),
         Container(
           height: MediaQuery.of(context).size.height * 0.7,
-          child: ListView.builder(
-            shrinkWrap: true,
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 15,
+              childAspectRatio: 0.58,
+            ),
             itemCount: myApartments.length,
             itemBuilder: (context, index) {
               var apartment = myApartments[index];
-              // print(apartment);
               return Card(
+                color: CustomColors.lightPrimaryColor,
                 margin: const EdgeInsets.symmetric(vertical: 10),
-                child: ListTile(
-                  leading: apartment['pictures'].isNotEmpty
-                      ? Image.network(apartment['pictures'][0]['imageUrl'],
-                          width: 50, height: 50, fit: BoxFit.cover)
-                      : const Icon(Icons.image, size: 50),
-                  title: Text(apartment['name']),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Address: ${apartment['address']}'),
-                      Text('City: ${apartment['city']}'),
-                      Text('Country: ${apartment['country']}'),
-                      Text('Guest: ${apartment['guest']}'),
-                      Text('Bedrooms: ${apartment['bedroom']}'),
-                      Text('Bathrooms: ${apartment['bathroom']}'),
-                      Text('Price: \$${apartment['price']}'),
-                    ],
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.edit),
-                        onPressed: () {
-                          showEditApartmentDialog(apartment);
-                        },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    apartment['pictures'].isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            child: Image.network(
+                              apartment['pictures'][0]['imageUrl'],
+                              width: double.infinity,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : const Icon(Icons.image, size: 120),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            apartment['name'],
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          Text(
+                            '${apartment['address']}, ${apartment['city']}, ${apartment['country']}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(Icons.bed, size: 16, color: Colors.black),
+                              const SizedBox(width: 5),
+                              Text('${apartment['bedroom']}',
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black)),
+                              const SizedBox(width: 10),
+                              Icon(Icons.bathtub,
+                                  size: 16, color: Colors.black),
+                              const SizedBox(width: 5),
+                              Text('${apartment['bathroom']}',
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black)),
+                              const SizedBox(width: 10),
+                              Icon(Icons.person_2,
+                                  size: 16, color: Colors.black),
+                              const SizedBox(width: 5),
+                              Text('${apartment['guest']} ',
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black)),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            '\$${apartment['price']}/night',
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.black),
+                                onPressed: () {
+                                  showEditApartmentDialog(apartment);
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete,
+                                    color: Colors.black),
+                                onPressed: () {
+                                  apartmentServices.deleteApartment(
+                                      context, apartment['id']);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          apartmentServices.deleteApartment(
-                              context, apartment['id']);
-                        },
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },

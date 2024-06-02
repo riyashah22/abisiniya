@@ -320,7 +320,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 200,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: apartments.length,
+                        itemCount:
+                            apartments.length > 10 ? 10 : apartments.length,
                         itemBuilder: (context, index) {
                           return _buildApartmentCard(
                               context, apartments[index]);
