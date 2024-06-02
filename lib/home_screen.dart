@@ -13,6 +13,7 @@ import 'package:abisiniya/screens/flights/flights.dart';
 import 'package:abisiniya/screens/vehicles/vehicles.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/services/vehicle_services.dart';
@@ -407,10 +408,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 8,
                     ),
                     Container(
-                      height: 120,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: airlineImages.length,
+                      height: 260,
+                      child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3, // Single row for horizontal scroll
+                          childAspectRatio: 1, // Adjust aspect ratio as needed
+                        ),
+                        itemCount: 6,
                         itemBuilder: (context, index) {
                           return _buildAirlineCard(airlineImages[index]);
                         },
@@ -426,7 +431,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         icon: Icon(
-                          Icons.warehouse_rounded,
+                          LineIcons.infoCircle,
                           color: CustomColors.lightPrimaryColor,
                         ),
                         onPressed: () {
@@ -673,13 +678,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildAirlineCard(String imagePath) {
     return Container(
       width: 120,
-      margin: EdgeInsets.only(right: 16),
+      margin: EdgeInsets.only(right: 16, bottom: 8),
       decoration: BoxDecoration(
-        border: Border.all(color: CustomColors.primaryColor, width: 2),
+        border: Border.all(color: CustomColors.primaryColor, width: 1),
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
           image: AssetImage(imagePath),
-          fit: BoxFit.fill,
+          fit: BoxFit.contain,
         ),
       ),
     );
