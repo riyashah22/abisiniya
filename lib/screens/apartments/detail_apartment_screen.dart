@@ -1,9 +1,10 @@
 import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
-import 'package:abisiniya/screens/apartments/apartments.dart';
 import 'package:abisiniya/services/apartment_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class DetailApartmentScreen extends StatefulWidget {
@@ -20,9 +21,10 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
   DateTime? fromDate;
   DateTime? toDate;
 
-  void bookApartment() {
-    apartmentServices.bookApartment(
-        context, fromDate.toString(), toDate.toString(), 45);
+  void bookApartment(int apartmentId) {
+    print("vansh132" + apartmentId.toString());
+    // apartmentServices.bookApartment(
+    //     context, fromDate.toString(), toDate.toString(), apartmentId);
   }
 
   double calculateTotalAmount(int price) {
@@ -42,6 +44,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
     final user = Provider.of<UserProvider>(context, listen: false);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: const Color(0xff3e6837),
@@ -107,22 +110,23 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 children: [
                   Expanded(
                     child: Card(
+                      color: CustomColors.lightPrimaryColor,
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Center(
+                            Center(
                               child: Text(
                                 'Specs and Utilities',
-                                style: TextStyle(
+                                style: GoogleFonts.roboto(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 28),
+                            const SizedBox(height: 24),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,16 +198,17 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: Card(
+                      color: CustomColors.lightPrimaryColor,
                       margin: const EdgeInsets.symmetric(horizontal: 16),
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Center(
+                            Center(
                               child: Text(
                                 'Location',
-                                style: TextStyle(
+                                style: GoogleFonts.roboto(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
                                 ),
@@ -259,17 +264,18 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
 
               // Booking Details Form
               Card(
+                color: CustomColors.lightPrimaryColor,
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Booking Details',
-                        style: TextStyle(
+                        style: GoogleFonts.roboto(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 22,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -378,9 +384,9 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                       Center(
                         child: Text(
                           'Total Amount: \$${calculateTotalAmount(apartment.price)}',
-                          style: const TextStyle(
+                          style: GoogleFonts.roboto(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 22,
                           ),
                         ),
                       ),
@@ -409,9 +415,9 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                 ),
               ),
               ElevatedButton(
-                style: const ButtonStyle(
+                style: ButtonStyle(
                     backgroundColor:
-                        MaterialStatePropertyAll(Color(0xFF3E6837))),
+                        WidgetStatePropertyAll(CustomColors.primaryColor)),
                 onPressed: () {
                   double totalAmount = calculateTotalAmount(apartment.price);
                   if (totalAmount <= 0) {
@@ -456,7 +462,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                         },
                       );
                     } else {
-                      bookApartment();
+                      bookApartment(apartment.id);
                       setState(() {
                         fromDate = null;
                         toDate = null;

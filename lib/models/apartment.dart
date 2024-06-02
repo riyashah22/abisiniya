@@ -1,4 +1,5 @@
 class Apartment {
+  final int id;
   final List<String> images;
   final String text;
   final String address;
@@ -9,6 +10,7 @@ class Apartment {
   final int price;
 
   Apartment({
+    this.id = 0,
     required this.images,
     required this.text,
     required this.address,

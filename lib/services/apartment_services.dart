@@ -32,6 +32,7 @@ class ApartmentServices {
             }
 
             Apartment apartment = Apartment(
+              id: data[i]['id'],
               images: imageUrls,
               text: data[i]['city'],
               address: data[i]['address'],
