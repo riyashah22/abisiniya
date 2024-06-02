@@ -3,12 +3,19 @@ import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
   static const String routeName = 'about-screen';
 
+  @override
+  State<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,18 +28,16 @@ class AboutScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 20),
               alignment: Alignment.center,
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/logo.png',
-                  width: 400, // Adjust the width as needed
-                  height: 160, // Adjust the height as needed
-                  fit: BoxFit.fill,
-                ),
+              child: Image.asset(
+                'assets/logo.png',
+                width: double.infinity, // Adjust the width as needed
+                height: 160, // Adjust the height as needed
+                fit: BoxFit.contain,
               ),
             ),
+            // About us
             _buildCard(
               context,
-              // color: CustomColors.primaryColor.withOpacity(0.4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -42,71 +47,76 @@ class AboutScreen extends StatelessWidget {
                       Icon(
                         Icons.announcement_rounded,
                         size: 30,
-                        color: Theme.of(context).primaryColor,
+                        color: CustomColors.primaryColor,
                       ),
                       const SizedBox(width: 8),
-                      const Text(
+                      Text(
                         "About Us",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
+                          color: CustomColors.smokyBlackColor,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 14),
-                  const Text(
+                  Text(
                     "We pride ourselves on our outstanding customer service. Let us take you across the world in easier and affordable ways.",
                     textAlign: TextAlign.justify,
-                    style: TextStyle(fontSize: 18),
+                    style: GoogleFonts.raleway(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: CustomColors.smokyBlackColor,
+                    ),
                   ),
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: Theme.of(context).primaryColor,
-                  width: 2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
+            // Reach Us
+            _buildCard(
+              context,
+              // margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              // decoration: BoxDecoration(
+              //   color: Colors.white,
+              //   borderRadius: BorderRadius.circular(10),
+              //   border: Border.all(
+              //     color: Theme.of(context).primaryColor,
+              //     width: 2,
+              // ),
+              // boxShadow: [
+              //   BoxShadow(
+              //     color: Colors.grey.withOpacity(0.5),
+              //     spreadRadius: 5,
+              //     blurRadius: 7,
+              //     offset: const Offset(0, 3), // changes position of shadow
+              //   ),
+              // ],
+              // ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.place,
-                          size: 30,
-                          color: Theme.of(context).primaryColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.place,
+                        size: 30,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "Reach Us",
+                        style: GoogleFonts.poppins(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: CustomColors.smokyBlackColor,
                         ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          "Reach Us",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: _buildLocationCard(
                       context,
                       "Zimbabwe",
@@ -118,7 +128,7 @@ class AboutScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: _buildLocationCard(
                       context,
                       "South Africa",
@@ -163,7 +173,8 @@ class AboutScreen extends StatelessWidget {
             // ),
             Container(
               margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
+                icon: Icon(LineIcons.arrowCircleRight),
                 style: ElevatedButton.styleFrom(
                     side:
                         BorderSide(width: 2, color: CustomColors.primaryColor)),
@@ -171,9 +182,13 @@ class AboutScreen extends StatelessWidget {
                   _launchInBrowser(
                       Uri.parse("https://www.abisiniya.com/privacy"));
                 },
-                child: const Text(
+                label: Text(
                   "Privacy Policy",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.2,
+                  ),
                 ),
               ),
             ),
@@ -187,7 +202,7 @@ class AboutScreen extends StatelessWidget {
       {required Widget child, Color? color}) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       decoration: BoxDecoration(
         color: color ?? CustomColors.lightPrimaryColor,
         borderRadius: BorderRadius.circular(10),
@@ -222,11 +237,12 @@ class AboutScreen extends StatelessWidget {
   ) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(width: 2, color: CustomColors.primaryColor)),
+        borderRadius: BorderRadius.circular(20),
+        // border: Border.all(width: 2, color: CustomColors.primaryColor),
+      ),
       child: Card(
-        color: Colors.white.withOpacity(0.7),
-        elevation: 2,
+        color: Colors.white,
+        elevation: 5,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -234,11 +250,12 @@ class AboutScreen extends StatelessWidget {
             children: [
               Text(
                 location,
-                style: const TextStyle(
+                style: GoogleFonts.roboto(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              Divider(),
               const SizedBox(height: 8),
               _buildInfoRow(
                 context,
@@ -275,6 +292,8 @@ class AboutScreen extends StatelessWidget {
     );
   }
 
+  bool _isTapped = false;
+
   Widget _buildInfoRow(BuildContext context, IconData icon, String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
@@ -287,7 +306,11 @@ class AboutScreen extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(fontSize: 17),
+              style: GoogleFonts.raleway(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: CustomColors.smokyBlackColor,
+              ),
             ),
           ),
         ],
@@ -297,23 +320,57 @@ class AboutScreen extends StatelessWidget {
 
   Widget _buildClickableText(
       BuildContext context, String label, String text, String url) {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        text: label,
-        style: const TextStyle(
-            fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold),
+    return Container(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TextSpan(
-            text: text,
+          Text(
+            label,
             style: TextStyle(
-                fontSize: 17,
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.bold),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                _launchURL(url);
-              },
+              fontSize: 17,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          GestureDetector(
+            onTapDown: (_) {
+              setState(() {
+                _isTapped = true;
+              });
+            },
+            onTapUp: (_) {
+              setState(() {
+                _isTapped = false;
+              });
+              _launchURL(url);
+            },
+            onTapCancel: () {
+              setState(() {
+                _isTapped = false;
+              });
+            },
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              color:
+                  _isTapped ? Colors.grey.withOpacity(0.2) : Colors.transparent,
+              child: Text.rich(
+                TextSpan(
+                  text: url,
+                  style: TextStyle(
+                    color: CustomColors.primaryColor,
+                    fontSize: 17,
+                    decoration: TextDecoration.underline,
+                    decorationColor: CustomColors.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      _launchURL(url);
+                    },
+                ),
+              ),
+            ),
           ),
         ],
       ),
