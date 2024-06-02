@@ -2,6 +2,7 @@ import 'package:abisiniya/screens/apartments/add_apartment.dart';
 import 'package:abisiniya/services/apartment_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyApartments extends StatefulWidget {
   const MyApartments({super.key});
@@ -173,11 +174,12 @@ class _MyApartmentsState extends State<MyApartments> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'My Apartments',
-              style: TextStyle(
-                fontSize: 20,
+              style: GoogleFonts.raleway(
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
+                color: CustomColors.smokyBlackColor,
               ),
             ),
             ElevatedButton(
@@ -185,7 +187,14 @@ class _MyApartmentsState extends State<MyApartments> {
                 Navigator.of(context)
                     .pushReplacementNamed(AddApartmentForm.routeName);
               },
-              child: const Text('Add Apartment'),
+              child: Text(
+                'Add Apartment',
+                style: GoogleFonts.raleway(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: CustomColors.smokyBlackColor,
+                ),
+              ),
             ),
           ],
         ),
@@ -196,8 +205,8 @@ class _MyApartmentsState extends State<MyApartments> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 10,
-              mainAxisSpacing: 15,
-              childAspectRatio: 0.58,
+              mainAxisSpacing: 0,
+              childAspectRatio: 0.62,
             ),
             itemCount: myApartments.length,
             itemBuilder: (context, index) {
@@ -205,95 +214,131 @@ class _MyApartmentsState extends State<MyApartments> {
               return Card(
                 color: CustomColors.lightPrimaryColor,
                 margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    apartment['pictures'].isNotEmpty
-                        ? ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                            child: Image.network(
-                              apartment['pictures'][0]['imageUrl'],
-                              width: double.infinity,
-                              height: 120,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : const Icon(Icons.image, size: 120),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            apartment['name'],
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          Text(
-                            '${apartment['address']}, ${apartment['city']}, ${apartment['country']}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.black54,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        apartment['pictures'].isNotEmpty
+                            ? ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                                child: Image.network(
+                                  apartment['pictures'][0]['imageUrl'],
+                                  width: double.infinity,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : const Icon(Icons.image, size: 120),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.bed, size: 16, color: Colors.black),
-                              const SizedBox(width: 5),
-                              Text('${apartment['bedroom']}',
-                                  style: const TextStyle(
-                                      fontSize: 14, color: Colors.black)),
-                              const SizedBox(width: 10),
-                              Icon(Icons.bathtub,
-                                  size: 16, color: Colors.black),
-                              const SizedBox(width: 5),
-                              Text('${apartment['bathroom']}',
-                                  style: const TextStyle(
-                                      fontSize: 14, color: Colors.black)),
-                              const SizedBox(width: 10),
-                              Icon(Icons.person_2,
-                                  size: 16, color: Colors.black),
-                              const SizedBox(width: 5),
-                              Text('${apartment['guest']} ',
-                                  style: const TextStyle(
-                                      fontSize: 14, color: Colors.black)),
+                              Text(
+                                apartment['name'],
+                                style: GoogleFonts.raleway(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: CustomColors.smokyBlackColor,
+                                ),
+                              ),
+                              Text(
+                                '${apartment['address']}, ${apartment['city']}, ${apartment['country']}',
+                                style: GoogleFonts.raleway(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(Icons.bed,
+                                      size: 16, color: Colors.black),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    '${apartment['bedroom']}',
+                                    style: GoogleFonts.raleway(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColors.smokyBlackColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Icon(Icons.bathtub,
+                                      size: 16, color: Colors.black),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    '${apartment['bathroom']}',
+                                    style: GoogleFonts.raleway(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColors.smokyBlackColor,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Icon(Icons.person_2,
+                                      size: 16, color: Colors.black),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    '${apartment['guest']} ',
+                                    style: GoogleFonts.raleway(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColors.smokyBlackColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.edit,
+                                        color: Colors.green),
+                                    onPressed: () {
+                                      showEditApartmentDialog(apartment);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      apartmentServices.deleteApartment(
+                                          context, apartment['id']);
+                                    },
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '\$${apartment['price']}/night',
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.7),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          '\$${apartment['price']}/night',
+                          style: GoogleFonts.raleway(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              IconButton(
-                                icon:
-                                    const Icon(Icons.edit, color: Colors.green),
-                                onPressed: () {
-                                  showEditApartmentDialog(apartment);
-                                },
-                              ),
-                              IconButton(
-                                icon:
-                                    const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () {
-                                  apartmentServices.deleteApartment(
-                                      context, apartment['id']);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
