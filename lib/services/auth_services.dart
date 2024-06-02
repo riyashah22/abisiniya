@@ -140,8 +140,38 @@ class AuthServices {
         },
       );
       if (res.statusCode == 200) {
-        print(jsonDecode(res.body)['data']);
         return jsonDecode(res.body)['data'];
+      } else {
+        showSnackBar(context, 'Failed to load apartments');
+      }
+    } catch (e) {
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
+    }
+    return null;
+  }
+
+  Future<List<dynamic>?> userDetailBookings(BuildContext context) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.get(
+        Uri.parse(
+            "https://staging.abisiniya.com/api/v1/booking/apartment/mybookingdetail/258"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+      if (res.statusCode == 200) {
+        // print(jsonDecode(res.body)['data']['booking'][0]['ownerDetail']);
+        // print(jsonDecode(res.body)['data']['booking'][0]['customerDetail']
+        //     ['Payment Status']);
+        // print(jsonDecode(res.body)['data']['booking'][0]['price']);
+        return [
+          jsonDecode(res.body)['data']['booking'][0]['ownerDetail'],
+          jsonDecode(res.body)['data']['booking'][0]['customerDetail']
+              ['Payment Status'],
+          jsonDecode(res.body)['data']['booking'][0]['price']
+        ];
       } else {
         showSnackBar(context, 'Failed to load apartments');
       }

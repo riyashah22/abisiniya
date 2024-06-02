@@ -8,6 +8,7 @@ import "package:abisiniya/screens/apartments/detail_apartment_screen.dart";
 import "package:abisiniya/screens/auth/login.dart";
 import "package:abisiniya/screens/auth/otpVerification.dart";
 import "package:abisiniya/screens/auth/signup.dart";
+import "package:abisiniya/screens/dashboard/detailBookings.dart";
 import "package:abisiniya/screens/flights/flights.dart";
 import "package:abisiniya/screens/vehicles/add_vehicle.dart";
 import "package:abisiniya/screens/vehicles/bus_detail_screen.dart";
@@ -41,6 +42,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const BottomNav(),
+      );
+    case BookingDetails.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const BookingDetails(),
       );
     case AboutScreen.routeName:
       return MaterialPageRoute(

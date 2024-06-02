@@ -1,4 +1,6 @@
+import 'package:abisiniya/screens/dashboard/detailBookings.dart';
 import 'package:abisiniya/services/auth_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class MyBookings extends StatefulWidget {
@@ -9,19 +11,15 @@ class MyBookings extends StatefulWidget {
 }
 
 class _MyBookingsState extends State<MyBookings> {
-  // Sample data for bookings
   List<dynamic> myBookings = [];
   AuthServices authServices = AuthServices();
 
   Future<void> myBookingsList() async {
     final bookingList = await authServices.userBookings(context);
     setState(() {
-      myBookings = bookingList!;
+      myBookings = bookingList ?? [];
     });
-    print(myBookings);
   }
-
-  String? selectedBooking;
 
   @override
   void initState() {
@@ -43,90 +41,103 @@ class _MyBookingsState extends State<MyBookings> {
         const SizedBox(height: 10),
         Container(
           height: MediaQuery.of(context).size.height * 0.7,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Table(
-              border: TableBorder.all(),
-              columnWidths: const {
-                0: FixedColumnWidth(100.0),
-                1: FixedColumnWidth(150.0),
-                2: FixedColumnWidth(150.0),
-                3: FixedColumnWidth(100.0),
-                4: FixedColumnWidth(100.0),
-              },
-              children: [
-                TableRow(
-                  decoration: BoxDecoration(color: Colors.grey[300]),
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Type',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Check In',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Check Out',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Payment Status',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Booking ID',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                  ],
-                ),
-                for (var booking in myBookings)
-                  TableRow(
-                    decoration: BoxDecoration(
-                      color: booking == selectedBooking
-                          ? Colors.blue[100]
-                          : Colors.white,
-                    ),
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedBooking = booking;
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(booking['country'].toString()),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(booking['name']),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(booking['email']),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(booking['phone'].toString()),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(booking[0]['address'].toString()),
-                      ),
-                    ],
-                  ),
-              ],
-            ),
+          child: ListView.builder(
+            itemCount: myBookings.length,
+            itemBuilder: (context, index) {
+              return CardItem(booking: myBookings[index]);
+            },
           ),
         ),
       ],
+    );
+  }
+
+  Widget CardItem({required dynamic booking}) {
+    return Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 1, color: Colors.black),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        padding: EdgeInsets.all(2),
+        margin: EdgeInsets.only(bottom: 10),
+        child: Card(
+            color: CustomColors.lightPrimaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            elevation: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Type: ${booking["type"]}',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      RichTextCustom("Reference", booking["reference"])
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RichTextCustom("CheckIn", booking['checkIn']),
+                        RichTextCustom(
+                          "CheckOut",
+                          booking['checkOut'],
+                        ),
+                      ]),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RichTextCustom(
+                        "Pyment Status",
+                        booking['paymentStatus'],
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichTextCustom(
+                          "Booking Date", "${booking['date'].split(" ")[0]}"),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(BookingDetails.routeName);
+                        },
+                        child: Text('View'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )));
+  }
+
+  Widget RichTextCustom(String label, String value) {
+    return RichText(
+      text: TextSpan(
+        text: '$label: ',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
+        children: [
+          TextSpan(
+            text: value,
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
