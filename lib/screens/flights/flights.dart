@@ -2,8 +2,10 @@ import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/flight_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class FlightScreen extends StatefulWidget {
@@ -113,6 +115,7 @@ class _FlightScreenState extends State<FlightScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppbarSecondaryScreen(context, 'Flights'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -122,9 +125,33 @@ class _FlightScreenState extends State<FlightScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Flight Request',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'Let\'s Explore',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          ' The World!👋🏻',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // Image.asset(
+                    //   "assets/flight_booking_icon.gif",
+                    //   height: 84,
+                    //   width: 84,
+                    // ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 _buildAutocomplete(
@@ -251,8 +278,20 @@ class _FlightScreenState extends State<FlightScreen> {
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        CustomColors.primaryColor,
+                      ),
+                    ),
                     onPressed: _submitForm,
-                    child: const Text('Submit'),
+                    child: Text(
+                      'Submit',
+                      style: GoogleFonts.roboto(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: CustomColors.lightPrimaryColor,
+                      ),
+                    ),
                   ),
                 ),
               ],
