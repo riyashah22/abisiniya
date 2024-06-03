@@ -1,10 +1,11 @@
 import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/screens/apartments/apartment_item.dart';
 import 'package:abisiniya/services/auth_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
-import 'package:abisiniya/widgets/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/services/apartment_services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ApartmentScreen extends StatefulWidget {
   static const String routeName = "/apartment-screen";
@@ -71,25 +72,51 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppbarSecondaryScreen(context, "Apartments"),
+      appBar: CustomAppbarSecondaryScreen(context, "Book Apartment"),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserInfo(),
-            const SizedBox(
-              height: 18,
-            ),
-            Text(
-              " Elite Residences",
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFF3E6837), // Primary color
+            Container(
+              margin: EdgeInsets.only(right: 4),
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Effortless Rental",
+                        style: GoogleFonts.roboto(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 0.5,
+                          color: CustomColors.smokyBlackColor, // Primary color
+                        ),
+                      ),
+                      Text(
+                        "Properties",
+                        style: GoogleFonts.roboto(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
+                          color: CustomColors.smokyBlackColor, // Primary color
+                        ),
+                      ),
+                    ],
                   ),
+                  Image.asset(
+                    "assets/apartments.png",
+                    height: 66,
+                    width: 66,
+                  )
+                ],
+              ),
             ),
+
             const SizedBox(
               height: 18,
             ),

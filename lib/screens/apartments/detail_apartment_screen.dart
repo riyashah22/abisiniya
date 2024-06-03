@@ -95,11 +95,36 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
                             );
                           }).toList(),
                         )
-                      : Image.network(
-                          apartment.images[0],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        ),
+                      : apartment.images.length < 1
+                          ? Container(
+                              width: double.infinity,
+                              color: Colors.grey,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.image,
+                                    size: 100,
+                                    color: Colors.white,
+                                  ),
+                                  Text(
+                                    'No pictures available',
+                                    style: GoogleFonts.openSans(
+                                      fontSize: 20,
+                                      color: Colors.black.withOpacity(
+                                        0.7,
+                                      ),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Image.network(
+                              apartment.images[0],
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
                 ),
               ),
 
