@@ -41,6 +41,7 @@ class _MyApartmentsState extends State<MyApartments> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        var width = MediaQuery.of(context).size.width;
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
@@ -96,8 +97,8 @@ class _MyApartmentsState extends State<MyApartments> {
                             "Status",
                             style: TextStyle(fontSize: 14),
                           ),
-                          const SizedBox(
-                            width: 20,
+                          SizedBox(
+                            width: width * 0.07,
                           ),
                           DropdownButton(
                             value: selectedStatus,
@@ -169,6 +170,9 @@ class _MyApartmentsState extends State<MyApartments> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    var size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(
@@ -228,7 +232,7 @@ class _MyApartmentsState extends State<MyApartments> {
                                 child: Image.network(
                                   apartment['pictures'][0]['imageUrl'],
                                   width: double.infinity,
-                                  height: 130,
+                                  height: height * 0.14,
                                   fit: BoxFit.cover,
                                 ),
                               )
@@ -239,7 +243,7 @@ class _MyApartmentsState extends State<MyApartments> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 8,
+                                height: height * 0.001,
                               ),
                               Text(
                                 overflow: TextOverflow.ellipsis,
@@ -262,7 +266,7 @@ class _MyApartmentsState extends State<MyApartments> {
                                 ),
                               ),
                               SizedBox(
-                                height: 8,
+                                height: height * 0.004,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -278,7 +282,7 @@ class _MyApartmentsState extends State<MyApartments> {
                                       color: CustomColors.smokyBlackColor,
                                     ),
                                   ),
-                                  const SizedBox(width: 10),
+                                  SizedBox(width: width * 0.02),
                                   Icon(Icons.bathtub,
                                       size: 25, color: Colors.black),
                                   Text(
@@ -289,7 +293,7 @@ class _MyApartmentsState extends State<MyApartments> {
                                       color: CustomColors.smokyBlackColor,
                                     ),
                                   ),
-                                  const SizedBox(width: 10),
+                                  SizedBox(width: width * 0.02),
                                   Icon(Icons.person_2,
                                       size: 25, color: Colors.black),
                                   Text(
@@ -302,7 +306,7 @@ class _MyApartmentsState extends State<MyApartments> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: height * 0.01),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -312,8 +316,8 @@ class _MyApartmentsState extends State<MyApartments> {
                                       showEditApartmentDialog(apartment);
                                     },
                                     child: Image.asset(
-                                      height: 30,
-                                      width: 30,
+                                      height: height * 0.03,
+                                      width: width * 0.05,
                                       'assets/editIicon.png',
                                       fit: BoxFit.cover, // Adjust as needed
                                     ),
@@ -324,8 +328,8 @@ class _MyApartmentsState extends State<MyApartments> {
                                           context, apartment['id']);
                                     },
                                     child: Image.asset(
-                                      height: 25,
-                                      width: 25,
+                                      height: height * 0.027,
+                                      width: width * 0.045,
                                       'assets/deleteIcon.png',
                                       fit: BoxFit.cover,
                                       // Adjust as needed

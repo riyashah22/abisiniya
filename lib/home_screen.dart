@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/about/about.dart';
 import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
 import 'package:abisiniya/screens/vehicles/vehicle_detail_screen.dart';
 import 'package:abisiniya/services/apartment_services.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:abisiniya/models/apartment.dart';
@@ -61,6 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
       'assets/southAfrican.png',
       'assets/ethiopian.png',
     ];
+
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -135,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 8,
           ),
         ],
-        toolbarHeight: MediaQuery.of(context).size.height * 0.12,
+        toolbarHeight: height * 0.12,
         centerTitle: false,
         title: Row(
           children: [
@@ -144,8 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Image.asset(
                 fit: BoxFit.cover,
                 "assets/logo.png",
-                height: 50,
-                width: 50,
+                height: height * 0.06,
+                width: width * 0.13,
               ),
             ),
             SizedBox(
@@ -161,9 +167,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     letterSpacing: 0,
                     fontSize: 30,
                   ),
-                ),
-                SizedBox(
-                  height: 2,
                 ),
                 Text(
                   "Travels & Tourism",
@@ -209,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // User information bar
                     UserInfo(),
                     SizedBox(
-                      height: 20,
+                      height: height * 0.02,
                     ),
                     // Message
                     Text(
@@ -229,11 +232,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 12,
+                      height: height * 0.01,
                     ),
                     // Services menu options
                     Container(
-                      height: 148,
+                      height: height * 0.18,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
@@ -257,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 16,
+                      height: height * 0.03,
                     ),
                     // "Most Popular" section
                     Row(
@@ -296,10 +299,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 8,
+                      height: height * 0.02,
                     ),
                     Container(
-                      height: 200,
+                      height: height * 0.22,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount:
@@ -311,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 16,
+                      height: height * 0.03,
                     ),
                     // "Most Popular Cars" section
                     Row(
@@ -350,10 +353,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 8,
+                      height: height * 0.02,
                     ),
                     Container(
-                      height: 200,
+                      height: height * 0.25,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: vehicles.length > 10 ? 10 : vehicles.length,
@@ -363,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 16,
+                      height: height * 0.02,
                     ),
                     Container(
                       width: double.infinity,
@@ -388,10 +391,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 8,
+                      height: height * 0.02,
                     ),
                     Container(
-                      height: 260,
+                      height: height * 0.3,
                       child: GridView.builder(
                         scrollDirection: Axis.vertical,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -443,6 +446,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   GestureDetector _buildServicesCard(
       String label, String path, String routeName) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(routeName);
@@ -453,7 +458,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Container(
           margin: EdgeInsets.all(8),
           padding: EdgeInsets.all(16),
-          width: 120,
+          width: width * 0.3,
           decoration: BoxDecoration(
             color: CustomColors.primaryColor.withOpacity(0.2),
             borderRadius: BorderRadius.circular(16),
@@ -463,18 +468,21 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Image.asset(
                 path,
-                height: 72,
-                width: 72,
+                height: height * 0.08,
+                width: width * 0.25,
               ),
-              SizedBox(height: 8),
-              Text(
+              SizedBox(height: height * 0.01),
+              AutoSizeText(
                 label,
                 style: GoogleFonts.raleway(
                   fontWeight: FontWeight.w600,
                   fontSize: label == 'Airport Shuttles' ? 11 : 14,
                   color: CustomColors.smokyBlackColor,
                 ),
-              ),
+                minFontSize: 8,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              )
             ],
           ),
         ),
@@ -483,6 +491,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildApartmentCard(BuildContext context, Apartment apartment) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -492,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
       child: Container(
-        width: 160,
+        width: width * 0.35,
         margin: EdgeInsets.only(right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -502,13 +512,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: apartment.images.isNotEmpty
                   ? Image.network(
                       apartment.images[0],
-                      height: 120,
+                      height: height * 0.13,
                       width: double.infinity,
                       fit: BoxFit.cover,
                     )
                   : Container(
                       width: double.infinity,
-                      height: 120,
+                      height: height * 0.13,
                       color: Colors.grey,
                       child: const Icon(
                         Icons.image,
@@ -517,7 +527,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: height * 0.01),
             Text(
               "  ${apartment.text}",
               style: GoogleFonts.raleway(
@@ -525,7 +535,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 4),
             Text(
               "   ${apartment.address}",
               style: GoogleFonts.raleway(
@@ -534,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 4),
+            SizedBox(height: height * 0.01),
             Text(
               "   \$${apartment.price} / night",
               style: GoogleFonts.raleway(
@@ -550,6 +559,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildVehicleCard(BuildContext context, Vehicle vehicle) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
@@ -559,7 +570,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
       child: Container(
-        width: 160,
+        width: width * 0.35,
         margin: EdgeInsets.only(right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -571,13 +582,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: vehicle.images.isNotEmpty
                       ? Image.network(
                           vehicle.images,
-                          height: 120,
+                          height: height * 0.13,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         )
                       : Container(
                           width: double.infinity,
-                          height: 120,
+                          height: height * 0.13,
                           color: Colors.grey,
                           child: const Icon(
                             Icons.image,
@@ -614,7 +625,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            SizedBox(height: height * 0.01),
             Text(
               "  ${vehicle.make}",
               style: GoogleFonts.raleway(
@@ -622,14 +633,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 4),
             Row(
               children: [
                 SizedBox(
                   width: 6,
                 ),
                 Icon(Icons.location_city, size: 14, color: Colors.grey[600]),
-                SizedBox(width: 4),
+                SizedBox(width: height * 0.02),
                 Text(
                   vehicle.country,
                   style: GoogleFonts.raleway(
@@ -640,7 +650,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 4),
+            SizedBox(height: height * 0.008),
             Text(
               "  \$${vehicle.price} / day",
               style: GoogleFonts.raleway(
@@ -656,8 +666,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildAirlineCard(String imagePath) {
+    var width = MediaQuery.of(context).size.width;
     return Container(
-      width: 120,
+      width: width * 0.40,
       margin: EdgeInsets.only(right: 16, bottom: 8),
       decoration: BoxDecoration(
         border: Border.all(color: CustomColors.primaryColor, width: 1),
