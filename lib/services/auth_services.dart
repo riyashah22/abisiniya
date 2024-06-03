@@ -135,6 +135,9 @@ class AuthServices {
         handleHttpError("Password is not matched");
       } else if (!isValidEmail(email)) {
         handleHttpError("Invalid Email");
+      }else{
+        final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
       }
     }
   }
@@ -155,7 +158,8 @@ class AuthServices {
         showErrorMessage(context, "Error: ${res.statusCode.toString()}");
       }
     } catch (e) {
-      showErrorMessage(context, "Error 404");
+     final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
     }
     return null;
   }
@@ -218,7 +222,8 @@ class AuthServices {
         },
       );
     } catch (e) {
-      handleHttpError("Invalid Otp");
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
     }
   }
 
@@ -263,7 +268,7 @@ class AuthServices {
       );
     } catch (e) {
       final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      showSnackBar(context, errorMessage);
     }
   }
 }

@@ -232,9 +232,8 @@ class VehicleServices {
         showErrorMessage(context, "Failed to add vehicle");
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error occurred: ${e.toString()}')),
-      );
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
     }
   }
 
