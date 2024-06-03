@@ -136,7 +136,6 @@ class VehicleServices {
   void bookVehicle(BuildContext context, String start_date, String end_date,
       int vehicle_id) async {
     void handleHttpError(String errorMessage) {
-      // showSnackBar(context, errorMessage);
       showErrorMessage(context, errorMessage);
     }
 
@@ -160,11 +159,10 @@ class VehicleServices {
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          print("booking successful");
+          showSuccessMessage(context, "Booking Succussful");
         },
         onError: (errorMessage) {
-          // showSnackBar(context, errorMessage); //new comment
-          showErrorMessage(context, errorMessage);
+          showErrorMessage(context, "Try again");
         },
       );
     } catch (e) {
@@ -231,9 +229,7 @@ class VehicleServices {
           SnackBar(content: Text('Vehicle Added Successfully')),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add vehicle: ${response.body}')),
-        );
+        showErrorMessage(context, "Failed to add vehicle");
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

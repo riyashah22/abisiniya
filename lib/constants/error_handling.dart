@@ -52,3 +52,23 @@ void showErrorMessage(BuildContext context, String errorMessage) {
     },
   );
 }
+
+void showSuccessMessage(BuildContext context, String successMessage) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Success"),
+        content: Text(successMessage),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("OK"),
+          ),
+        ],
+      );
+    },
+  );
+}

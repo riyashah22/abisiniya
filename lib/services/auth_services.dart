@@ -43,8 +43,8 @@ class AuthServices {
         },
       );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      handleHttpError("Enter correct Email or Password");
     }
   }
 
@@ -87,10 +87,17 @@ class AuthServices {
     }
   }
 
+  bool isValidEmail(String email) {
+    final emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    );
+    return emailRegex.hasMatch(email);
+  }
+
   void signup(BuildContext context, String name, String surname, String email,
       String phone, String password, String confirmPassword) async {
     void handleHttpError(String errorMessage) {
-      showSnackBar(context, errorMessage);
+      showErrorMessage(context, errorMessage);
     }
 
     try {
@@ -120,12 +127,15 @@ class AuthServices {
               arguments: {'email': email});
         },
         onError: (errorMessage) {
-          showErrorMessage(context, errorMessage);
+          showErrorMessage(context, "Error: ${res.statusCode}");
         },
       );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      if (password != confirmPassword) {
+        handleHttpError("Password is not matched");
+      } else if (!isValidEmail(email)) {
+        handleHttpError("Invalid Email");
+      }
     }
   }
 
@@ -142,11 +152,10 @@ class AuthServices {
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];
       } else {
-        showSnackBar(context, 'Failed to load apartments');
+        showErrorMessage(context, "Error: ${res.statusCode.toString()}");
       }
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      showErrorMessage(context, "Error 404");
     }
     return null;
   }
@@ -164,9 +173,6 @@ class AuthServices {
       );
 
       if (res.statusCode == 200) {
-        // print(jsonDecode(res.body)['data']['booking'][0]['ownerDetail']);
-        // print(jsonDecode(res.body)['data']['booking'][0]['customerDetail']
-        //     ['Payment Status']);
         print(jsonDecode(res.body)['data']['booking'][0]);
         return [
           jsonDecode(res.body)['data']['booking'][0]['ownerDetail'],
@@ -208,12 +214,11 @@ class AuthServices {
           Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         },
         onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
+          showSnackBar(context, "Otp Invalid");
         },
       );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      handleHttpError("Invalid Otp");
     }
   }
 

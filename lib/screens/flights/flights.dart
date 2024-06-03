@@ -72,7 +72,6 @@ class _FlightScreenState extends State<FlightScreen> {
           );
         },
       );
-      showSnackBar(context, "Please login");
     } else {
       if (_formKey.currentState?.validate() ?? false) {
         if (_tripType == 'Round Trip' && (fromDate == null || toDate == null)) {
