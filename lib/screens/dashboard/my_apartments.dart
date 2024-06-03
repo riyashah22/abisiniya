@@ -324,10 +324,11 @@ class _MyApartmentsState extends State<MyApartments> {
                                           context, apartment['id']);
                                     },
                                     child: Image.asset(
-                                      height: 30,
-                                      width: 30,
+                                      height: 25,
+                                      width: 25,
                                       'assets/deleteIcon.png',
-                                      fit: BoxFit.cover, // Adjust as needed
+                                      fit: BoxFit.cover,
+                                      // Adjust as needed
                                     ),
                                   ),
                                 ],
