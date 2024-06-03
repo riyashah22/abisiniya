@@ -37,8 +37,9 @@ class FlightServices {
       final res = await http.post(
         uri,
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer ${user.user.token}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: jsonEncode(request),
       );

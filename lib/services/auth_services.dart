@@ -17,9 +17,12 @@ class AuthServices {
 
     try {
       http.Response res = await http.post(
-        Uri.parse(
-            "https://staging.abisiniya.com/api/v1/login?email=$email&password=$password"),
-      );
+          Uri.parse(
+              "https://staging.abisiniya.com/api/v1/login?email=$email&password=$password"),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          });
       print(jsonDecode(res.body)['data']['token']);
 
       httpErrorHandle(
@@ -59,6 +62,8 @@ class AuthServices {
           Uri.parse("https://staging.abisiniya.com/api/v1/logout"),
           headers: {
             'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           });
 
       httpErrorHandle(
@@ -109,6 +114,7 @@ class AuthServices {
         uri,
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: jsonEncode(data),
       );

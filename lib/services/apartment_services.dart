@@ -94,6 +94,7 @@ class ApartmentServices {
       }
 
       request.headers['Authorization'] = 'Bearer ${user.user.token}';
+      request.headers['Accept'] = 'application/json';
 
       var res = await request.send();
 
@@ -123,6 +124,7 @@ class ApartmentServices {
         Uri.parse("https://staging.abisiniya.com/api/v1/apartment/auth/list"),
         headers: {
           'Authorization': 'Bearer ${user.user.token}',
+          'Accept': 'application/json',
         },
       );
       // var dataset =
@@ -149,6 +151,8 @@ class ApartmentServices {
         Uri.parse("https://staging.abisiniya.com/api/v1/apartment/delete/$id"),
         headers: {
           'Authorization': 'Bearer ${user.user.token}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
       );
       httpErrorHandle(
@@ -286,6 +290,8 @@ class ApartmentServices {
       http.Response res = await http.post(
           headers: {
             'Authorization': 'Bearer ${user.token}',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
           Uri.parse(
             "https://staging.abisiniya.com/api/v1/booking/vehicle/booking/authuser",

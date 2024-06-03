@@ -64,10 +64,12 @@ class VehicleServices {
   Future<List<Bus>> getAllBuses(BuildContext context) async {
     try {
       http.Response res = await http.get(
-        Uri.parse(
-          "https://staging.abisiniya.com/api/v1/bus/list",
-        ),
-      );
+          Uri.parse(
+            "https://staging.abisiniya.com/api/v1/bus/list",
+          ),
+          headers: {
+            'Accept': 'application/json',
+          });
       List<Bus> fetchedBus = [];
       // print(fetchedApartments);
       httpErrorHandle(
@@ -146,6 +148,8 @@ class VehicleServices {
       http.Response res = await http.post(
           headers: {
             'Authorization': 'Bearer ${user.token}',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
           },
           Uri.parse(
             "https://staging.abisiniya.com/api/v1/booking/vehicle/booking/authuser",
@@ -219,6 +223,7 @@ class VehicleServices {
       }
 
       request.headers['Authorization'] = 'Bearer ${user.user.token}';
+      request.headers['Accept'] = 'application/json';
       print(user.user.token);
 
       var res = await request.send();
@@ -312,7 +317,7 @@ class VehicleServices {
       final res = await http.put(
         uri,
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': 'Bearer ${user.user.token}',
         },
         body: jsonEncode(updatedData),
