@@ -116,7 +116,7 @@ class _FlightScreenState extends State<FlightScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppbarSecondaryScreen(context, 'Flights'),
+      appBar: CustomAppbarSecondaryScreen(context, 'Request for Flight'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Container(

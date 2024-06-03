@@ -13,7 +13,7 @@ class UserInfo extends StatelessWidget {
     final user = Provider.of<UserProvider>(context).user;
     return Container(
       decoration: BoxDecoration(
-        color: CustomColors.secondaryColor,
+        color: CustomColors.secondaryColor.withOpacity(0.6),
         borderRadius: BorderRadius.circular(10),
         // boxShadow: [
         //   BoxShadow(

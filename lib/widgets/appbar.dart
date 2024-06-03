@@ -1,4 +1,6 @@
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 PreferredSizeWidget CustomAppbarSecondaryScreen(
     BuildContext context, String title) {
@@ -6,12 +8,12 @@ PreferredSizeWidget CustomAppbarSecondaryScreen(
     centerTitle: true,
     title: Text(
       title,
-      style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-            color: Theme.of(context).secondaryHeaderColor,
-            fontWeight: FontWeight.bold,
-          ),
+      style: GoogleFonts.openSans(
+        fontWeight: FontWeight.bold,
+        color: CustomColors.lightPrimaryColor,
+      ),
     ),
-    backgroundColor: Theme.of(context).primaryColor,
+    backgroundColor: CustomColors.primaryColor,
   );
 }
 //new commit

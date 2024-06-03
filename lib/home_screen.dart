@@ -38,24 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   double _scale = 1.0;
   Duration _duration = Duration(milliseconds: 200);
 
-  void _onTapDown(TapDownDetails details) {
-    setState(() {
-      _scale = 0.9;
-    });
-  }
-
-  void _onTapUp(TapUpDetails details) {
-    setState(() {
-      _scale = 1.0;
-    });
-  }
-
-  void _onTapCancel() {
-    setState(() {
-      _scale = 1.0;
-    });
-  }
-
   Future<Map<String, dynamic>> fetchData() async {
     final apartments = await apartmentServices.getAllApartments(context);
     final vehicles = await vehicleServices.getAllVehicles(context);
@@ -462,9 +444,6 @@ class _HomeScreenState extends State<HomeScreen> {
   GestureDetector _buildServicesCard(
       String label, String path, String routeName) {
     return GestureDetector(
-      onTapDown: _onTapDown,
-      onTapUp: _onTapUp,
-      onTapCancel: _onTapCancel,
       onTap: () {
         Navigator.of(context).pushNamed(routeName);
       },
