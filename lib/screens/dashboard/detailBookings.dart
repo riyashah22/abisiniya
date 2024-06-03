@@ -1,9 +1,7 @@
-import 'package:abisiniya/main.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BookingDetails extends StatefulWidget {
