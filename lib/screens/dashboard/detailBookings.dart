@@ -81,13 +81,6 @@ class _BookingDetailsState extends State<BookingDetails> {
                     myBookings[0]['city'],
                     myBookings[0]['country'],
                   )
-                : SizedBox(),
-            SizedBox(height: 40),
-            type == 'Apartment'
-                ? ApartmentCard(
-                    myBookings[3].toString(),
-                    myBookings[4].toString(),
-                  )
                 : VehicleCard(
                     myBookings[0]['name'],
                     myBookings[0]['address'],
@@ -139,8 +132,8 @@ class _BookingDetailsState extends State<BookingDetails> {
               children: [
                 SizedBox(height: 24), // Space for the circle to overlap
                 Text(
-                  'Owner Details',
-                  style: TextStyle(
+                  'Apartment Owner Details',
+                  style: GoogleFonts.roboto(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -149,126 +142,111 @@ class _BookingDetailsState extends State<BookingDetails> {
                 labelData("Name:", name),
                 Row(
                   children: [
-                    Text(
-                      'Email:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8),
                     Expanded(
                       child: Text(
+                        'Email:',
+                        style: GoogleFonts.roboto(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
                         email,
-                        style: TextStyle(fontSize: 16),
+                        style: GoogleFonts.openSans(
+                            fontSize: 15.9, letterSpacing: 1.5),
                         overflow: TextOverflow.visible,
                       ),
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 8,
+                ),
+                Divider(
+                  height: 3,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
                 labelData('Phone:', phone.toString()),
                 Row(
                   children: [
-                    Text(
-                      'Address:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8),
                     Expanded(
                       child: Text(
+                        'Address:',
+                        style: GoogleFonts.roboto(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        overflow: TextOverflow.visible,
                         address,
-                        style: TextStyle(
-                            fontSize: 16, overflow: TextOverflow.visible),
+                        style: GoogleFonts.openSans(
+                            fontSize: 16, letterSpacing: 1.5),
                       ),
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 8,
+                ),
+                Divider(
+                  height: 3,
+                ),
+                SizedBox(
+                  height: 8,
+                ),
                 labelData('City:', city),
-                labelData('Country:', country),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Country:",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        country,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
           Positioned(
-            top: -25,
+            top: -30,
             left: 0,
             right: 0,
             child: Center(
               child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: CustomColors.primaryColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-                child: Icon(
-                  Icons.person,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget ApartmentCard(
-    String checkIn,
-    String checkOut,
-  ) {
-    return Center(
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 380,
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: CustomColors.primaryColor, width: 2),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: 24), // Space for the circle to overlap
-                Text(
-                  'Apartment Details',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  padding: EdgeInsets.all(7),
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: CustomColors.primaryColor.withOpacity(0.4),
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
                   ),
-                ),
-                SizedBox(height: 8),
-
-                labelData("CheckIn:", checkIn),
-                labelData("CheckOut:", checkOut),
-              ],
-            ),
-          ),
-          Positioned(
-            top: -25,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: CustomColors.primaryColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-                child: Icon(
-                  Icons.home,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
+                  child: Image.asset(
+                    "assets/apartments.png",
+                    height: 50,
+                    width: 50,
+                  )),
             ),
           ),
         ],
@@ -307,7 +285,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                 SizedBox(height: 24), // Space for the circle to overlap
                 Text(
                   'Vehicle Details',
-                  style: TextStyle(
+                  style: GoogleFonts.roboto(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -329,6 +307,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                       ),
                     ),
                     Expanded(
+                      flex: 2,
                       child: Text(
                         address,
                         style: TextStyle(
@@ -367,10 +346,13 @@ class _BookingDetailsState extends State<BookingDetails> {
                       ),
                     ),
                     Expanded(
+                      flex: 2,
                       child: Text(
                         '\$${price}',
                         style: TextStyle(
-                            fontSize: 16, overflow: TextOverflow.visible),
+                            fontSize: 16,
+                            letterSpacing: 1.5,
+                            overflow: TextOverflow.visible),
                       ),
                     ),
                   ],
@@ -413,16 +395,17 @@ class _BookingDetailsState extends State<BookingDetails> {
             Expanded(
               child: Text(
                 label,
-                style: TextStyle(
+                style: GoogleFonts.roboto(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             Expanded(
+              flex: 2,
               child: Text(
                 value,
-                style: TextStyle(fontSize: 16),
+                style: GoogleFonts.openSans(fontSize: 16, letterSpacing: 1.5),
               ),
             ),
           ],
@@ -453,8 +436,16 @@ class _BookingDetailsState extends State<BookingDetails> {
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(color: CustomColors.primaryColor, width: 2)),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 24),
+                Text(
+                  'Payment Details',
+                  style: GoogleFonts.roboto(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -519,9 +510,6 @@ class _BookingDetailsState extends State<BookingDetails> {
                   child: Container(
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: status == "Not Paid"
-                          ? Colors.red.withOpacity(0.9)
-                          : Colors.green.withOpacity(0.9),
                       borderRadius: BorderRadius.circular(24),
                     ),
                     child: Text.rich(
@@ -532,9 +520,11 @@ class _BookingDetailsState extends State<BookingDetails> {
                                 ? "Amount to be paid: \$${price}"
                                 : "Amount paid: \$${price}",
                             style: GoogleFonts.openSans(
-                              color: Colors.black,
+                              color: status == "Not Paid"
+                                  ? Colors.red
+                                  : Colors.green,
                               fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                              fontSize: 18,
                             ),
                           ),
                         ],
@@ -546,24 +536,19 @@ class _BookingDetailsState extends State<BookingDetails> {
             ),
           ),
           Positioned(
-            top: -25,
+            top: -28,
             left: 0,
             right: 0,
             child: Center(
               child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: CustomColors.primaryColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-                child: Icon(
-                  Icons.monetization_on,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    color: CustomColors.primaryColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  child: Image.asset("assets/dollar.png")),
             ),
           ),
         ],
