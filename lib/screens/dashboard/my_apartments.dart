@@ -206,7 +206,7 @@ class _MyApartmentsState extends State<MyApartments> {
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 0,
-              childAspectRatio: 0.62,
+              childAspectRatio: 0.58,
             ),
             itemCount: myApartments.length,
             itemBuilder: (context, index) {
