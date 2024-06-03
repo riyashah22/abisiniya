@@ -46,7 +46,7 @@ class ApartmentServices {
           }
         },
         onError: (errorMessage) {
-          showErrorMessage(context, "Apartment Not Added. Try Again!!");
+          showSnackBar(context, errorMessage);
         },
       );
 
@@ -101,13 +101,18 @@ class ApartmentServices {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
-        showSuccessMessage(context, "Apartment Added Successfully");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Apartment Added Successfully')),
+        );
       } else {
-        showErrorMessage(context, "Failed to add Apartment. Try Again!!");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add apartment: ${response.body}')),
+        );
       }
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error occurred: ${e.toString()}')),
+      );
     }
   }
 
@@ -120,13 +125,19 @@ class ApartmentServices {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
+      // var dataset =
+      //     jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures'];
+      // print(
+      //     jsonDecode(jsonEncode(jsonDecode(res.body)['data'][2]))['pictures']);
+
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];
       } else {
-        showErrorMessage(context, 'Failed to load apartments');
+        showSnackBar(context, 'Failed to load apartments');
       }
     } catch (e) {
-      showErrorMessage(context, "Error 404");
+      final errorMessage = "Error occurred: ${e.toString()}";
+      showSnackBar(context, errorMessage);
     }
     return null;
   }
@@ -143,10 +154,10 @@ class ApartmentServices {
       httpErrorHandle(
         response: res,
         onError: (errorMessage) {
-          showErrorMessage(context, "Failed to delete Apartment");
+          showSnackBar(context, errorMessage);
         },
         onSuccess: () {
-          showSuccessMessage(context, "Apartment Deleted Successfully");
+          showSnackBar(context, "Apartment Deleted Successfully");
         },
       );
     } catch (e) {
@@ -200,16 +211,16 @@ class ApartmentServices {
       httpErrorHandle(
         response: res,
         onError: (errorMessage) {
-          showErrorMessage(context, "Failed to update Apartment");
+          showSnackBar(context, errorMessage);
         },
         onSuccess: () {
-          showSuccessMessage(context, "Apartment Updated Successfully");
+          showSnackBar(context, "Apartment Updated Successfully");
           Navigator.of(context).pop();
         },
       );
     } catch (e) {
       final errorMessage = "Error occurred: ${e.toString()}";
-      showErrorMessage(context, errorMessage);
+      showSnackBar(context, errorMessage);
     }
   }
 
@@ -265,6 +276,7 @@ class ApartmentServices {
   void bookApartment(BuildContext context, String start_date, String end_date,
       int apartment_id) async {
     void handleHttpError(String errorMessage) {
+      // showSnackBar(context, errorMessage);
       showErrorMessage(context, errorMessage);
     }
 
@@ -284,15 +296,16 @@ class ApartmentServices {
             "bookable_type": "Apartment",
             "bookable_id": apartment_id.toString(),
           });
+      print(res.body);
 
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          showSuccessMessage(context, "Apartment booked Successfully ");
+          print("booking successful");
         },
         onError: (errorMessage) {
           // showSnackBar(context, errorMessage); //new comment
-          showErrorMessage(context, "Failed to booked an Apartment");
+          showErrorMessage(context, errorMessage);
         },
       );
     } catch (e) {

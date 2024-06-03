@@ -4,6 +4,7 @@ import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BookingDetails extends StatefulWidget {
   static const String routeName = "booking-Details";
@@ -44,6 +45,7 @@ class _BookingDetailsState extends State<BookingDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: CustomAppbarSecondaryScreen(context, "Booking Details"),
         body: myBookings.isNotEmpty
             ? ApartmentDetails()
@@ -102,6 +104,8 @@ class _BookingDetailsState extends State<BookingDetails> {
                   ),
             SizedBox(height: 40),
             PaymentStatusCard(
+              myBookings[3].toString(),
+              myBookings[4].toString(),
               myBookings[1].toString(),
               myBookings[2].toString(),
             ),
@@ -222,7 +226,7 @@ class _BookingDetailsState extends State<BookingDetails> {
         clipBehavior: Clip.none,
         children: [
           Container(
-            width: 350,
+            width: 380,
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
@@ -290,14 +294,15 @@ class _BookingDetailsState extends State<BookingDetails> {
         clipBehavior: Clip.none,
         children: [
           Container(
-            width: 350,
+            width: 380,
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
+              color: Colors.white,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: CustomColors.primaryColor, width: 2),
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 24), // Space for the circle to overlap
                 Text(
@@ -309,16 +314,20 @@ class _BookingDetailsState extends State<BookingDetails> {
                 ),
                 SizedBox(height: 8),
                 labelData("Name:", name),
+                SizedBox(
+                  height: 4,
+                ),
                 Row(
                   children: [
-                    Text(
-                      'Address:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        'Address:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         address,
@@ -328,16 +337,44 @@ class _BookingDetailsState extends State<BookingDetails> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 4,
+                ),
+                Divider(
+                  height: 3,
+                ),
+                SizedBox(
+                  height: 4,
+                ),
                 labelData("City:", city),
                 labelData("Country:", country),
-                labelData("CheckIn:", checkIn),
-                labelData("CheckOut:", checkOut),
+                // labelData("CheckIn:", checkIn),
+                // labelData("CheckOut:", checkOut),
                 labelData("Make:", make),
                 labelData("Model:", model),
                 labelData("Year:", year),
                 labelData("Fuel Type:", fuel_type),
                 labelData("Color:", color),
-                labelData("Price:", "\$${price}"),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Price:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        '\$${price}',
+                        style: TextStyle(
+                            fontSize: 16, overflow: TextOverflow.visible),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -347,19 +384,19 @@ class _BookingDetailsState extends State<BookingDetails> {
             right: 0,
             child: Center(
               child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: CustomColors.primaryColor,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-                child: Icon(
-                  Icons.car_rental,
-                  color: Colors.white,
-                  size: 28,
-                ),
-              ),
+                  padding: EdgeInsets.all(5),
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: CustomColors.primaryColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  child: Image.asset(
+                    'assets/car.png',
+                    height: 50,
+                    width: 50,
+                  )),
             ),
           ),
         ],
@@ -368,25 +405,43 @@ class _BookingDetailsState extends State<BookingDetails> {
   }
 
   Widget labelData(String label, String value) {
-    return Row(
+    return Column(
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                value,
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
         ),
-        SizedBox(width: 8),
-        Text(
-          value,
-          style: TextStyle(fontSize: 16),
+        SizedBox(
+          height: 4,
+        ),
+        Divider(
+          height: 2,
+        ),
+        SizedBox(
+          height: 4,
         ),
       ],
     );
   }
 
-  Widget PaymentStatusCard(String status, String price) {
+  Widget PaymentStatusCard(
+      String checkIn, String checkout, String status, String price) {
     return Center(
       child: Stack(
         clipBehavior: Clip.none,
@@ -395,55 +450,97 @@ class _BookingDetailsState extends State<BookingDetails> {
             width: 380,
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: CustomColors.primaryColor, width: 2),
-            ),
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: CustomColors.primaryColor, width: 2)),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 24), // Space for the circle to overlap
-                Text(
-                  'Payment Details',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Check-in",
+                            style: GoogleFonts.roboto(
+                              color: Color(0xff708090),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            checkIn,
+                            style: GoogleFonts.openSans(
+                              color: CustomColors.smokyBlackColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Image.asset(
+                      "assets/arrows.png",
+                      height: 36,
+                      width: 36,
+                    ),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Check-out",
+                            style: GoogleFonts.roboto(
+                              color: Color(0xff708090),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            checkout,
+                            style: GoogleFonts.openSans(
+                              color: CustomColors.smokyBlackColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              letterSpacing: 0.3,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: status == "Not Paid"
+                          ? Colors.red.withOpacity(0.9)
+                          : Colors.green.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: status == 'Not Paid'
+                                ? "Amount to be paid: \$${price}"
+                                : "Amount paid: \$${price}",
+                            style: GoogleFonts.openSans(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      'Status:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      status,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Price:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        '\$${price.toString()}',
-                        style: TextStyle(fontSize: 16),
-                        overflow: TextOverflow.visible,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
