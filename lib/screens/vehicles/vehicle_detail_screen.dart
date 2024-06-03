@@ -303,7 +303,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\$${vehicle.price} / night',
+                '\$${vehicle.price} / day',
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
