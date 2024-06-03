@@ -20,6 +20,7 @@ class _MyBookingsState extends State<MyBookings> {
     setState(() {
       myBookings = bookingList ?? [];
     });
+    print(myBookings);
   }
 
   @override
@@ -31,12 +32,21 @@ class _MyBookingsState extends State<MyBookings> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'My Bookings',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        Text(
+          'All your bookings',
+          style: GoogleFonts.roboto(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        Text(
+          'Thank you for booking with us',
+          style: GoogleFonts.roboto(
+            fontSize: 16,
+            color: Colors.grey.withOpacity(0.5),
+            fontWeight: FontWeight.w600,
           ),
         ),
         const SizedBox(height: 10),
