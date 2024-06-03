@@ -172,7 +172,6 @@ class _MyApartmentsState extends State<MyApartments> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    var size = MediaQuery.of(context).size;
     return Column(
       children: [
         Row(
