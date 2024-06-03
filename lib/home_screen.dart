@@ -476,7 +476,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 label,
                 style: GoogleFonts.raleway(
                   fontWeight: FontWeight.w600,
-                  fontSize: label == 'Airport Shuttles' ? 11 : 14,
+                  fontSize: 14,
                   color: CustomColors.smokyBlackColor,
                 ),
                 minFontSize: 8,
@@ -502,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
       child: Container(
-        width: width * 0.35,
+        width: width * 0.38,
         margin: EdgeInsets.only(right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -543,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: height * 0.01),
+            SizedBox(height: height * 0.008),
             Text(
               "   \$${apartment.price} / night",
               style: GoogleFonts.raleway(
