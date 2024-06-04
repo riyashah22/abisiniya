@@ -13,7 +13,10 @@ class VehicleItem extends StatefulWidget {
 class _VehicleItemState extends State<VehicleItem> {
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return Container(
+      height: height * 0.16,
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -33,8 +36,8 @@ class _VehicleItemState extends State<VehicleItem> {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: SizedBox(
-              height: 120,
-              width: 180,
+              height: height * 0.16,
+              width: width * 0.45,
               child: Image.network(
                 widget.vehicle.images,
                 fit: BoxFit.cover,
@@ -44,7 +47,7 @@ class _VehicleItemState extends State<VehicleItem> {
           const SizedBox(width: 16),
           Expanded(
             child: Container(
-              height: 120,
+              height: height * 0.15,
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,8 +60,8 @@ class _VehicleItemState extends State<VehicleItem> {
                         ),
                     overflow: TextOverflow.fade,
                   ),
-                  const SizedBox(
-                    height: 4,
+                  SizedBox(
+                    height: height * 0.001,
                   ),
                   Text(
                     widget.vehicle.make,
@@ -68,6 +71,7 @@ class _VehicleItemState extends State<VehicleItem> {
                   ),
                   Expanded(
                     child: Container(
+                      margin: EdgeInsets.only(right: 5),
                       alignment: Alignment.bottomCenter,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,8 +110,8 @@ class _VehicleItemState extends State<VehicleItem> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 4,
+                          SizedBox(
+                            width: width * 0.01,
                           )
                         ],
                       ),
