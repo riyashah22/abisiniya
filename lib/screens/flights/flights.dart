@@ -144,11 +144,11 @@ class _FlightScreenState extends State<FlightScreen> {
                         ),
                       ],
                     ),
-                    // Image.asset(
-                    //   "assets/flight_booking_icon.gif",
-                    //   height: 84,
-                    //   width: 84,
-                    // ),
+                    Image.asset(
+                      "assets/flight_booking_icon.gif",
+                      height: 84,
+                      width: 84,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
