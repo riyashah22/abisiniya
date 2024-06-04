@@ -181,9 +181,18 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                   },
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _selectImages,
-                  child: const Text('Select Images'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _selectImages,
+                      child: const Text('Select Images'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => setState(() => _imageFiles.clear()),
+                      child: const Text('Clear Images'),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 _imageFiles.isNotEmpty
