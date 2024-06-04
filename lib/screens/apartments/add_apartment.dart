@@ -1,4 +1,7 @@
+import 'package:abisiniya/themes/custom_colors.dart';
+import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:abisiniya/services/apartment_services.dart';
@@ -86,9 +89,8 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Apartment'),
-      ),
+      backgroundColor: Colors.white,
+      appBar: CustomAppbarSecondaryScreen(context, "Add Your Apartment"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -209,9 +211,24 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
                       )
                     : const Text('No images selected'),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _addApartment,
-                  child: const Text('Add Apartment'),
+                Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        CustomColors.primaryColor,
+                      ),
+                    ),
+                    onPressed: _addApartment,
+                    child: Text(
+                      'Add Apartment',
+                      style: GoogleFonts.roboto(
+                        color: CustomColors.lightPrimaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

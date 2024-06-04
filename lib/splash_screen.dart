@@ -21,14 +21,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               'assets/logo.png',
-              // Ensure the image covers the circle
-            ), // Add your logo here
+            ),
             SizedBox(height: 20),
           ],
         ),

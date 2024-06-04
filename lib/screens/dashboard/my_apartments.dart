@@ -186,6 +186,11 @@ class _MyApartmentsState extends State<MyApartments> {
               ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  CustomColors.primaryColor,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context)
                     .pushReplacementNamed(AddApartmentForm.routeName);
@@ -195,7 +200,7 @@ class _MyApartmentsState extends State<MyApartments> {
                 style: GoogleFonts.raleway(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: CustomColors.smokyBlackColor,
+                  color: CustomColors.lightPrimaryColor,
                 ),
               ),
             ),
@@ -209,13 +214,14 @@ class _MyApartmentsState extends State<MyApartments> {
               crossAxisCount: 2,
               crossAxisSpacing: 13,
               mainAxisSpacing: 0,
-              childAspectRatio: 0.65,
+              childAspectRatio: 0.62,
             ),
             itemCount: myApartments.length,
             itemBuilder: (context, index) {
               var apartment = myApartments[index];
               return Card(
-                color: Color(0xffeff1ed),
+                color: Colors.white,
+                elevation: 3,
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: Stack(
                   children: [
@@ -247,65 +253,80 @@ class _MyApartmentsState extends State<MyApartments> {
                               Text(
                                 overflow: TextOverflow.ellipsis,
                                 apartment['name'],
-                                style: GoogleFonts.raleway(
-                                  letterSpacing: 1.5,
+                                style: GoogleFonts.roboto(
+                                  letterSpacing: 0.5,
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w600,
                                   color: CustomColors.smokyBlackColor,
                                 ),
                               ),
                               Text(
                                 overflow: TextOverflow.ellipsis,
-                                '${apartment['address']},${apartment['country']}',
-                                style: GoogleFonts.raleway(
-                                  letterSpacing: 2,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54,
+                                '${apartment['address']}, ${apartment['country']}',
+                                style: GoogleFonts.openSans(
+                                  letterSpacing: 0.2,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xff708090).withOpacity(0.8),
                                 ),
                               ),
                               SizedBox(
-                                height: height * 0.004,
+                                height: height * 0.02,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Icon(Icons.bed,
-                                      size: 25, color: Colors.black),
+                                  Icon(
+                                    Icons.bed,
+                                    size: 22,
+                                    color: CustomColors.smokyBlackColor
+                                        .withOpacity(0.75),
+                                  ),
                                   Text(
                                     '${apartment['bedroom']}',
-                                    style: GoogleFonts.raleway(
-                                      fontSize: 20,
+                                    style: GoogleFonts.openSans(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: CustomColors.smokyBlackColor,
+                                      color: CustomColors.smokyBlackColor
+                                          .withOpacity(0.75),
                                     ),
                                   ),
                                   SizedBox(width: width * 0.02),
-                                  Icon(Icons.bathtub,
-                                      size: 25, color: Colors.black),
+                                  Icon(
+                                    Icons.bathtub,
+                                    size: 22,
+                                    color: CustomColors.smokyBlackColor
+                                        .withOpacity(0.75),
+                                  ),
                                   Text(
                                     '${apartment['bathroom']}',
-                                    style: GoogleFonts.raleway(
-                                      fontSize: 20,
+                                    style: GoogleFonts.openSans(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: CustomColors.smokyBlackColor,
+                                      color: CustomColors.smokyBlackColor
+                                          .withOpacity(0.75),
                                     ),
                                   ),
                                   SizedBox(width: width * 0.02),
-                                  Icon(Icons.person_2,
-                                      size: 25, color: Colors.black),
+                                  Icon(
+                                    Icons.person_2,
+                                    size: 22,
+                                    color: CustomColors.smokyBlackColor
+                                        .withOpacity(0.75),
+                                  ),
                                   Text(
                                     '${apartment['guest']} ',
-                                    style: GoogleFonts.raleway(
-                                      fontSize: 20,
+                                    style: GoogleFonts.openSans(
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: CustomColors.smokyBlackColor,
+                                      color: CustomColors.smokyBlackColor
+                                          .withOpacity(0.75),
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: height * 0.01),
+                              SizedBox(height: height * 0.025),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -318,7 +339,7 @@ class _MyApartmentsState extends State<MyApartments> {
                                       height: height * 0.03,
                                       width: width * 0.05,
                                       'assets/editIicon.png',
-                                      fit: BoxFit.cover, // Adjust as needed
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   GestureDetector(
@@ -331,7 +352,6 @@ class _MyApartmentsState extends State<MyApartments> {
                                       width: width * 0.045,
                                       'assets/deleteIcon.png',
                                       fit: BoxFit.cover,
-                                      // Adjust as needed
                                     ),
                                   ),
                                 ],
