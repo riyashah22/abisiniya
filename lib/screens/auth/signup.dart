@@ -1,3 +1,5 @@
+import 'package:abisiniya/constants/error_handling.dart';
+import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,28 @@ class _SignupScreenState extends State<SignupScreen> {
   AuthServices authServices = AuthServices();
 
   void signup() async {
-    authServices.signup(
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Wrap(children: [
+            Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Text("Creating an account...",
+                    style: GoogleFonts.roboto(
+                      fontSize: 16,
+                    )),
+              ],
+            ),
+          ]),
+        );
+      },
+    );
+
+    var result = await authServices.signup(
       context,
       nameController.text,
       surnameController.text,
@@ -34,6 +57,17 @@ class _SignupScreenState extends State<SignupScreen> {
       passwordController.text,
       confirmPasswordController.text,
     );
+
+    Navigator.pop(context);
+
+    if (result) {
+      Navigator.of(context).pushNamed(
+        OtpVerificationScreen.routeName,
+        arguments: emailController.text,
+      );
+    } else {
+      showErrorMessage(context, "Email or phone is already taken");
+    }
   }
 
   @override

@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/user.dart';
 import 'package:abisiniya/provider/user.dart';
-import 'package:abisiniya/screens/auth/login.dart';
-import 'package:abisiniya/screens/auth/otpVerification.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthServices {
-  void login(BuildContext context, String email, String password) async {
+  Future<bool> login(
+      BuildContext context, String email, String password) async {
     // void handleHttpError(String errorMessage) {
     //   // showSnackBar(context, errorMessage);
     //   showErrorMessage(context, errorMessage);
@@ -23,41 +22,60 @@ class AuthServices {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           });
-      print(jsonDecode(res.body)['data']['token']);
+      // print(jsonDecode(res.body)['data']['token']);
 
-      httpErrorHandle(
-        response: res,
-        onSuccess: () async {
-          User user = User(
-            userId: jsonDecode(res.body)['data']['userID'],
-            name: jsonDecode(res.body)['data']['name'],
-            token: jsonDecode(res.body)['data']['token'],
-            token_type: jsonDecode(res.body)['data']['token_type'],
-          );
-          Provider.of<UserProvider>(context, listen: false).setUser(
-            user,
-          );
+      if (res.statusCode == 200) {
+        User user = User(
+          userId: jsonDecode(res.body)['data']['userID'],
+          name: jsonDecode(res.body)['data']['name'],
+          token: jsonDecode(res.body)['data']['token'],
+          token_type: jsonDecode(res.body)['data']['token_type'],
+        );
+        Provider.of<UserProvider>(context, listen: false).setUser(
+          user,
+        );
+        return true;
+      } else if (res.statusCode == 404) {
+        //if credentials are wrong
+        return false;
+      } else {
+        return false;
+      }
 
-          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
-        },
-        onError: (errorMessage) {
-          // showErrorMessage(context, errorMessage);
-        },
-      );
+      // httpErrorHandle(
+      //   response: res,
+      //   onSuccess: () async {
+      //     User user = User(
+      //       userId: jsonDecode(res.body)['data']['userID'],
+      //       name: jsonDecode(res.body)['data']['name'],
+      //       token: jsonDecode(res.body)['data']['token'],
+      //       token_type: jsonDecode(res.body)['data']['token_type'],
+      //     );
+      //     Provider.of<UserProvider>(context, listen: false).setUser(
+      //       user,
+      //     );
+      //     Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+      //     // return true;
+      //   },
+      //   onError: (errorMessage) {
+      //     // showErrorMessage(context, errorMessage);
+      //   },
+      // );
     } catch (e) {
       /*
         status code - 404 (not found)
         such that won't go to onError()
        */
-      showErrorMessage(context, "Enter correct email or password");
+      // showErrorMessage(context, "Enter correct email or password");
+      return false;
     }
   }
 
-  void logout(BuildContext context, String token) async {
-    void handleHttpError(String errorMessage) {
-      // showSnackBar(context, errorMessage);
-      showErrorMessage(context, errorMessage);
-    }
+  Future<bool> logout(BuildContext context, String token) async {
+    // void handleHttpError(String errorMessage) {
+    //   // showSnackBar(context, errorMessage);
+    //   showErrorMessage(context, errorMessage);
+    // }
 
     try {
       http.Response res = await http.post(
@@ -68,35 +86,59 @@ class AuthServices {
             'Accept': 'application/json',
           });
 
-      httpErrorHandle(
-        response: res,
-        onSuccess: () async {
-          User user = User(
-            userId: 0,
-            name: "",
-            token: "",
-            token_type: "",
-          );
-          Provider.of<UserProvider>(context, listen: false).setUser(
-            user,
-          );
+      if (res.statusCode == 200) {
+        User user = User(
+          userId: 0,
+          name: "",
+          token: "",
+          token_type: "",
+        );
+        Provider.of<UserProvider>(context, listen: false).setUser(
+          user,
+        );
+        return true;
+      } else if (res.statusCode == 401) {
+        return false;
+      } else {
+        return false;
+      }
 
-          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
-        },
-        onError: (errorMessage) {
-          showErrorMessage(context, "Something went wrong");
-        },
-      );
+      // httpErrorHandle(
+      //   response: res,
+      //   onSuccess: () async {
+      //     User user = User(
+      //       userId: 0,
+      //       name: "",
+      //       token: "",
+      //       token_type: "",
+      //     );
+      //     Provider.of<UserProvider>(context, listen: false).setUser(
+      //       user,
+      //     );
+
+      //     Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+      //   },
+      //   onError: (errorMessage) {
+      //     showErrorMessage(context, "Something went wrong");
+      //   },
+      // );
     } catch (e) {
-      showErrorMessage(context, "Something went wrong");
+      // showErrorMessage(context, "Something went wrong");
+      return false;
 
       // final errorMessage = "Error occurred: ${e.toString()}";
       // handleHttpError(errorMessage);
     }
   }
 
-  void signup(BuildContext context, String name, String surname, String email,
-      String phone, String password, String confirmPassword) async {
+  Future<bool> signup(
+      BuildContext context,
+      String name,
+      String surname,
+      String email,
+      String phone,
+      String password,
+      String confirmPassword) async {
     void handleHttpError(String errorMessage) {
       showSnackBar(context, errorMessage);
     }
@@ -121,22 +163,31 @@ class AuthServices {
         },
         body: jsonEncode(data),
       );
-      httpErrorHandle(
-        response: res,
-        onSuccess: () async {
-          // print(jsonDecode(res.body));
-          Navigator.of(context).pushNamed(OtpVerificationScreen.routeName,
-              arguments: {'email': email});
-        },
-        onError: (errorMessage) {
-          //  status code - 400 (bad request)
-          showErrorMessage(context, errorMessage);
-        },
-      );
+
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+
+      // httpErrorHandle(
+      //   response: res,
+      //   onSuccess: () async {
+      //     // print(jsonDecode(res.body));
+      //     Navigator.of(context).pushNamed(OtpVerificationScreen.routeName,
+      //         arguments: {'email': email});
+      //   },
+      //   onError: (errorMessage) {
+      //     //  status code - 400 (bad request)
+      //     showErrorMessage(context, errorMessage);
+      //   },
+      // );
     } catch (e) {
       // only excutes when there is error (404)
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // handleHttpError(errorMessage);
+
+      return false;
     }
   }
 
@@ -197,33 +248,54 @@ class AuthServices {
     return null;
   }
 
-  void otpVerify(
+  Future<int> otpVerify(
     BuildContext context,
     String email,
     String otp,
   ) async {
-    void handleHttpError(String errorMessage) {
-      showSnackBar(context, errorMessage);
-    }
+    // void handleHttpError(String errorMessage) {
+    //   showSnackBar(context, errorMessage);
+    // }
 
     try {
       http.Response res = await http.post(
         Uri.parse(
-            "https://www.abisiniya.com/api/v1/otpverify?email=$email&otp=$otp"),
+            "https://staging.abisiniya.com/api/v1/otpverify?email=$email&otp=$otp"),
       );
+      print(res.body);
+      print(res.statusCode);
+      if (res.statusCode == 200) {
+        return 0;
+      } else if (res.statusCode == 400) {
+        return 1;
+      } else if (res.statusCode == 404) {
+        return 2;
+      } else {
+        return 3;
+      }
 
-      httpErrorHandle(
-        response: res,
-        onSuccess: () async {
-          print(jsonDecode(res.body));
-          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-        },
-        onError: (errorMessage) {
-          showErrorMessage(context, "Failed to generate OTP");
-        },
-      );
+      // httpErrorHandle(
+      //   response: res,
+      //   onSuccess: () async {
+      //     print(jsonDecode(res.body));
+      //     Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+      //   },
+      //   onError: (errorMessage) {
+      //     showErrorMessage(context, "Failed to generate OTP");
+      //   },
+      // );
     } catch (e) {
-      showErrorMessage(context, "Something went wrong");
+      // if (res.statusCode == 200) {
+      //   return 0;
+      // } else if (res.statusCode == 400) {
+      //   return 1;
+      // } else if (res.statusCode == 404) {
+      //   return 2;
+      // } else {
+      //   return 3;
+      // }
+      return 3;
+      // showErrorMessage(context, "Something went wrong");
 
       // final errorMessage = "Error occurred: ${e.toString()}";
       // handleHttpError(errorMessage);

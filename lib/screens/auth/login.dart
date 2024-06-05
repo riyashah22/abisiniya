@@ -1,8 +1,8 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/screens/auth/signup.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,8 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthServices authServices = AuthServices();
 
   void login() async {
-    authServices.login(context, email.text, password.text);
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -39,11 +37,19 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     );
 
+    var result = await authServices.login(context, email.text, password.text);
+
     // Simulate a delay for 5 seconds
-    await Future.delayed(const Duration(seconds: 3));
+    // await Future.delayed(const Duration(seconds: 3));
 
     // Dismiss the loading dialog
     Navigator.pop(context);
+
+    if (result) {
+      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+    } else {
+      showErrorMessage(context, "Invalid email or password");
+    }
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/about/about.dart';
 import 'package:abisiniya/screens/apartments/detail_apartment_screen.dart';
@@ -34,8 +35,32 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Vehicle> vehicleList = [];
   List<Apartment> apartmentsList = [];
 
-  void logoutAction(BuildContext context, String token) {
-    authServices.logout(context, token);
+  void logoutAction(BuildContext context, String token) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text("Logging out..."),
+            ],
+          ),
+        );
+      },
+    );
+
+    var result = await authServices.logout(context, token);
+
+    Navigator.pop(context);
+
+    if (result) {
+      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+    } else {
+      showErrorMessage(context, "Something went wrong");
+    }
   }
 
   double _scale = 1.0;
