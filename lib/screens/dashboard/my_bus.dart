@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:abisiniya/screens/vehicles/add_bus.dart';
 import 'package:abisiniya/services/bus_services.dart';
-import 'package:flutter/material.dart';
 
 class MyBus extends StatefulWidget {
   const MyBus({super.key});
@@ -17,19 +18,16 @@ class _MyBusState extends State<MyBus> {
   Future<void> fetchUserBus() async {
     final vehicles = await busServices.usersBus(context);
     if (vehicles != null) {
-      // print(vehicles);
       setState(() {
         myBus = vehicles;
       });
     }
-    // print(myBus[0]['name']);
   }
 
   @override
   void initState() {
     super.initState();
     fetchUserBus();
-    // TODO: implement initState
   }
 
   void showEditBusDialog(Map<String, dynamic> vehicle) {
@@ -67,91 +65,138 @@ class _MyBusState extends State<MyBus> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Edit Bus'),
+          backgroundColor: Colors.white,
+          title: Text('Edit Bus',
+              style: GoogleFonts.openSans(color: Colors.black)),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: seaterController,
-                  decoration: const InputDecoration(labelText: 'Seater'),
+                  decoration: InputDecoration(
+                      labelText: 'Seater',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: addressController,
-                  decoration: const InputDecoration(labelText: 'Address'),
+                  decoration: InputDecoration(
+                      labelText: 'Address',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: cityController,
-                  decoration: const InputDecoration(labelText: 'City'),
+                  decoration: InputDecoration(
+                      labelText: 'City',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: countryController,
-                  decoration: const InputDecoration(labelText: 'Country'),
+                  decoration: InputDecoration(
+                      labelText: 'Country',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: makeController,
-                  decoration: const InputDecoration(labelText: 'Make'),
+                  decoration: InputDecoration(
+                      labelText: 'Make',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: modelController,
-                  decoration: const InputDecoration(labelText: 'Model'),
+                  decoration: InputDecoration(
+                      labelText: 'Model',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: yearController,
-                  decoration: const InputDecoration(labelText: 'Year'),
+                  decoration: InputDecoration(
+                      labelText: 'Year',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: engineSizeController,
-                  decoration: const InputDecoration(labelText: 'Engine Size'),
+                  decoration: InputDecoration(
+                      labelText: 'Engine Size',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: fuelTypeController,
-                  decoration: const InputDecoration(labelText: 'Fuel Type'),
+                  decoration: InputDecoration(
+                      labelText: 'Fuel Type',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: weightController,
-                  decoration: const InputDecoration(labelText: 'Weight'),
+                  decoration: InputDecoration(
+                      labelText: 'Weight',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: colorController,
-                  decoration: const InputDecoration(labelText: 'Color'),
+                  decoration: InputDecoration(
+                      labelText: 'Color',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: transmissionController,
-                  decoration: const InputDecoration(labelText: 'Transmission'),
+                  decoration: InputDecoration(
+                      labelText: 'Transmission',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                 ),
                 TextField(
                   controller: priceController,
-                  decoration: const InputDecoration(labelText: 'Price'),
+                  decoration: InputDecoration(
+                      labelText: 'Price',
+                      labelStyle: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.black),
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
                   children: [
                     Text(
                       "Status",
-                      style: TextStyle(fontSize: 14),
+                      style: GoogleFonts.openSans(
+                          fontSize: 14, color: Colors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     DropdownButton(
                       value: selectedStatus,
                       items: [
                         DropdownMenuItem(
-                          child: Text("Pending"),
+                          child: Text("Pending",
+                              style: GoogleFonts.openSans(color: Colors.black)),
                           value: "Pending",
                         ),
                         DropdownMenuItem(
-                          child: Text("Inactive"),
+                          child: Text("Inactive",
+                              style: GoogleFonts.openSans(color: Colors.black)),
                           value: "Inactive",
                         ),
                       ],
@@ -160,7 +205,7 @@ class _MyBusState extends State<MyBus> {
                           selectedStatus = value!;
                         });
                       },
-                    )
+                    ),
                   ],
                 ),
               ],
@@ -171,11 +216,11 @@ class _MyBusState extends State<MyBus> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text('Cancel',
+                  style: GoogleFonts.openSans(color: Colors.black)),
             ),
             ElevatedButton(
               onPressed: () {
-                // Call update vehicle service here
                 busServices.updateBus(
                   context,
                   nameController.text,
@@ -193,10 +238,11 @@ class _MyBusState extends State<MyBus> {
                   colorController.text,
                   transmissionController.text,
                   int.parse(priceController.text),
-                  vehicle['id'],
+                  vehicle['id'].toString(),
                 );
               },
-              child: const Text('Save'),
+              child: Text('Save',
+                  style: GoogleFonts.openSans(color: Colors.black)),
             ),
           ],
         );
@@ -206,13 +252,16 @@ class _MyBusState extends State<MyBus> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'My Vehicles',
+              'My Buses',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -220,8 +269,9 @@ class _MyBusState extends State<MyBus> {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor:
-                      WidgetStatePropertyAll(Theme.of(context).primaryColor)),
+                backgroundColor:
+                    MaterialStatePropertyAll(Theme.of(context).primaryColor),
+              ),
               onPressed: () {
                 Navigator.of(context)
                     .pushReplacementNamed(AddBusScreen.routeName);
@@ -235,248 +285,182 @@ class _MyBusState extends State<MyBus> {
         ),
         const SizedBox(height: 10),
         Container(
-          height: MediaQuery.of(context).size.height * 0.7,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: myBus.length,
             itemBuilder: (context, index) {
               var vehicle = myBus[index];
-              return Container(
+              return Card(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 margin: const EdgeInsets.symmetric(vertical: 10),
-                child: vehicle['pictures'].isNotEmpty
-                    ? Stack(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                  blurRadius: 6,
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
+                            margin: EdgeInsets.only(left: 10),
+                            child: ClipOval(
                               child: Image.network(
                                 vehicle['pictures'][0]['imageUrl'],
-                                height: 300,
-                                fit: BoxFit.cover,
-                                color: Color.fromRGBO(0, 0, 0,
-                                    0.5), // Black color with 50% opacity
-                                colorBlendMode: BlendMode.srcOver,
+                                height: screenWidth * 0.25,
+                                width: screenWidth * 0.25,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(
-                                    0.7), // Semi-transparent background
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 6,
+                              ),
+                              Icon(Icons.location_city),
+                              const SizedBox(width: 6),
+                              Text(
+                                vehicle['city'],
+                                style:
+                                    GoogleFonts.openSans(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 6,
+                              ),
+                              Icon(Icons.location_on),
+                              const SizedBox(width: 6),
+                              Text(
+                                vehicle['country'],
+                                style: GoogleFonts.openSans(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black26,
-                                    offset: Offset(0, 2),
-                                    blurRadius: 6,
-                                  ),
-                                ],
                               ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        vehicle['model'],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        '${vehicle['make']}',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 14,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.local_gas_station,
-                                            color: Colors.red,
-                                          ),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          Text(
-                                            '${vehicle['fuel_type']}',
-                                            style: TextStyle(
-                                              color: Colors.red,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.settings_input_component,
-                                            color: Colors.yellowAccent,
-                                          ),
-                                          SizedBox(
-                                            width: 6,
-                                          ),
-                                          Text(
-                                            '${vehicle['transmission']}',
-                                            style: TextStyle(
-                                              color: Colors.yellowAccent,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.public,
-                                            color: Colors.lightBlueAccent,
-                                          ),
-                                          SizedBox(
-                                            width: 4,
-                                          ),
-                                          Text(
-                                            '${vehicle['country']}',
-                                            style: TextStyle(
-                                              color: Colors.lightBlueAccent,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.price_change_rounded,
-                                            color: Colors.green,
-                                          ),
-                                          SizedBox(
-                                            width: 6,
-                                          ),
-                                          Text(
-                                            '\$${vehicle['price']}/day',
-                                            style: TextStyle(
-                                              color: Colors.green,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 6,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      OutlinedButton.icon(
-                                        icon: Icon(
-                                          Icons.remove_red_eye_outlined,
-                                          color: Colors.grey,
-                                        ),
-                                        label: Text(
-                                          "View",
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                      OutlinedButton.icon(
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color: Colors.grey,
-                                        ),
-                                        label: Text(
-                                          "Edit",
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          showEditBusDialog(vehicle);
-                                        },
-                                      ),
-                                      OutlinedButton.icon(
-                                        icon: Icon(
-                                          Icons.delete_forever,
-                                          color: Colors.grey,
-                                        ),
-                                        label: Text(
-                                          "Delete",
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          busServices.deleteBus(
-                                            context,
-                                            vehicle['id'],
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: screenWidth * 0.05,
+                    ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: screenHeight * 0.02,
+                        ),
+                        Container(
+                          width: 3,
+                          height: screenHeight * 0.16,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: screenHeight * 0.03,
+                            ),
+                            buildRow(Icon(Icons.directions_bus_filled_outlined),
+                                vehicle['name']),
+                            const SizedBox(height: 5),
+                            buildRow(Icon(Icons.person_3),
+                                '${vehicle['seater']} Seater'),
+                            const SizedBox(height: 5),
+                            buildRow(Icon(Icons.local_gas_station_sharp),
+                                vehicle['fuel_type']),
+                            const SizedBox(height: 5),
+                            buildRow(
+                                Icon(Icons.settings), vehicle['transmission']),
+                            const SizedBox(height: 5),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0, top: 8.0),
+                      child: Column(
+                        children: [
+                          PopupMenuButton<String>(
+                            onSelected: (value) {
+                              if (value == 'edit') {
+                                showEditBusDialog(vehicle);
+                              } else if (value == 'delete') {
+                                busServices.deleteBus(context, vehicle['id']);
+                              }
+                            },
+                            itemBuilder: (BuildContext context) => [
+                              const PopupMenuItem(
+                                value: 'edit',
+                                child: Text('Edit'),
                               ),
+                              const PopupMenuItem(
+                                value: 'delete',
+                                child: Text('Delete'),
+                              ),
+                            ],
+                            child: Container(
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.black.withOpacity(0.7),
+                              ),
+                              child: const Icon(
+                                Icons.double_arrow_rounded,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: screenHeight * 0.12,
+                          ),
+                          Text(
+                            '\$${vehicle['price']}/day',
+                            style: GoogleFonts.openSans(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
                             ),
                           ),
                         ],
-                      )
-                    : const Icon(Icons.image, size: 50),
+                      ),
+                    ),
+                  ],
+                ),
               );
             },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildRow(Icon icon, String text) {
+    return Row(
+      children: [
+        icon,
+        SizedBox(
+          width: 6,
+        ),
+        Text(
+          text,
+          style: GoogleFonts.openSans(
+            fontSize: 16,
+            color: Colors.black,
           ),
         ),
       ],

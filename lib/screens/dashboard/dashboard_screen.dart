@@ -27,6 +27,8 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
   // Variables to store selected items and menu option
   String? selectedBooking;
   String? selectedApartment;
+  String? selectedVehicle;
+  String? selectedBus;
   String selectedMenu = 'My Bookings';
 
   @override
@@ -83,6 +85,8 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                             selectedMenu = newValue!;
                             selectedBooking = null;
                             selectedApartment = null;
+                            selectedBus = null;
+                            selectedVehicle = null;
                           });
                         },
                         dropdownColor: Colors.white,

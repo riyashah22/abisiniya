@@ -72,7 +72,7 @@ class BusServices {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
-      print(res.body);
+      print(user.user.token);
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];
       } else {
@@ -174,27 +174,26 @@ class BusServices {
     String color,
     String transmission,
     int price,
-    int id,
+    String id,
   ) async {
     final user = Provider.of<UserProvider>(context, listen: false);
 
     try {
       final updatedData = {
-        'id': id,
         'name': name,
-        'seater': seater,
+        'seater': seater.toString(),
         'address': address,
         'city': city,
         'country': country,
         'make': make,
         'model': model,
-        'year': year,
-        'engine_size': engineSize,
+        'year': year.toString(),
+        'engine_size': engineSize.toString(),
         'fuel_type': fuelType,
-        'weight': weight,
+        'weight': weight.toString(),
         'color': color,
         'transmission': transmission,
-        'price': price,
+        'price': price.toString(),
         'status': status
       };
 
@@ -206,12 +205,13 @@ class BusServices {
         uri,
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer ${user.user.token}',
         },
-        body: jsonEncode(updatedData),
+        body: updatedData,
       );
-
-      print(res.body);
+      // print(user.user.token);
+      print(res.statusCode);
       httpErrorHandle(
         response: res,
         onError: (errorMessage) {
