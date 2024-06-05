@@ -394,6 +394,7 @@ class _MyBusState extends State<MyBus> {
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0, top: 8.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           PopupMenuButton<String>(
                             onSelected: (value) {
@@ -460,7 +461,7 @@ class _MyBusState extends State<MyBus> {
           text,
           style: GoogleFonts.openSans(
             fontSize: 16,
-            color: Colors.black,
+            color: Colors.black.withOpacity(0.7),
           ),
         ),
       ],
