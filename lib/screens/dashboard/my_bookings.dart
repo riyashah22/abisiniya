@@ -1,6 +1,5 @@
 import 'package:abisiniya/screens/dashboard/detailBookings.dart';
 import 'package:abisiniya/services/auth_services.dart';
-import 'package:abisiniya/services/flight_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,25 +14,15 @@ class MyBookings extends StatefulWidget {
 class _MyBookingsState extends State<MyBookings> {
   List<dynamic> myBookings = [];
   AuthServices authServices = AuthServices();
-  FlightServices flightServices = FlightServices();
 
   Future<void> myBookingsList() async {
     final bookingList = await authServices.userBookings(context);
-    final flightList = await flightServices.userFlightRequests(context);
-    bookingList!.forEach((object) {
-      myBookings.add(object);
-    });
-    flightList!.forEach((object) {
-      myBookings.add(object);
-    });
+
     setState(() {
       // myBookings.add(flightList);
       // myBookings.add(bookingList);
-      // myBookings = bookingList ?? [];
+      myBookings = bookingList ?? [];
     });
-    // print(bookingList);
-    // print(flightList);
-    print(myBookings);
   }
 
   @override
