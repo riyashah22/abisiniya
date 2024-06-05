@@ -277,15 +277,15 @@ class ApartmentServices {
     return [];
   }
 
-  void bookApartment(BuildContext context, String start_date, String end_date,
-      int apartment_id) async {
-    void handleHttpError(String errorMessage) {
-      // showSnackBar(context, errorMessage);
-      showErrorMessage(context, errorMessage);
-    }
+  Future<bool> bookApartment(BuildContext context, String start_date,
+      String end_date, int apartment_id) async {
+    // void handleHttpError(String errorMessage) {
+    //   // showSnackBar(context, errorMessage);
+    //   showErrorMessage(context, errorMessage);
+    // }
 
     final user = Provider.of<UserProvider>(context, listen: false).user;
-    print(start_date.split(" ")[0]);
+
     try {
       http.Response res = await http.post(
           headers: {
@@ -302,21 +302,27 @@ class ApartmentServices {
             "bookable_type": "Apartment",
             "bookable_id": apartment_id.toString(),
           });
-      print(res.body);
 
-      httpErrorHandle(
-        response: res,
-        onSuccess: () async {
-          print("booking successful");
-        },
-        onError: (errorMessage) {
-          // showSnackBar(context, errorMessage); //new comment
-          showErrorMessage(context, errorMessage);
-        },
-      );
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+
+      // httpErrorHandle(
+      //   response: res,
+      //   onSuccess: () async {
+      //     print("booking successful");
+      //   },
+      //   onError: (errorMessage) {
+      //     // showSnackBar(context, errorMessage); //new comment
+      //     showErrorMessage(context, errorMessage);
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // handleHttpError(errorMessage);
     }
   }
 }

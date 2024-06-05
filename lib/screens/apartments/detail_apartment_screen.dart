@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/services/apartment_services.dart';
@@ -21,10 +22,34 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
   DateTime? fromDate;
   DateTime? toDate;
 
-  void bookApartment(int apartmentId) {
-    print("vansh132" + apartmentId.toString());
-    // apartmentServices.bookApartment(
-    //     context, fromDate.toString(), toDate.toString(), apartmentId);
+  void bookApartment(int apartmentId) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text("Booking ride..."),
+            ],
+          ),
+        );
+      },
+    );
+    var result = await apartmentServices.bookApartment(
+        context, fromDate.toString(), toDate.toString(), apartmentId);
+    Navigator.pop(context);
+
+    if (result) {
+      showBookingSuccessfulDialog(context, "assets/success.gif");
+      await Future.delayed(const Duration(seconds: 3));
+      Navigator.pop(context);
+    } else {
+      showErrorMessage(context,
+          "Booking failed.\nPlease contact us at info@abisiniya.com, if facing difficulty to book ride.");
+    }
   }
 
   double calculateTotalAmount(int price) {
