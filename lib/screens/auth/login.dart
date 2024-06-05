@@ -1,5 +1,6 @@
 import 'package:abisiniya/screens/auth/signup.dart';
 import 'package:abisiniya/services/auth_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     // Simulate a delay for 5 seconds
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
 
     // Dismiss the loading dialog
     Navigator.pop(context);
@@ -48,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
       ),
@@ -74,21 +76,21 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 "Welcome Back",
                 style: GoogleFonts.roboto(
-                  textStyle:
-                      Theme.of(context).textTheme.headlineLarge!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.5,
-                            color: Theme.of(context).primaryColor,
-                          ),
+                  textStyle: GoogleFonts.roboto(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                    letterSpacing: 0.5,
+                    color: CustomColors.primaryColor,
+                  ),
                 ),
               ),
               Text(
                 "Please login to your account",
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      // letterSpacing: 0.5,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  color: CustomColors.primaryColor,
+                ),
               ),
               const SizedBox(
                 height: 16,
@@ -136,9 +138,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                       icon: const Icon(Icons.arrow_right_alt_outlined),
-                      label: const Text("Login"),
+                      label: Text(
+                        "Login",
+                        style: GoogleFonts.roboto(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
-                        // Add styling if needed
+                        foregroundColor: CustomColors.lightPrimaryColor,
+                        backgroundColor: CustomColors.primaryColor,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0), // Adjust padding as needed
                       ),
@@ -149,17 +158,23 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't have an account? "),
+                  Text(
+                    "Don't have an account? ",
+                    style: GoogleFonts.roboto(
+                      color: CustomColors.secondaryColor,
+                    ),
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(SignupScreen.routeName);
                     },
                     child: Text("Sign up?",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline,
-                              color: Theme.of(context).primaryColor,
-                            )),
+                        style: GoogleFonts.roboto(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          decoration: TextDecoration.underline,
+                          color: CustomColors.primaryColor,
+                        )),
                   ),
                 ],
               ),

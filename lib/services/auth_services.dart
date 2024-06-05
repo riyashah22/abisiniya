@@ -10,10 +10,10 @@ import 'package:provider/provider.dart';
 
 class AuthServices {
   void login(BuildContext context, String email, String password) async {
-    void handleHttpError(String errorMessage) {
-      // showSnackBar(context, errorMessage);
-      showErrorMessage(context, errorMessage);
-    }
+    // void handleHttpError(String errorMessage) {
+    //   // showSnackBar(context, errorMessage);
+    //   showErrorMessage(context, errorMessage);
+    // }
 
     try {
       http.Response res = await http.post(
@@ -41,13 +41,15 @@ class AuthServices {
           Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
         },
         onError: (errorMessage) {
-          // showSnackBar(context, errorMessage); //new comment
-          showErrorMessage(context, errorMessage);
+          // showErrorMessage(context, errorMessage);
         },
       );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      /*
+        status code - 404 (not found)
+        such that won't go to onError()
+       */
+      showErrorMessage(context, "Enter correct email or password");
     }
   }
 
@@ -82,13 +84,14 @@ class AuthServices {
           Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
         },
         onError: (errorMessage) {
-          // showSnackBar(context, errorMessage); //new comment
-          showErrorMessage(context, errorMessage);
+          showErrorMessage(context, "Something went wrong");
         },
       );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      showErrorMessage(context, "Something went wrong");
+
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // handleHttpError(errorMessage);
     }
   }
 
@@ -121,15 +124,17 @@ class AuthServices {
       httpErrorHandle(
         response: res,
         onSuccess: () async {
-          print(jsonDecode(res.body));
+          // print(jsonDecode(res.body));
           Navigator.of(context).pushNamed(OtpVerificationScreen.routeName,
               arguments: {'email': email});
         },
         onError: (errorMessage) {
+          //  status code - 400 (bad request)
           showErrorMessage(context, errorMessage);
         },
       );
     } catch (e) {
+      // only excutes when there is error (404)
       final errorMessage = "Error occurred: ${e.toString()}";
       handleHttpError(errorMessage);
     }
@@ -151,8 +156,9 @@ class AuthServices {
         showSnackBar(context, 'Failed to load apartments');
       }
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      showErrorMessage(context, "Failed to load apartments.");
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
     return null;
   }
@@ -170,9 +176,6 @@ class AuthServices {
       );
 
       if (res.statusCode == 200) {
-        // print(jsonDecode(res.body)['data']['booking'][0]['ownerDetail']);
-        // print(jsonDecode(res.body)['data']['booking'][0]['customerDetail']
-        //     ['Payment Status']);
         print(jsonDecode(res.body)['data']['booking'][0]);
         return [
           jsonDecode(res.body)['data']['booking'][0]['ownerDetail'],
@@ -183,11 +186,13 @@ class AuthServices {
           jsonDecode(res.body)['data']['booking'][0]['checkOut']
         ];
       } else {
-        showSnackBar(context, 'Failed to load apartments');
+        showErrorMessage(context, 'Failed to load apartments');
       }
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      showErrorMessage(context, "Something went wrong");
+
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
     return null;
   }
@@ -214,12 +219,14 @@ class AuthServices {
           Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         },
         onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
+          showErrorMessage(context, "Failed to generate OTP");
         },
       );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
+      showErrorMessage(context, "Something went wrong");
+
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // handleHttpError(errorMessage);
     }
   }
 
