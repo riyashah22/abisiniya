@@ -68,6 +68,28 @@ class FlightServices {
     }
   }
 
+  Future<List<dynamic>?> userFlightRequests(BuildContext context) async {
+    try {
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.get(
+        Uri.parse("https://staging.abisiniya.com/api/v1/flight/flightreqs"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
+      );
+      if (res.statusCode == 200) {
+        return jsonDecode(res.body)['data'];
+      } else {
+        showSnackBar(context, 'Failed to load apartments');
+      }
+    } catch (e) {
+      showErrorMessage(context, "Failed to load apartments.");
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
+    }
+    return null;
+  }
+
   Future<List<String>> airlines(BuildContext context) async {
     try {
       http.Response res = await http.get(

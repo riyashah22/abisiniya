@@ -88,25 +88,28 @@ class VehicleServices {
     //   // showSnackBar(context, errorMessage);
     //   showErrorMessage(context, errorMessage);
     // }
-
+    var bookedVehicle = {
+      "start_date": start_date.split(" ")[0],
+      "end_date": end_date.split(" ")[0],
+      "bookable_type": "Vehicle",
+      "bookable_id": vehicle_id.toString(),
+    };
     final user = Provider.of<UserProvider>(context, listen: false).user;
     print(start_date.split(" ")[0]);
     try {
       http.Response res = await http.post(
-          headers: {
-            'Authorization': 'Bearer ${user.token}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          Uri.parse(
-            "https://staging.abisiniya.com/api/v1/booking/vehicle/booking/authuser",
-          ),
-          body: {
-            "start_date": start_date.split(" ")[0],
-            "end_date": end_date.split(" ")[0],
-            "bookable_type": "Vehicle",
-            "bookable_id": vehicle_id.toString(),
-          });
+        headers: {
+          'Authorization': 'Bearer ${user.token}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        Uri.parse(
+          "https://staging.abisiniya.com/api/v1/booking/vehicle/booking/authuser",
+        ),
+        body: jsonEncode(
+          bookedVehicle,
+        ),
+      );
 
       if (res.statusCode == 200) {
         return true;

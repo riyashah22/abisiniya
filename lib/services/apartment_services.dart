@@ -283,9 +283,13 @@ class ApartmentServices {
     //   // showSnackBar(context, errorMessage);
     //   showErrorMessage(context, errorMessage);
     // }
-
+    var apartment = {
+      "start_date": start_date.split(" ")[0],
+      "end_date": end_date.split(" ")[0],
+      "bookable_type": "Apartment",
+      "bookable_id": apartment_id,
+    };
     final user = Provider.of<UserProvider>(context, listen: false).user;
-
     try {
       http.Response res = await http.post(
           headers: {
@@ -296,13 +300,8 @@ class ApartmentServices {
           Uri.parse(
             "https://staging.abisiniya.com/api/v1/booking/vehicle/booking/authuser",
           ),
-          body: {
-            "start_date": start_date.split(" ")[0],
-            "end_date": end_date.split(" ")[0],
-            "bookable_type": "Apartment",
-            "bookable_id": apartment_id.toString(),
-          });
-
+          body: jsonEncode(apartment));
+      print(res.statusCode);
       if (res.statusCode == 200) {
         return true;
       } else {
@@ -320,6 +319,7 @@ class ApartmentServices {
       //   },
       // );
     } catch (e) {
+      print(e);
       return false;
       // final errorMessage = "Error occurred: ${e.toString()}";
       // handleHttpError(errorMessage);
