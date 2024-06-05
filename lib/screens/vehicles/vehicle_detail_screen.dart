@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/services/vehicle_services.dart';
@@ -24,8 +25,39 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
   DateTime? toDate;
 
   void bookVehicle(int vehicleId) async {
-    vehicleServices.bookVehicle(
-        context, fromDate.toString(), toDate.toString(), vehicleId);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text("Booking ride..."),
+            ],
+          ),
+        );
+      },
+    );
+
+    var result = await vehicleServices.bookVehicle(
+      context,
+      fromDate.toString(),
+      toDate.toString(),
+      vehicleId,
+    );
+
+    Navigator.pop(context);
+
+    if (result) {
+      showBookingSuccessfulDialog(context, "assets/success.gif");
+      await Future.delayed(const Duration(seconds: 3));
+      Navigator.pop(context);
+    } else {
+      showErrorMessage(context,
+          "Booking failed.\nPlease contact us at info@abisiniya.com, if facing difficulty to book ride.");
+    }
   }
 
   double calculateTotalAmount(int price) {

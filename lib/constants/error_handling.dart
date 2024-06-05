@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 void httpErrorHandle({
@@ -68,6 +69,38 @@ void showSuccessMessage(BuildContext context, String successMessage) {
             child: Text("OK"),
           ),
         ],
+      );
+    },
+  );
+}
+
+void showBookingSuccessfulDialog(BuildContext context, String path) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                path, // Replace with your GIF asset path
+                height: 120,
+                width: 120,
+              ),
+              SizedBox(height: 16),
+              Text(
+                "Booking Successful",
+                style: GoogleFonts.roboto(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
       );
     },
   );
