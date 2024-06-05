@@ -1,6 +1,7 @@
 import 'package:abisiniya/screens/dashboard/my_apartments.dart';
 import 'package:abisiniya/screens/dashboard/my_bookings.dart';
 import 'package:abisiniya/screens/dashboard/my_bus.dart';
+import 'package:abisiniya/screens/dashboard/my_flights.dart';
 import 'package:abisiniya/screens/dashboard/my_vehicles.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
   String? selectedApartment;
   String? selectedVehicle;
   String? selectedBus;
+  String? selectedFlights;
   String selectedMenu = 'My Bookings';
 
   @override
@@ -73,7 +75,8 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                           'My Bookings',
                           'My Apartments',
                           'My vehicles',
-                          'My Buses'
+                          'My Buses',
+                          'My Flight Request'
                         ].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -86,6 +89,7 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                             selectedBooking = null;
                             selectedApartment = null;
                             selectedBus = null;
+                            selectedFlights = null;
                             selectedVehicle = null;
                           });
                         },
@@ -112,7 +116,9 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                   MyVehicles()
                 ] else if (selectedMenu == 'My Buses') ...[
                   MyBus()
-                ],
+                ] else if (selectedMenu == 'My Flight Request') ...[
+                  MyFlights(),
+                ]
               ],
             ),
           ),
