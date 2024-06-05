@@ -1,5 +1,6 @@
 import 'package:abisiniya/screens/dashboard/my_apartments.dart';
 import 'package:abisiniya/screens/dashboard/my_bookings.dart';
+import 'package:abisiniya/screens/dashboard/my_bus.dart';
 import 'package:abisiniya/screens/dashboard/my_vehicles.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -66,8 +67,12 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: selectedMenu,
-                        items: ['My Bookings', 'My Apartments', 'My vehicles']
-                            .map((String value) {
+                        items: [
+                          'My Bookings',
+                          'My Apartments',
+                          'My vehicles',
+                          'My Buses'
+                        ].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -101,6 +106,8 @@ class _ApartmentDashboardState extends State<ApartmentDashboard> {
                   MyApartments()
                 ] else if (selectedMenu == 'My vehicles') ...[
                   MyVehicles()
+                ] else if (selectedMenu == 'My Buses') ...[
+                  MyBus()
                 ],
               ],
             ),

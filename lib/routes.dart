@@ -10,6 +10,7 @@ import "package:abisiniya/screens/auth/otpVerification.dart";
 import "package:abisiniya/screens/auth/signup.dart";
 import "package:abisiniya/screens/dashboard/detailBookings.dart";
 import "package:abisiniya/screens/flights/flights.dart";
+import "package:abisiniya/screens/vehicles/add_bus.dart";
 import "package:abisiniya/screens/vehicles/add_vehicle.dart";
 import "package:abisiniya/screens/vehicles/bus_detail_screen.dart";
 import "package:abisiniya/screens/vehicles/vehicle_detail_screen.dart";
@@ -72,6 +73,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const AddVehicleScreen(),
+      );
+    case AddBusScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => AddBusScreen(),
       );
     case BusDetailScreen.routeName:
       return MaterialPageRoute(

@@ -10,15 +10,17 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:path/path.dart';
 
-class VehicleServices {
-  Future<List<Vehicle>> getAllVehicles(BuildContext context) async {
+class BusServices {
+  Future<List<Bus>> getAllBuses(BuildContext context) async {
     try {
       http.Response res = await http.get(
-        Uri.parse(
-          "https://staging.abisiniya.com/api/v1/vehicle/list",
-        ),
-      );
-      List<Vehicle> fetchedVehicles = [];
+          Uri.parse(
+            "https://staging.abisiniya.com/api/v1/bus/list",
+          ),
+          headers: {
+            'Accept': 'application/json',
+          });
+      List<Bus> fetchedBus = [];
       // print(fetchedApartments);
       httpErrorHandle(
         response: res,
@@ -26,9 +28,9 @@ class VehicleServices {
           var data = jsonDecode(jsonEncode(jsonDecode(res.body)['data']));
           // print(jsonDecode(res.body)['data'][0]['model']);
           for (var i = 0; i < data.length; i++) {
-            Vehicle vehicle = Vehicle(
-              id: jsonDecode(res.body)['data'][i]['id'],
+            Bus bus = Bus(
               name: jsonDecode(res.body)['data'][i]['name'].toString(),
+              seater: jsonDecode(res.body)['data'][i]['seater'],
               address: jsonDecode(res.body)['data'][i]['address'],
               city: jsonDecode(res.body)['data'][i]['city'],
               country: jsonDecode(res.body)['data'][i]['country'],
@@ -45,7 +47,7 @@ class VehicleServices {
               images: jsonDecode(res.body)['data'][i]['pictures'][0]
                   ['imageUrl'],
             );
-            fetchedVehicles.add(vehicle);
+            fetchedBus.add(bus);
           }
         },
         onError: (errorMessage) {
@@ -53,7 +55,7 @@ class VehicleServices {
         },
       );
 
-      return fetchedVehicles;
+      return fetchedBus;
     } catch (e) {
       final errorMessage = "Error occurred: ${e.toString()}";
       showSnackBar(context, errorMessage);
@@ -61,16 +63,16 @@ class VehicleServices {
     }
   }
 
-  Future<List<dynamic>?> usersVehicles(BuildContext context) async {
+  Future<List<dynamic>?> usersBus(BuildContext context) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.get(
-        Uri.parse("https://staging.abisiniya.com/api/v1/vehicle/auth/list"),
+        Uri.parse("https://staging.abisiniya.com/api/v1/bus/auth/list"),
         headers: {
           'Authorization': 'Bearer ${user.user.token}',
         },
       );
-      // print(res.body);
+      print(res.body);
       if (res.statusCode == 200) {
         return jsonDecode(res.body)['data'];
       } else {
@@ -83,51 +85,10 @@ class VehicleServices {
     return null;
   }
 
-  void bookVehicle(BuildContext context, String start_date, String end_date,
-      int vehicle_id) async {
-    void handleHttpError(String errorMessage) {
-      // showSnackBar(context, errorMessage);
-      showErrorMessage(context, errorMessage);
-    }
-
-    final user = Provider.of<UserProvider>(context, listen: false).user;
-    print(start_date.split(" ")[0]);
-    try {
-      http.Response res = await http.post(
-          headers: {
-            'Authorization': 'Bearer ${user.token}',
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          Uri.parse(
-            "https://staging.abisiniya.com/api/v1/booking/vehicle/booking/authuser",
-          ),
-          body: {
-            "start_date": start_date.split(" ")[0],
-            "end_date": end_date.split(" ")[0],
-            "bookable_type": "Vehicle",
-            "bookable_id": vehicle_id.toString(),
-          });
-
-      httpErrorHandle(
-        response: res,
-        onSuccess: () async {
-          print("booking successful");
-        },
-        onError: (errorMessage) {
-          // showSnackBar(context, errorMessage); //new comment
-          showErrorMessage(context, errorMessage);
-        },
-      );
-    } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      handleHttpError(errorMessage);
-    }
-  }
-
-  Future<void> addVehicles(
+  Future<void> addBus(
     BuildContext context,
     String name,
+    int seater,
     String address,
     String city,
     String country,
@@ -145,9 +106,10 @@ class VehicleServices {
     final user = Provider.of<UserProvider>(context, listen: false);
 
     try {
-      var uri = Uri.parse("https://staging.abisiniya.com/api/v1/vehicle/add");
+      var uri = Uri.parse("https://staging.abisiniya.com/api/v1/bus/add");
       var request = http.MultipartRequest('POST', uri)
         ..fields['name'] = name
+        ..fields['seater'] = seater.toString()
         ..fields['address'] = address
         ..fields['city'] = city
         ..fields['country'] = country
@@ -195,34 +157,10 @@ class VehicleServices {
     }
   }
 
-  void deleteVehicle(BuildContext context, int id) async {
-    try {
-      final user = Provider.of<UserProvider>(context, listen: false);
-      http.Response res = await http.delete(
-        Uri.parse("https://staging.abisiniya.com/api/v1/vehicle/delete/$id"),
-        headers: {
-          'Authorization': 'Bearer ${user.user.token}',
-        },
-      );
-      print(res.statusCode);
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Vehicle Deleted Successfully");
-        },
-      );
-    } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
-    }
-  }
-
-  Future<void> updateVehicle(
+  Future<void> updateBus(
     BuildContext context,
     String name,
+    int seater,
     String address,
     String city,
     String country,
@@ -242,7 +180,9 @@ class VehicleServices {
 
     try {
       final updatedData = {
+        'id': id,
         'name': name,
+        'seater': seater,
         'address': address,
         'city': city,
         'country': country,
@@ -259,7 +199,7 @@ class VehicleServices {
       };
 
       final uri = Uri.parse(
-        "https://staging.abisiniya.com/api/v1/vehicle/update/$id",
+        "https://staging.abisiniya.com/api/v1/bus/update/$id",
       );
 
       final res = await http.put(
@@ -271,13 +211,14 @@ class VehicleServices {
         body: jsonEncode(updatedData),
       );
 
+      print(res.body);
       httpErrorHandle(
         response: res,
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);
         },
         onSuccess: () {
-          showSnackBar(context, "Vehicle Updated Successfully");
+          showSnackBar(context, "Bus Updated Successfully");
           Navigator.of(context).pop();
         },
       );
@@ -287,50 +228,28 @@ class VehicleServices {
     }
   }
 
-  Future<List<Vehicle>> searchCar(BuildContext context, String search) async {
+  void deleteBus(BuildContext context, int id) async {
     try {
-      List<Vehicle> fetchedVehicles = [];
-      final res = await http.post(
-        Uri.parse(
-            "https://staging.abisiniya.com/api/v1/common/search?type=vehicle&keyword=$search"),
+      final user = Provider.of<UserProvider>(context, listen: false);
+      http.Response res = await http.delete(
+        Uri.parse("https://staging.abisiniya.com/api/v1/bus/delete/$id"),
+        headers: {
+          'Authorization': 'Bearer ${user.user.token}',
+        },
       );
-
+      print(res.statusCode);
       httpErrorHandle(
         response: res,
         onError: (errorMessage) {
           showSnackBar(context, errorMessage);
         },
         onSuccess: () {
-          var data = jsonDecode(jsonEncode(jsonDecode(res.body)['data']));
-          // print(jsonDecode(res.body)['data'][0]['model']);
-          for (var i = 0; i < data.length; i++) {
-            Vehicle vehicle = Vehicle(
-              name: jsonDecode(res.body)['data'][i]['name'].toString(),
-              address: jsonDecode(res.body)['data'][i]['address'],
-              city: jsonDecode(res.body)['data'][i]['city'],
-              country: jsonDecode(res.body)['data'][i]['country'],
-              make: jsonDecode(res.body)['data'][i]['make'],
-              model: jsonDecode(res.body)['data'][i]['model'],
-              year: jsonDecode(res.body)['data'][i]['year'],
-              engineSize: jsonDecode(res.body)['data'][i]['engine_size'],
-              fuelType: jsonDecode(res.body)['data'][i]['fuel_type'],
-              weight: jsonDecode(res.body)['data'][i]['weight'],
-              color: jsonDecode(res.body)['data'][i]['color'],
-              transmission: jsonDecode(res.body)['data'][i]['transmission'],
-              price: jsonDecode(res.body)['data'][i]['price'],
-              status: jsonDecode(res.body)['data'][i]['status'],
-              images: jsonDecode(res.body)['data'][i]['pictures'][0]
-                  ['imageUrl'],
-            );
-            fetchedVehicles.add(vehicle);
-          }
+          showSnackBar(context, "Bus Deleted Successfully");
         },
       );
-      return fetchedVehicles;
     } catch (e) {
       final errorMessage = "Error occurred: ${e.toString()}";
       showSnackBar(context, errorMessage);
     }
-    return [];
   }
 }

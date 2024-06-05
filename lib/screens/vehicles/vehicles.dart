@@ -2,6 +2,7 @@ import 'package:abisiniya/models/bus.dart';
 import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/screens/vehicles/bus_item.dart';
 import 'package:abisiniya/screens/vehicles/vehicle_item.dart';
+import 'package:abisiniya/services/bus_services.dart';
 import 'package:abisiniya/services/vehicle_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
@@ -26,6 +27,7 @@ class _VehicleScreenState extends State<VehicleScreen>
   List<Vehicle> vehicleList = [];
   List<Bus> busList = [];
   VehicleServices vehicleServices = VehicleServices();
+  BusServices busServices = BusServices();
 
   @override
   void initState() {
@@ -54,7 +56,7 @@ class _VehicleScreenState extends State<VehicleScreen>
   }
 
   Future<void> fetchBuses() async {
-    List<Bus> fetchedBus = await vehicleServices.getAllBuses(context);
+    List<Bus> fetchedBus = await busServices.getAllBuses(context);
     setState(() {
       busList = fetchedBus;
     });
