@@ -1,6 +1,9 @@
+import 'package:abisiniya/themes/custom_colors.dart';
+import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/auth_services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String routeName = '/singup-screen';
@@ -36,44 +39,47 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      backgroundColor: Colors.white,
+      appBar: CustomAppbarSecondaryScreen(context, "Welcome to Abisiniya"),
       body: Container(
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(
-                  height: 48,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Text(
                   "Create An Account",
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                  style: GoogleFonts.roboto(
+                    color: CustomColors.primaryColor,
                     fontWeight: FontWeight.bold,
+                    letterSpacing: 0.2,
                     fontSize: 25,
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 2,
                 ),
                 Text(
                   "Ready to roam? Join us today!",
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: CustomColors.primaryColor,
                     fontSize: 12,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Divider(
                     height: 10,
-                    color: Theme.of(context).primaryColor,
+                    color: CustomColors.primaryColor,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 10,
+                  ),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -126,8 +132,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: InputDecoration(
                             hintText: 'Enter Your Phone Number',
                             border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor),
+                              borderSide:
+                                  BorderSide(color: CustomColors.primaryColor),
                               borderRadius: BorderRadius.circular(5.0),
                             ),
                           ),
@@ -169,24 +175,52 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 15.0),
                         ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStatePropertyAll(
+                            CustomColors.primaryColor,
+                          )),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               signup();
                             }
                           },
-                          child: const Center(child: Text('Create Account')),
+                          child: Center(
+                              child: Text(
+                            'Create Account',
+                            style: GoogleFonts.roboto(
+                              color: CustomColors.lightPrimaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              letterSpacing: 0.5,
+                            ),
+                          )),
                         ),
                         const SizedBox(height: 10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Already have an account? "),
+                            Text(
+                              "Already have an account? ",
+                              style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w400,
+                                color: CustomColors.smokyBlackColor,
+                              ),
+                            ),
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context)
                                     .pushNamed(LoginScreen.routeName);
                               },
-                              child: const Text('Login'),
+                              child: Text(
+                                'Login',
+                                style: GoogleFonts.roboto(
+                                  fontWeight: FontWeight.w700,
+                                  color: CustomColors.primaryColor,
+                                  letterSpacing: 0.5,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 14,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -229,8 +263,8 @@ class InputTextField extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w700,
               fontSize: 16.0,
             ),
           ),
@@ -240,7 +274,7 @@ class InputTextField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hintText,
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                borderSide: BorderSide(color: CustomColors.primaryColor),
                 borderRadius: BorderRadius.circular(5.0),
               ),
             ),
