@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/screens/auth/login.dart';
 import 'package:abisiniya/services/flight_services.dart';
@@ -72,14 +73,29 @@ class _FlightScreenState extends State<FlightScreen> {
         },
       );
     } else {
-      if (_formKey.currentState?.validate() ?? false) {
+      if (_formKey.currentState?.validate() ?? true) {
         if (_tripType == 'Round Trip' && (fromDate == null || toDate == null)) {
           _showValidationDialog(
               'Both departure and return dates are required for round trips');
           return;
         }
 
-        await flightServices.flightRequest(
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const AlertDialog(
+              content: Row(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 16),
+                  Text("Requesting Flight..."),
+                ],
+              ),
+            );
+          },
+        );
+        var result = await flightServices.flightRequest(
             context,
             _from,
             _to,
@@ -89,6 +105,16 @@ class _FlightScreenState extends State<FlightScreen> {
             _class,
             _tripType,
             _message);
+        Navigator.pop(context);
+
+        if (result) {
+          showBookingSuccessfulDialog(context, "assets/success.gif");
+          await Future.delayed(const Duration(seconds: 3));
+          Navigator.pop(context);
+        } else {
+          showErrorMessage(context,
+              "Booking failed.\nPlease contact us at info@abisiniya.com, if facing difficulty to book ride.");
+        }
       }
     }
   }

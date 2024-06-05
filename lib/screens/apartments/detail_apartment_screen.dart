@@ -32,7 +32,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
             children: [
               CircularProgressIndicator(),
               SizedBox(width: 16),
-              Text("Booking ride..."),
+              Text("Booking apartment..."),
             ],
           ),
         );

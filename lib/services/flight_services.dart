@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class FlightServices {
-  Future<void> flightRequest(
+  Future<bool> flightRequest(
       BuildContext context,
       String from,
       String to,
@@ -17,14 +17,14 @@ class FlightServices {
       String trip_option,
       String message) async {
     final user = Provider.of<UserProvider>(context, listen: false);
-
+    // return true;
     try {
       final request = {
         'from': from,
         'to': to,
         'airline': airline,
-        'departure_date': fromDate,
-        'return_date': toDate,
+        'departure_date': fromDate.split(" ")[0],
+        'return_date': toDate.split(" ")[0],
         'travel_class': travel_class,
         'trip_option': trip_option,
         'message': message,
@@ -44,18 +44,27 @@ class FlightServices {
         body: jsonEncode(request),
       );
 
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Flight Request Submitted");
-        },
-      );
+      print(res.body);
+
+      if (res.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+
+      // httpErrorHandle(
+      //   response: res,
+      //   onError: (errorMessage) {
+      //     showSnackBar(context, errorMessage);
+      //   },
+      //   onSuccess: () {
+      //     showSnackBar(context, "Flight Request Submitted");
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
   }
 
