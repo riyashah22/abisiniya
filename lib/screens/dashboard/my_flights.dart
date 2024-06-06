@@ -89,10 +89,10 @@ class _MyFlightsState extends State<MyFlights> {
     return Container(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
           child: Card(
             color: Colors.white,
-            elevation: 4,
+            elevation: 7,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -114,9 +114,9 @@ class _MyFlightsState extends State<MyFlights> {
                       Text(
                         request['airline'],
                         style: GoogleFonts.roboto(
-                          letterSpacing: 2,
+                          letterSpacing: 1.5,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18,
                         ),
                       ),
                     ],
@@ -127,7 +127,7 @@ class _MyFlightsState extends State<MyFlights> {
                       Expanded(
                         child: Divider(
                           thickness: 1,
-                          color: Colors.grey,
+                          color: Colors.grey.withOpacity(0.8),
                         ),
                       ),
                       Container(
@@ -142,14 +142,14 @@ class _MyFlightsState extends State<MyFlights> {
                             Text(
                               'Flight id: ',
                               style: GoogleFonts.roboto(
-                                fontSize: 12,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
                               ' ${myFlights[0]['flight_request_id']}',
                               style: GoogleFonts.openSans(
-                                fontSize: 12,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -164,11 +164,14 @@ class _MyFlightsState extends State<MyFlights> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 20),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(Icons.flight_takeoff_outlined),
+                      Icon(
+                        Icons.flight_takeoff_outlined,
+                        color: CustomColors.smokyBlackColor.withOpacity(0.8),
+                      ),
                       SizedBox(width: 4),
                       Expanded(
                         child: Text(
@@ -178,7 +181,10 @@ class _MyFlightsState extends State<MyFlights> {
                         ),
                       ),
                       SizedBox(width: 26),
-                      Icon(Icons.flight_land_outlined),
+                      Icon(
+                        Icons.flight_land_outlined,
+                        color: CustomColors.smokyBlackColor.withOpacity(0.8),
+                      ),
                       SizedBox(width: 4),
                       Expanded(
                         child: Text(
@@ -333,7 +339,7 @@ class _MyFlightsState extends State<MyFlights> {
                           color: request['status'] == 'Not Paid'
                               ? Colors.red
                               : Colors.green,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                           fontSize: 14,
                         ),
                       ),
