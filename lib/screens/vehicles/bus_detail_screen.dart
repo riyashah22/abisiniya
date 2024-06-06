@@ -485,12 +485,12 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xfff8fbf1),
-            Color(0xfff8fbf1),
+            CustomColors.lightPrimaryColor,
+            CustomColors.lightPrimaryColor,
           ],
         ),
         borderRadius: BorderRadius.circular(6),
