@@ -95,12 +95,23 @@ class _MyFlightsState extends State<MyFlights> {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.grey),
                         ),
-                        child: Text(
-                          'Flight Id ${myFlights[0]['flight_request_id']}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Flight id: ',
+                              style: GoogleFonts.roboto(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              ' ${myFlights[0]['flight_request_id']}',
+                              style: GoogleFonts.openSans(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Expanded(
@@ -121,6 +132,7 @@ class _MyFlightsState extends State<MyFlights> {
                         child: Text(
                           request['from'],
                           softWrap: true,
+                          style: GoogleFonts.openSans(),
                         ),
                       ),
                       SizedBox(width: 26),
@@ -130,6 +142,7 @@ class _MyFlightsState extends State<MyFlights> {
                         child: Text(
                           request['to'],
                           softWrap: true,
+                          style: GoogleFonts.openSans(),
                         ),
                       ),
                     ],
@@ -153,7 +166,10 @@ class _MyFlightsState extends State<MyFlights> {
                                 fontSize: 14,
                               ),
                             ),
-                            Text(request['departure_date']),
+                            Text(
+                              request['departure_date'],
+                              style: GoogleFonts.openSans(),
+                            ),
                           ],
                         ),
                       ),
@@ -182,6 +198,7 @@ class _MyFlightsState extends State<MyFlights> {
                               request['return_date'] == null
                                   ? 'N/A'
                                   : request['return_date'].toString(),
+                              style: GoogleFonts.openSans(),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],
@@ -194,17 +211,13 @@ class _MyFlightsState extends State<MyFlights> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width:
-                            120, // Adjust width to control the horizontal size
-                        height:
-                            40, // Adjust height to control the vertical size
+                        width: 120,
+                        height: 40,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              25), // Adjust the radius to make it more oval
+                          borderRadius: BorderRadius.circular(25),
                           border: Border.all(
-                            color: CustomColors
-                                .primaryColor, // Optional border color
-                            width: 2, // Optional border width
+                            color: CustomColors.primaryColor,
+                            width: 2,
                           ),
                         ),
                         child: Center(
@@ -217,7 +230,7 @@ class _MyFlightsState extends State<MyFlights> {
                               ),
                               Text(
                                 request['travel_class'],
-                                style: TextStyle(
+                                style: GoogleFonts.openSans(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -227,17 +240,13 @@ class _MyFlightsState extends State<MyFlights> {
                         ),
                       ),
                       Container(
-                        width:
-                            120, // Adjust width to control the horizontal size
-                        height:
-                            50, // Adjust height to control the vertical size
+                        width: 120,
+                        height: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              25), // Adjust the radius to make it more oval
+                          borderRadius: BorderRadius.circular(25),
                           border: Border.all(
-                            color: CustomColors
-                                .primaryColor, // Optional border color
-                            width: 2, // Optional border width
+                            color: CustomColors.primaryColor,
+                            width: 2,
                           ),
                         ),
                         child: Center(
@@ -252,7 +261,7 @@ class _MyFlightsState extends State<MyFlights> {
                               ),
                               Text(
                                 request['trip_option'],
-                                style: TextStyle(
+                                style: GoogleFonts.openSans(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -278,7 +287,7 @@ class _MyFlightsState extends State<MyFlights> {
                       SizedBox(width: 8),
                       Text(
                         request['status'],
-                        style: GoogleFonts.roboto(
+                        style: GoogleFonts.openSans(
                           color: request['status'] == 'Not Paid'
                               ? Colors.red
                               : Colors.green,
