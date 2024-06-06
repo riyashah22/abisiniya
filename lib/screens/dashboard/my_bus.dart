@@ -1,3 +1,4 @@
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:abisiniya/screens/vehicles/add_bus.dart';
@@ -257,8 +258,8 @@ class _MyBusState extends State<MyBus> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
 
     return Column(
       children: [
@@ -275,7 +276,7 @@ class _MyBusState extends State<MyBus> {
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStatePropertyAll(Theme.of(context).primaryColor),
+                    WidgetStatePropertyAll(Theme.of(context).primaryColor),
               ),
               onPressed: () {
                 Navigator.of(context)
@@ -291,15 +292,38 @@ class _MyBusState extends State<MyBus> {
         const SizedBox(height: 10),
         if (isLoading)
           Container(
-            height: screenHeight * 0.6,
+            height: height * 0.6,
             child: Center(
-                child: Center(
-              child: Image.asset(
-                "assets/loading.gif",
-                height: 100,
-                width: 100,
+              child: Center(
+                child: Image.asset(
+                  "assets/loading.gif",
+                  height: 100,
+                  width: 100,
+                ),
               ),
-            )),
+            ),
+          )
+        else if (myBus.isEmpty)
+          Container(
+            height: height * 0.6,
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: height * 0.2,
+                  ),
+                  Image.asset("assets/noDataFound.gif"),
+                  Text(
+                    "No Data Found",
+                    style: GoogleFonts.raleway(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColors.smokyBlackColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           )
         else
           Container(
@@ -327,8 +351,8 @@ class _MyBusState extends State<MyBus> {
                               child: ClipOval(
                                 child: Image.network(
                                   vehicle['pictures'][0]['imageUrl'],
-                                  height: screenWidth * 0.25,
-                                  width: screenWidth * 0.25,
+                                  height: height * 0.25,
+                                  width: width * 0.25,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -369,16 +393,16 @@ class _MyBusState extends State<MyBus> {
                         ),
                       ),
                       SizedBox(
-                        width: screenWidth * 0.05,
+                        width: width * 0.05,
                       ),
                       Column(
                         children: [
                           SizedBox(
-                            height: screenHeight * 0.02,
+                            height: height * 0.02,
                           ),
                           Container(
                             width: 3,
-                            height: screenHeight * 0.16,
+                            height: height * 0.16,
                             color: Colors.black,
                           ),
                         ],
@@ -391,7 +415,7 @@ class _MyBusState extends State<MyBus> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: screenHeight * 0.03,
+                                height: height * 0.03,
                               ),
                               buildRow(
                                   Icon(Icons.directions_bus_filled_outlined),
@@ -446,7 +470,7 @@ class _MyBusState extends State<MyBus> {
                               ),
                             ),
                             SizedBox(
-                              height: screenHeight * 0.12,
+                              height: height * 0.12,
                             ),
                             Text(
                               '\$${vehicle['price']}/day',

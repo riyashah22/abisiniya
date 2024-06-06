@@ -223,6 +223,7 @@ class _MyApartmentsState extends State<MyApartments> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         Row(
@@ -261,13 +262,36 @@ class _MyApartmentsState extends State<MyApartments> {
           Container(
             height: height * 0.6,
             child: Center(
-                child: Center(
-              child: Image.asset(
-                "assets/loading.gif",
-                height: 100,
-                width: 100,
+              child: Center(
+                child: Image.asset(
+                  "assets/loading.gif",
+                  height: 100,
+                  width: 100,
+                ),
               ),
-            )),
+            ),
+          )
+        else if (myApartments.isEmpty)
+          Container(
+            height: height * 0.6,
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: height * 0.2,
+                  ),
+                  Image.asset("assets/noDataFound.gif"),
+                  Text(
+                    "No Data Found",
+                    style: GoogleFonts.raleway(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColors.smokyBlackColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           )
         else
           Container(
@@ -432,7 +456,7 @@ class _MyApartmentsState extends State<MyApartments> {
 
                                         if (result) {
                                           showSuccessMessage(context,
-                                              "Apartment Updated Successfully.\nPlease Refresh the screen to view changes.");
+                                              "Apartment Deleted Successfully.\nPlease Refresh the screen to view changes.");
                                         } else {
                                           showErrorMessage(
                                               context, "Something went wrong");

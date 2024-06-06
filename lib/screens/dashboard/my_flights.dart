@@ -12,16 +12,21 @@ class MyFlights extends StatefulWidget {
 
 class _MyFlightsState extends State<MyFlights> {
   List<dynamic> myFlights = [];
+  bool isLoading = false;
   FlightServices flightServices = FlightServices();
 
   Future<void> fetchUserApartments() async {
     final flights = await flightServices.userFlightRequests(context);
     if (flights != null) {
       setState(() {
+        isLoading = false;
         myFlights = flights;
       });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
     }
-    print(myFlights[0]);
   }
 
   @override
@@ -32,15 +37,52 @@ class _MyFlightsState extends State<MyFlights> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
-      child: ListView.builder(
-        itemCount: myFlights.length,
-        itemBuilder: (context, index) {
-          return FlightRequestItem(request: myFlights[index]);
-        },
-      ),
-    );
+    var height = MediaQuery.of(context).size.height;
+    if (isLoading)
+      return Container(
+        height: height * 0.6,
+        child: Center(
+          child: Center(
+            child: Image.asset(
+              "assets/loading.gif",
+              height: 100,
+              width: 100,
+            ),
+          ),
+        ),
+      );
+    else if (myFlights.isEmpty)
+      return Container(
+        height: height * 0.6,
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: height * 0.2,
+              ),
+              Image.asset("assets/noDataFound.gif"),
+              Text(
+                "No Data Found",
+                style: GoogleFonts.raleway(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: CustomColors.smokyBlackColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    else
+      return Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        child: ListView.builder(
+          itemCount: myFlights.length,
+          itemBuilder: (context, index) {
+            return FlightRequestItem(request: myFlights[index]);
+          },
+        ),
+      );
   }
 
   Widget FlightRequestItem({required dynamic request}) {

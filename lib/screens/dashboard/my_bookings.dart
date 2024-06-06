@@ -13,14 +13,24 @@ class MyBookings extends StatefulWidget {
 
 class _MyBookingsState extends State<MyBookings> {
   List<dynamic> myBookings = [];
+  bool isLoading = false;
   AuthServices authServices = AuthServices();
 
   Future<void> myBookingsList() async {
+    setState(() {
+      isLoading = true;
+    });
     final bookingList = await authServices.userBookings(context);
+    if (myBookings.isEmpty) {
+      myBookings = bookingList ?? [];
+      isLoading = false;
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
 
     setState(() {
-      // myBookings.add(flightList);
-      // myBookings.add(bookingList);
       myBookings = bookingList ?? [];
     });
   }
@@ -33,6 +43,7 @@ class _MyBookingsState extends State<MyBookings> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -52,15 +63,51 @@ class _MyBookingsState extends State<MyBookings> {
           ),
         ),
         const SizedBox(height: 10),
-        Container(
-          height: MediaQuery.of(context).size.height * 0.7,
-          child: ListView.builder(
-            itemCount: myBookings.length,
-            itemBuilder: (context, index) {
-              return CardItem(booking: myBookings[index]);
-            },
+        if (isLoading)
+          Container(
+            height: height * 0.6,
+            child: Center(
+              child: Center(
+                child: Image.asset(
+                  "assets/loading.gif",
+                  height: 100,
+                  width: 100,
+                ),
+              ),
+            ),
+          )
+        else if (myBookings.isEmpty)
+          Container(
+            height: height * 0.6,
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: height * 0.2,
+                  ),
+                  Image.asset("assets/noDataFound.gif"),
+                  Text(
+                    "No Data Found",
+                    style: GoogleFonts.raleway(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: CustomColors.smokyBlackColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        else
+          Container(
+            height: MediaQuery.of(context).size.height * 0.7,
+            child: ListView.builder(
+              itemCount: myBookings.length,
+              itemBuilder: (context, index) {
+                return CardItem(booking: myBookings[index]);
+              },
+            ),
           ),
-        ),
       ],
     );
   }
