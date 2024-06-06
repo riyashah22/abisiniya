@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/bus.dart';
-import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
