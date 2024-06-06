@@ -528,9 +528,9 @@ class _MyVehiclesState extends State<MyVehicles> {
                                               model:
                                                   vehicle["model"].toString(),
                                               year: vehicle["year"],
-                                              engineSize: vehicle["engineSize"]
+                                              engineSize: vehicle["engine_size"]
                                                   .toString(),
-                                              fuelType: vehicle["fuelType"]
+                                              fuelType: vehicle["fuel_type"]
                                                   .toString(),
                                               weight:
                                                   vehicle["weight"].toString(),

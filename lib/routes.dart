@@ -15,6 +15,7 @@ import "package:abisiniya/screens/vehicles/add_vehicle.dart";
 import "package:abisiniya/screens/vehicles/bus_detail_screen.dart";
 import "package:abisiniya/screens/vehicles/vehicle_detail_screen.dart";
 import "package:abisiniya/screens/vehicles/vehicles.dart";
+import "package:abisiniya/screens/vehicles/view_bus.dart";
 import "package:abisiniya/screens/vehicles/view_vehicle.dart";
 import "package:flutter/material.dart";
 
@@ -89,6 +90,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const BusDetailScreen(),
+      );
+    case ViewBus.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const ViewBus(),
       );
     case DetailApartmentScreen.routeName:
       return MaterialPageRoute(

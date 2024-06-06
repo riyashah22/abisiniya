@@ -16,6 +16,9 @@ class _MyFlightsState extends State<MyFlights> {
   FlightServices flightServices = FlightServices();
 
   Future<void> fetchUserApartments() async {
+    setState(() {
+      isLoading = true;
+    });
     final flights = await flightServices.userFlightRequests(context);
     if (flights != null) {
       setState(() {

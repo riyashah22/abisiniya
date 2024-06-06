@@ -47,7 +47,11 @@ class _MyApartmentsState extends State<MyApartments> {
           builder: (context, setState) {
             return AlertDialog(
               backgroundColor: Colors.white,
-              title: const Text('Edit Apartment'),
+              title: Center(
+                  child: const Text(
+                'Update Apartment',
+                style: TextStyle(fontSize: 20),
+              )),
               content: SingleChildScrollView(
                 child: Container(
                   child: Column(
@@ -71,6 +75,7 @@ class _MyApartmentsState extends State<MyApartments> {
                       TextField(
                         controller: guestController,
                         decoration: const InputDecoration(labelText: 'Guest'),
+                        keyboardType: TextInputType.number,
                       ),
                       TextField(
                         controller: bedroomController,
@@ -133,6 +138,8 @@ class _MyApartmentsState extends State<MyApartments> {
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: CustomColors.primaryColor),
                   onPressed: () async {
                     showDialog(
                       context: context,
@@ -173,6 +180,8 @@ class _MyApartmentsState extends State<MyApartments> {
                                 "Apartment Updated Successfully.\nPlease Refresh the screen to view changes."),
                             actions: <Widget>[
                               TextButton(
+                                style: TextButton.styleFrom(
+                                    backgroundColor: CustomColors.primaryColor),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                   Navigator.of(context).pop();
@@ -187,7 +196,10 @@ class _MyApartmentsState extends State<MyApartments> {
                       showErrorMessage(context, "Failed to update apartment.");
                     }
                   },
-                  child: const Text('Save'),
+                  child: Text(
+                    'Save',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             );

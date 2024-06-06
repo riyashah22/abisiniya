@@ -1,4 +1,6 @@
 import 'package:abisiniya/constants/error_handling.dart';
+import 'package:abisiniya/models/bus.dart';
+import 'package:abisiniya/screens/vehicles/view_bus.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,8 +103,10 @@ class _MyBusState extends State<MyBus> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Edit Bus',
-              style: GoogleFonts.openSans(color: Colors.black)),
+          title: Center(
+            child: Text('Update Bus',
+                style: GoogleFonts.openSans(color: Colors.black, fontSize: 20)),
+          ),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -119,6 +123,7 @@ class _MyBusState extends State<MyBus> {
                       labelText: 'Seater',
                       labelStyle: GoogleFonts.openSans(color: Colors.black)),
                   style: GoogleFonts.openSans(color: Colors.black),
+                  keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: addressController,
@@ -255,6 +260,8 @@ class _MyBusState extends State<MyBus> {
                   style: GoogleFonts.openSans(color: Colors.black)),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColors.primaryColor),
               onPressed: () async {
                 showDialog(
                   context: context,
@@ -316,7 +323,7 @@ class _MyBusState extends State<MyBus> {
                 }
               },
               child: Text('Save',
-                  style: GoogleFonts.openSans(color: Colors.black)),
+                  style: GoogleFonts.openSans(color: Colors.white)),
             ),
           ],
         );
@@ -515,6 +522,33 @@ class _MyBusState extends State<MyBus> {
                                     showEditBusDialog(vehicle);
                                   } else if (value == 'delete') {
                                     deleteBus(vehicle['id']);
+                                  } else if (value == 'view') {
+                                    var busX = Bus(
+                                      name: vehicle['name'].toString(),
+                                      seater: vehicle['seater'].toString(),
+                                      address: vehicle['address'].toString(),
+                                      city: vehicle['city'].toString(),
+                                      country: vehicle["country"].toString(),
+                                      make: vehicle["make"].toString(),
+                                      model: vehicle["model"].toString(),
+                                      year: vehicle["year"],
+                                      engineSize:
+                                          vehicle["engine_size"].toString(),
+                                      fuelType: vehicle["fuel_type"].toString(),
+                                      weight: vehicle["weight"].toString(),
+                                      color: vehicle["color"].toString(),
+                                      transmission:
+                                          vehicle["transmission"].toString(),
+                                      price: vehicle["price"],
+                                      status: vehicle["status"].toString(),
+                                      images: vehicle["pictures"][0]
+                                          ['imageUrl'],
+                                    );
+                                    Navigator.pushNamed(
+                                      context,
+                                      ViewBus.routeName,
+                                      arguments: busX,
+                                    );
                                   }
                                 },
                                 itemBuilder: (BuildContext context) => [
@@ -525,6 +559,10 @@ class _MyBusState extends State<MyBus> {
                                   const PopupMenuItem(
                                     value: 'delete',
                                     child: Text('Delete'),
+                                  ),
+                                  const PopupMenuItem(
+                                    value: 'view',
+                                    child: Text('View'),
                                   ),
                                 ],
                                 child: Container(
