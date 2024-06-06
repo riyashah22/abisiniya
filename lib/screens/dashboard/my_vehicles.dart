@@ -599,7 +599,7 @@ class _MyVehiclesState extends State<MyVehicles> {
 
                                             if (result) {
                                               showSuccessMessage(context,
-                                                  "Vehicle Updated Successfully.\nPlease Refresh the screen to view changes.");
+                                                  "Vehicle Deleted Successfully.\nPlease Refresh the screen to view changes.");
                                             } else {
                                               showErrorMessage(context,
                                                   "Something went wrong");

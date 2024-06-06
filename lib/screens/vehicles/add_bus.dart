@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/services/bus_services.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -86,7 +87,23 @@ class _AddBusScreenState extends State<AddBusScreen> {
       List<File> imageFilesAsFiles =
           _imageFiles.map((e) => File(e.path)).toList();
 
-      await busServices.addBus(
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            content: Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Text("Adding your bus..."),
+              ],
+            ),
+          );
+        },
+      );
+
+      var result = await busServices.addBus(
         context,
         name,
         seater,
@@ -104,6 +121,30 @@ class _AddBusScreenState extends State<AddBusScreen> {
         price,
         imageFilesAsFiles,
       );
+
+      Navigator.pop(context);
+      if (result) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Success"),
+              content: Text("Bus added successfully."),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showErrorMessage(context, "Failed to add bus");
+      }
     }
   }
 

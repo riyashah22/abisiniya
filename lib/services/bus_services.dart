@@ -83,7 +83,7 @@ class BusServices {
     return null;
   }
 
-  Future<void> addBus(
+  Future<bool> addBus(
     BuildContext context,
     String name,
     int seater,
@@ -139,23 +139,26 @@ class BusServices {
       var response = await http.Response.fromStream(res);
       print(response.statusCode);
       print(response.body);
-      if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Vehicle Added Successfully')),
-        );
+      if (response.statusCode == 201) {
+        return true;
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Vehicle Added Successfully')),
+        // );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add vehicle: ${response.body}')),
-        );
+        return false;
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Failed to add vehicle: ${response.body}')),
+        // );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error occurred: ${e.toString()}')),
-      );
+      return false;
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Error occurred: ${e.toString()}')),
+      // );
     }
   }
 
-  Future<void> updateBus(
+  Future<bool> updateBus(
     BuildContext context,
     String name,
     int seater,
@@ -208,25 +211,31 @@ class BusServices {
         },
         body: updatedData,
       );
-      // print(user.user.token);
       print(res.statusCode);
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Bus Updated Successfully");
-          Navigator.of(context).pop();
-        },
-      );
+
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+      // httpErrorHandle(
+      //   response: res,
+      //   onError: (errorMessage) {
+      //     showSnackBar(context, errorMessage);
+      //   },
+      //   onSuccess: () {
+      //     showSnackBar(context, "Bus Updated Successfully");
+      //     Navigator.of(context).pop();
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
   }
 
-  void deleteBus(BuildContext context, int id) async {
+  Future<bool> deleteBus(BuildContext context, int id) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.delete(
@@ -236,18 +245,24 @@ class BusServices {
         },
       );
       print(res.statusCode);
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Bus Deleted Successfully");
-        },
-      );
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+      // httpErrorHandle(
+      //   response: res,
+      //   onError: (errorMessage) {
+      //     showSnackBar(context, errorMessage);
+      //   },
+      //   onSuccess: () {
+      //     showSnackBar(context, "Bus Deleted Successfully");
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
   }
 }
