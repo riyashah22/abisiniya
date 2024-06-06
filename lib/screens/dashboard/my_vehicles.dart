@@ -1,4 +1,7 @@
+import 'package:abisiniya/constants/error_handling.dart';
+import 'package:abisiniya/models/vehicles.dart';
 import 'package:abisiniya/screens/vehicles/add_vehicle.dart';
+import 'package:abisiniya/screens/vehicles/view_vehicle.dart';
 import 'package:abisiniya/services/vehicle_services.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +31,6 @@ class _MyVehiclesState extends State<MyVehicles> {
   void initState() {
     super.initState();
     fetchUserVehicle();
-    // TODO: implement initState
   }
 
   void showEditVehicleDialog(Map<String, dynamic> vehicle) {
@@ -167,9 +169,23 @@ class _MyVehiclesState extends State<MyVehicles> {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () {
-                // Call update vehicle service here
-                vehicleServices.updateVehicle(
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return const AlertDialog(
+                      content: Row(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(width: 16),
+                          Text("Updating Vehicle"),
+                        ],
+                      ),
+                    );
+                  },
+                );
+                var result = await vehicleServices.updateVehicle(
                   context,
                   nameController.text,
                   addressController.text,
@@ -187,6 +203,31 @@ class _MyVehiclesState extends State<MyVehicles> {
                   int.parse(priceController.text),
                   vehicle['id'],
                 );
+
+                Navigator.pop(context);
+                if (result) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Success"),
+                        content: Text(
+                            "Vehicle Updated Successfully.\nPlease Refresh the screen to view changes."),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  showErrorMessage(context, "Failed to update vehicle.");
+                }
               },
               child: const Text('Save'),
             ),
@@ -215,8 +256,7 @@ class _MyVehiclesState extends State<MyVehicles> {
                   backgroundColor:
                       WidgetStatePropertyAll(Theme.of(context).primaryColor)),
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(AddVehicleScreen.routeName);
+                Navigator.of(context).pushNamed(AddVehicleScreen.routeName);
               },
               child: Text(
                 'Add Vehicle',
@@ -271,7 +311,7 @@ class _MyVehiclesState extends State<MyVehicles> {
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 color: Colors.black.withOpacity(
-                                    0.7), // Semi-transparent background
+                                    0.3), // Semi-transparent background
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
                                   bottomRight: Radius.circular(10),
@@ -423,7 +463,39 @@ class _MyVehiclesState extends State<MyVehicles> {
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          var vehicleX = Vehicle(
+                                            name: vehicle['name'].toString(),
+                                            address:
+                                                vehicle['address'].toString(),
+                                            city: vehicle['city'].toString(),
+                                            country:
+                                                vehicle["country"].toString(),
+                                            make: vehicle["make"].toString(),
+                                            model: vehicle["model"].toString(),
+                                            year: vehicle["year"],
+                                            engineSize: vehicle["engineSize"]
+                                                .toString(),
+                                            fuelType:
+                                                vehicle["fuelType"].toString(),
+                                            weight:
+                                                vehicle["weight"].toString(),
+                                            color: vehicle["color"].toString(),
+                                            transmission:
+                                                vehicle["transmission"]
+                                                    .toString(),
+                                            price: vehicle["price"],
+                                            status:
+                                                vehicle["status"].toString(),
+                                            images: vehicle["pictures"][0]
+                                                ['imageUrl'],
+                                          );
+                                          Navigator.pushNamed(
+                                            context,
+                                            ViewVehicle.routeName,
+                                            arguments: vehicleX,
+                                          );
+                                        },
                                       ),
                                       OutlinedButton.icon(
                                         icon: Icon(
@@ -451,11 +523,37 @@ class _MyVehiclesState extends State<MyVehicles> {
                                             color: Colors.grey,
                                           ),
                                         ),
-                                        onPressed: () {
-                                          vehicleServices.deleteVehicle(
+                                        onPressed: () async {
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return const AlertDialog(
+                                                content: Row(
+                                                  children: [
+                                                    CircularProgressIndicator(),
+                                                    SizedBox(width: 16),
+                                                    Text("Deleting vehicle..."),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          );
+                                          var result = await vehicleServices
+                                              .deleteVehicle(
                                             context,
                                             vehicle['id'],
                                           );
+
+                                          Navigator.pop(context);
+
+                                          if (result) {
+                                            showSuccessMessage(context,
+                                                "Vehicle Updated Successfully.\nPlease Refresh the screen to view changes.");
+                                          } else {
+                                            showErrorMessage(context,
+                                                "Something went wrong");
+                                          }
                                         },
                                       ),
                                     ],

@@ -134,7 +134,7 @@ class VehicleServices {
     }
   }
 
-  Future<void> addVehicles(
+  Future<bool> addVehicles(
     BuildContext context,
     String name,
     String address,
@@ -189,22 +189,25 @@ class VehicleServices {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Vehicle Added Successfully')),
-        );
+        return true;
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Vehicle Added Successfully')),
+        // );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add vehicle: ${response.body}')),
-        );
+        return false;
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Failed to add vehicle: ${response.body}')),
+        // );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error occurred: ${e.toString()}')),
-      );
+      return false;
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Error occurred: ${e.toString()}')),
+      // );
     }
   }
 
-  void deleteVehicle(BuildContext context, int id) async {
+  Future<bool> deleteVehicle(BuildContext context, int id) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.delete(
@@ -214,22 +217,28 @@ class VehicleServices {
         },
       );
       print(res.statusCode);
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Vehicle Deleted Successfully");
-        },
-      );
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+      // httpErrorHandle(
+      //   response: res,
+      //   onError: (errorMessage) {
+      //     showSnackBar(context, errorMessage);
+      //   },
+      //   onSuccess: () {
+      //     showSnackBar(context, "Vehicle Deleted Successfully");
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
   }
 
-  Future<void> updateVehicle(
+  Future<bool> updateVehicle(
     BuildContext context,
     String name,
     String address,
@@ -257,16 +266,15 @@ class VehicleServices {
         'country': country,
         'make': make,
         'model': model,
-        'year': year,
-        'engine_size': engineSize,
+        'year': year.toString(),
+        'engine_size': engineSize.toString(),
         'fuel_type': fuelType,
-        'weight': weight,
+        'weight': weight.toString(),
         'color': color,
         'transmission': transmission,
-        'price': price,
+        'price': price.toString(),
         'status': status
       };
-
       final uri = Uri.parse(
         "https://staging.abisiniya.com/api/v1/vehicle/update/$id",
       );
@@ -275,24 +283,31 @@ class VehicleServices {
         uri,
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer ${user.user.token}',
         },
-        body: jsonEncode(updatedData),
+        body: updatedData,
       );
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
 
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Vehicle Updated Successfully");
-          Navigator.of(context).pop();
-        },
-      );
+      // httpErrorHandle(
+      //   response: res,
+      //   onError: (errorMessage) {
+      //     showSnackBar(context, errorMessage);
+      //   },
+      //   onSuccess: () {
+      //     showSnackBar(context, "Vehicle Updated Successfully");
+      //     Navigator.of(context).pop();
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
   }
 

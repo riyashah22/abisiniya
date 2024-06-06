@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -83,7 +84,23 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
       List<File> imageFilesAsFiles =
           _imageFiles.map((e) => File(e.path)).toList();
 
-      await _vehicleServices.addVehicles(
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            content: Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Text("Adding your vehicle..."),
+              ],
+            ),
+          );
+        },
+      );
+
+      var result = await _vehicleServices.addVehicles(
         context,
         name,
         address,
@@ -100,6 +117,31 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
         price,
         imageFilesAsFiles,
       );
+
+      Navigator.pop(context);
+
+      if (result) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Success"),
+              content: Text("Vehicle added successfully."),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showErrorMessage(context, "Failed to add vehicle");
+      }
     }
   }
 
