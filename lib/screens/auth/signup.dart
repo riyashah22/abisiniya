@@ -203,6 +203,9 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please re-enter your password';
                             }
+                            if (value == passwordController.text) {
+                              return 'Password doesn\'t match';
+                            }
 
                             return null;
                           },

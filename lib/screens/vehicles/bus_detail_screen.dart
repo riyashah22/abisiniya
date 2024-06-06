@@ -24,15 +24,6 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
   DateTime? fromDate;
   DateTime? toDate;
 
-  void bookBus() async {
-    vehicleServices.bookVehicle(
-      context,
-      fromDate.toString(),
-      toDate.toString(),
-      5,
-    );
-  }
-
   double calculateTotalAmount(int price) {
     if (fromDate != null && toDate != null) {
       final duration = toDate!.difference(fromDate!);
