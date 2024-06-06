@@ -80,7 +80,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                     myBookings[0]['country'],
                   )
                 : VehicleCard(
-                    myBookings[0]['name'],
+                    myBookings[0]['name'] ?? "null",
                     myBookings[0]['address'],
                     myBookings[0]['city'],
                     myBookings[0]['country'],

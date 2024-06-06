@@ -1,4 +1,6 @@
 import 'package:abisiniya/constants/error_handling.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
+import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -148,9 +150,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Vehicle'),
-      ),
+      appBar: CustomAppbarSecondaryScreen(context, "Add vehicle"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -321,9 +321,18 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       )
                     : const Text('No images selected'),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _addVehicle,
-                  child: const Text('Add Vehicle'),
+                Container(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          WidgetStatePropertyAll(CustomColors.primaryColor),
+                      foregroundColor: WidgetStatePropertyAll(
+                          CustomColors.lightPrimaryColor),
+                    ),
+                    onPressed: _addVehicle,
+                    child: const Text('Add Vehicle'),
+                  ),
                 ),
               ],
             ),

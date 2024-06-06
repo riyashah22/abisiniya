@@ -287,6 +287,8 @@ class _MyBookingsState extends State<MyBookings> {
                   //     "Booking Date", "${booking['date'].split(" ")[0]}"),
                   TextButton(
                     onPressed: () {
+                      // print(booking['id']);
+                      // print(booking['type']);
                       Navigator.of(context).pushNamed(
                         BookingDetails.routeName,
                         arguments: {
@@ -294,7 +296,7 @@ class _MyBookingsState extends State<MyBookings> {
                           'type': booking['type']
                         },
                       );
-                      print(booking['id']);
+                      // print(booking['id']);
                     },
                     child: Text('Details'),
                   ),

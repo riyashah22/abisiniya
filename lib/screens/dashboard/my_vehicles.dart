@@ -76,7 +76,7 @@ class _MyVehiclesState extends State<MyVehicles> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Edit Vehicle'),
+          title: Center(child: const Text('Update Vehicle')),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -179,6 +179,12 @@ class _MyVehiclesState extends State<MyVehicles> {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                foregroundColor:
+                    WidgetStatePropertyAll(CustomColors.lightPrimaryColor),
+                backgroundColor:
+                    WidgetStatePropertyAll(CustomColors.primaryColor),
+              ),
               onPressed: () async {
                 showDialog(
                   context: context,
@@ -239,7 +245,7 @@ class _MyVehiclesState extends State<MyVehicles> {
                   showErrorMessage(context, "Failed to update vehicle.");
                 }
               },
-              child: const Text('Save'),
+              child: const Text('Update'),
             ),
           ],
         );
