@@ -1,7 +1,11 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/models/bus.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/services/vehicle_services.dart';
+import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 class BusDetailScreen extends StatefulWidget {
@@ -20,7 +24,7 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
   DateTime? fromDate;
   DateTime? toDate;
 
-  void bookVehicle() async {
+  void bookBus() async {
     vehicleServices.bookVehicle(
       context,
       fromDate.toString(),
@@ -44,6 +48,7 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
     final bus = ModalRoute.of(context)!.settings.arguments as Bus;
     final user = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: const Color(0xff3e6837),
@@ -77,47 +82,61 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.green[50],
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                  //     Container(
+                  //       padding: const EdgeInsets.all(16),
+                  //       decoration: BoxDecoration(
+                  //         color: Colors.green[50],
+                  //         borderRadius: BorderRadius.circular(12),
+                  //         boxShadow: [
+                  //           BoxShadow(
+                  //             color: Colors.grey.withOpacity(0.3),
+                  //             spreadRadius: 2,
+                  //             blurRadius: 4,
+                  //             offset: const Offset(0, 2),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           _buildInfoRow(Icons.directions_car, "Model",
+                  //               bus.model, context),
+                  //           const SizedBox(height: 16),
+                  //           _buildInfoRow(
+                  //               Icons.build, "Make", bus.make, context),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  Container(
+                    height: 148,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        _buildCard(LineIcons.car, "Model", bus.model),
+                        _buildCard(Icons.build, "Make", bus.make),
+                        _buildCard(
+                          Icons.local_gas_station_rounded,
+                          "Fuel",
+                          bus.fuelType,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildInfoRow(Icons.directions_car, "Model",
-                                bus.model, context),
-                            const SizedBox(height: 16),
-                            _buildInfoRow(
-                                Icons.build, "Make", bus.make, context),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Details',
-                    style: TextStyle(
-                      fontSize: 20,
+                  Text(
+                    'Specifications',
+                    style: GoogleFonts.roboto(
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  _buildDetailRow(Icons.local_gas_station, 'Fuel Type',
-                      bus.fuelType, context),
+                  _buildDetailRow(Icons.group, 'Seater', bus.seater, context),
                   _buildDetailRow(Icons.engineering, 'Engine Size',
                       bus.engineSize, context),
                   _buildDetailRow(Icons.settings_input_component,
@@ -129,29 +148,28 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                   _buildDetailRow(
                       Icons.fitness_center, 'Weight', bus.weight, context),
                   _buildDetailRow(Icons.price_change_rounded, 'Price',
-                      '${bus.price} Per Day', context),
+                      '\$${bus.price} Per Day', context),
                   _buildDetailRow(Icons.calendar_today, 'Year',
                       bus.year.toString(), context),
-                  const SizedBox(
-                    height: 8,
-                  ),
                 ],
               ),
             ),
 
             // Booking Details Form
             Card(
+              elevation: 2,
+              color: CustomColors.lightPrimaryColor,
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Booking Details',
-                      style: TextStyle(
+                      style: GoogleFonts.roboto(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 22,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -161,10 +179,11 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'From Date:',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                style: GoogleFonts.roboto(
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 0,
                                   fontSize: 16,
                                 ),
                               ),
@@ -188,7 +207,11 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                                   fromDate != null
                                       ? fromDate!.toString().split(' ')[0]
                                       : 'Select Date',
-                                  style: const TextStyle(fontSize: 16),
+                                  style: GoogleFonts.roboto(
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 0,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                             ],
@@ -199,10 +222,11 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'To Date:',
-                                style: TextStyle(
+                                style: GoogleFonts.roboto(
                                   fontWeight: FontWeight.bold,
+                                  letterSpacing: 0,
                                   fontSize: 16,
                                 ),
                               ),
@@ -260,9 +284,10 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                     Center(
                       child: Text(
                         'Total Amount: \$${calculateTotalAmount(bus.price)}',
-                        style: const TextStyle(
+                        style: GoogleFonts.roboto(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          letterSpacing: 0,
+                          fontSize: 22,
                         ),
                       ),
                     ),
@@ -284,16 +309,16 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '\$${bus.price} / night',
+                '\$${bus.price} / day',
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               ElevatedButton(
-                style: const ButtonStyle(
+                style: ButtonStyle(
                     backgroundColor:
-                        MaterialStatePropertyAll(Color(0xFF3E6837))),
+                        WidgetStatePropertyAll(CustomColors.primaryColor)),
                 onPressed: () {
                   double totalAmount = calculateTotalAmount(bus.price);
                   if (totalAmount <= 0) {
@@ -338,12 +363,15 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
                         },
                       );
                     } else {
-                      // bookVehicle();
+                      // bookVehicle(bus.id);
                       // Show success dialog and reset dates
                       setState(() {
                         fromDate = null;
                         toDate = null;
                       });
+
+                      showSuccessMessage(context,
+                          "Please contact us at info@abisiniya.com to book bus.");
                       // showDialog(
                       //   context: context,
                       //   builder: (BuildContext context) {
@@ -409,6 +437,54 @@ class _BusDetailScreenState extends State<BusDetailScreen> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildCard(IconData icon, String label, String model) {
+    return Container(
+      width: 106,
+      margin: EdgeInsets.only(right: 12),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: CustomColors.lightPrimaryColor,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Icon(
+            icon,
+            color: CustomColors.primaryColor,
+            size: 38,
+          ),
+          Text(
+            label,
+            style: GoogleFonts.raleway(
+              color: CustomColors.smokyBlackColor,
+              fontSize: 20,
+              letterSpacing: 0.2,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            model,
+            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.openSans(
+              color: CustomColors.smokyBlackColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
