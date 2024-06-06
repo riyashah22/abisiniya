@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/screens/apartments/add_apartment.dart';
 import 'package:abisiniya/services/apartment_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
@@ -132,19 +133,59 @@ class _MyApartmentsState extends State<MyApartments> {
                   child: const Text('Cancel'),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    apartmentServices.updateApartments(
-                        context,
-                        nameController.text,
-                        addressController.text,
-                        cityController.text,
-                        countryController.text,
-                        selectedStatus,
-                        int.parse(guestController.text),
-                        int.parse(bedroomController.text),
-                        int.parse(bathroomController.text),
-                        int.parse(priceController.text),
-                        apartment['id']);
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                          content: Row(
+                            children: [
+                              CircularProgressIndicator(),
+                              SizedBox(width: 16),
+                              Text("Updating Apartment"),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                    var result = await apartmentServices.updateApartments(
+                      context,
+                      nameController.text,
+                      addressController.text,
+                      cityController.text,
+                      countryController.text,
+                      selectedStatus,
+                      int.parse(guestController.text),
+                      int.parse(bedroomController.text),
+                      int.parse(bathroomController.text),
+                      int.parse(priceController.text),
+                      apartment['id'],
+                    );
+                    Navigator.pop(context);
+                    if (result) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Success"),
+                            content: Text(
+                                "Apartment Updated Successfully.\nPlease Refresh the screen to view changes."),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      showErrorMessage(context, "Failed to update apartment.");
+                    }
                   },
                   child: const Text('Save'),
                 ),
@@ -192,8 +233,7 @@ class _MyApartmentsState extends State<MyApartments> {
                 ),
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(AddApartmentForm.routeName);
+                Navigator.of(context).pushNamed(AddApartmentForm.routeName);
               },
               child: Text(
                 'Add Apartment',
@@ -334,6 +374,7 @@ class _MyApartmentsState extends State<MyApartments> {
                                   GestureDetector(
                                     onTap: () {
                                       showEditApartmentDialog(apartment);
+                                      fetchUserApartments();
                                     },
                                     child: Image.asset(
                                       height: height * 0.03,
@@ -343,9 +384,36 @@ class _MyApartmentsState extends State<MyApartments> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      apartmentServices.deleteApartment(
-                                          context, apartment['id']);
+                                    onTap: () async {
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context) {
+                                          return const AlertDialog(
+                                            content: Row(
+                                              children: [
+                                                CircularProgressIndicator(),
+                                                SizedBox(width: 16),
+                                                Text("Deleting apartment..."),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      );
+
+                                      var result = await apartmentServices
+                                          .deleteApartment(
+                                              context, apartment['id']);
+
+                                      Navigator.pop(context);
+
+                                      if (result) {
+                                        showSuccessMessage(context,
+                                            "Apartment Updated Successfully.\nPlease Refresh the screen to view changes.");
+                                      } else {
+                                        showErrorMessage(
+                                            context, "Something went wrong");
+                                      }
                                     },
                                     child: Image.asset(
                                       height: height * 0.027,

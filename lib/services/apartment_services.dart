@@ -58,7 +58,7 @@ class ApartmentServices {
     }
   }
 
-  Future<void> addApartments(
+  Future<bool> addApartments(
     BuildContext context,
     String name,
     String address,
@@ -102,18 +102,22 @@ class ApartmentServices {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Apartment Added Successfully')),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Apartment Added Successfully')),
+        // );
+
+        return true;
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add apartment: ${response.body}')),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(content: Text('Failed to add apartment: ${response.body}')),
+        // );
+        return false;
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error occurred: ${e.toString()}')),
-      );
+      return false;
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Error occurred: ${e.toString()}')),
+      // );
     }
   }
 
@@ -144,7 +148,7 @@ class ApartmentServices {
     return null;
   }
 
-  void deleteApartment(BuildContext context, int id) async {
+  Future<bool> deleteApartment(BuildContext context, int id) async {
     try {
       final user = Provider.of<UserProvider>(context, listen: false);
       http.Response res = await http.delete(
@@ -155,22 +159,28 @@ class ApartmentServices {
           'Accept': 'application/json',
         },
       );
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Apartment Deleted Successfully");
-        },
-      );
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+      // httpErrorHandle(
+      //   response: res,
+      //   onError: (errorMessage) {
+      //     showSnackBar(context, errorMessage);
+      //   },
+      //   onSuccess: () {
+      //     showSnackBar(context, "Apartment Deleted Successfully");
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
   }
 
-  Future<void> updateApartments(
+  Future<bool> updateApartments(
     BuildContext context,
     String name,
     String address,
@@ -212,19 +222,26 @@ class ApartmentServices {
         body: jsonEncode(updatedData),
       );
 
-      httpErrorHandle(
-        response: res,
-        onError: (errorMessage) {
-          showSnackBar(context, errorMessage);
-        },
-        onSuccess: () {
-          showSnackBar(context, "Apartment Updated Successfully");
-          Navigator.of(context).pop();
-        },
-      );
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+
+      // httpErrorHandle(
+      //   response: res,
+      //   onError: (errorMessage) {
+      //     showSnackBar(context, errorMessage);
+      //   },
+      //   onSuccess: () {
+      //     showSnackBar(context, "Apartment Updated Successfully");
+      //     Navigator.of(context).pop();
+      //   },
+      // );
     } catch (e) {
-      final errorMessage = "Error occurred: ${e.toString()}";
-      showSnackBar(context, errorMessage);
+      return false;
+      // final errorMessage = "Error occurred: ${e.toString()}";
+      // showSnackBar(context, errorMessage);
     }
   }
 

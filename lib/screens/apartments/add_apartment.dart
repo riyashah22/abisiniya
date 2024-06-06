@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,23 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
       List<File> imageFilesAsFiles =
           _imageFiles.map((e) => File(e.path)).toList();
 
-      await _apartmentServices.addApartments(
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            content: Row(
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Text("Adding your apartment..."),
+              ],
+            ),
+          );
+        },
+      );
+
+      var result = await _apartmentServices.addApartments(
         context,
         name,
         address,
@@ -83,6 +100,31 @@ class _AddApartmentFormState extends State<AddApartmentForm> {
         price,
         imageFilesAsFiles,
       );
+
+      Navigator.pop(context);
+
+      if (result) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Success"),
+              content: Text("Apartment added successfully."),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showErrorMessage(context, "Failed to add apartment");
+      }
     }
   }
 
