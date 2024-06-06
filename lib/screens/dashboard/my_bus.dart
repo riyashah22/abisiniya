@@ -332,158 +332,161 @@ class _MyBusState extends State<MyBus> {
               itemCount: myBus.length,
               itemBuilder: (context, index) {
                 var vehicle = myBus[index];
-                return Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: ClipOval(
-                                child: Image.network(
-                                  vehicle['pictures'][0]['imageUrl'],
-                                  height: height * 0.25,
-                                  width: width * 0.25,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 6,
-                                ),
-                                Icon(Icons.location_city),
-                                const SizedBox(width: 6),
-                                Text(
-                                  vehicle['city'],
-                                  style:
-                                      GoogleFonts.openSans(color: Colors.black),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 6,
-                                ),
-                                Icon(Icons.location_on),
-                                const SizedBox(width: 6),
-                                Text(
-                                  vehicle['country'],
-                                  style: GoogleFonts.openSans(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: width * 0.05,
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: height * 0.02,
-                          ),
-                          Container(
-                            width: 3,
-                            height: height * 0.16,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Padding(
+                return Container(
+                  child: Card(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: height * 0.03,
+                              Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: ClipOval(
+                                  child: Image.network(
+                                    vehicle['pictures'][0]['imageUrl'],
+                                    height: height * 0.11,
+                                    width: width * 0.25,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                               ),
-                              buildRow(
-                                  Icon(Icons.directions_bus_filled_outlined),
-                                  vehicle['name']),
-                              const SizedBox(height: 5),
-                              buildRow(Icon(Icons.person_3),
-                                  '${vehicle['seater']} Seater'),
-                              const SizedBox(height: 5),
-                              buildRow(Icon(Icons.local_gas_station_sharp),
-                                  vehicle['fuel_type']),
-                              const SizedBox(height: 5),
-                              buildRow(Icon(Icons.settings),
-                                  vehicle['transmission']),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 6,
+                                  ),
+                                  Icon(Icons.location_city),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    vehicle['city'],
+                                    style: GoogleFonts.openSans(
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 6,
+                                  ),
+                                  Icon(Icons.location_on),
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    vehicle['country'],
+                                    style: GoogleFonts.openSans(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15.0, top: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        SizedBox(
+                          width: width * 0.05,
+                        ),
+                        Column(
                           children: [
-                            PopupMenuButton<String>(
-                              onSelected: (value) {
-                                if (value == 'edit') {
-                                  showEditBusDialog(vehicle);
-                                } else if (value == 'delete') {
-                                  busServices.deleteBus(context, vehicle['id']);
-                                }
-                              },
-                              itemBuilder: (BuildContext context) => [
-                                const PopupMenuItem(
-                                  value: 'edit',
-                                  child: Text('Edit'),
-                                ),
-                                const PopupMenuItem(
-                                  value: 'delete',
-                                  child: Text('Delete'),
-                                ),
-                              ],
-                              child: Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.black.withOpacity(0.7),
-                                ),
-                                child: const Icon(
-                                  Icons.double_arrow_rounded,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
                             SizedBox(
-                              height: height * 0.12,
+                              height: height * 0.02,
                             ),
-                            Text(
-                              '\$${vehicle['price']}/day',
-                              style: GoogleFonts.openSans(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green,
-                              ),
+                            Container(
+                              width: 3,
+                              height: height * 0.16,
+                              color: Colors.black,
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: height * 0.03,
+                                ),
+                                buildRow(
+                                    Icon(Icons.directions_bus_filled_outlined),
+                                    vehicle['name']),
+                                const SizedBox(height: 5),
+                                buildRow(Icon(Icons.person_3),
+                                    '${vehicle['seater']} Seater'),
+                                const SizedBox(height: 5),
+                                buildRow(Icon(Icons.local_gas_station_sharp),
+                                    vehicle['fuel_type']),
+                                const SizedBox(height: 5),
+                                buildRow(Icon(Icons.settings),
+                                    vehicle['transmission']),
+                                const SizedBox(height: 5),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15.0, top: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              PopupMenuButton<String>(
+                                onSelected: (value) {
+                                  if (value == 'edit') {
+                                    showEditBusDialog(vehicle);
+                                  } else if (value == 'delete') {
+                                    busServices.deleteBus(
+                                        context, vehicle['id']);
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) => [
+                                  const PopupMenuItem(
+                                    value: 'edit',
+                                    child: Text('Edit'),
+                                  ),
+                                  const PopupMenuItem(
+                                    value: 'delete',
+                                    child: Text('Delete'),
+                                  ),
+                                ],
+                                child: Container(
+                                  padding: const EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.black.withOpacity(0.7),
+                                  ),
+                                  child: const Icon(
+                                    Icons.double_arrow_rounded,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.12,
+                              ),
+                              Text(
+                                '\$${vehicle['price']}/day',
+                                style: GoogleFonts.openSans(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
