@@ -21,7 +21,7 @@ class _MyFlightsState extends State<MyFlights> {
         myFlights = flights;
       });
     }
-    print(myFlights[0]['from']);
+    print(myFlights[0]);
   }
 
   @override
@@ -57,8 +57,6 @@ class _MyFlightsState extends State<MyFlights> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -82,11 +80,40 @@ class _MyFlightsState extends State<MyFlights> {
                     ],
                   ),
                   SizedBox(height: 12),
-                  Divider(
-                    height: 10,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Text(
+                          'Flight Id ${myFlights[0]['flight_request_id']}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          thickness: 1,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 16),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(Icons.flight_takeoff_outlined),
                       SizedBox(width: 4),
@@ -96,7 +123,7 @@ class _MyFlightsState extends State<MyFlights> {
                           softWrap: true,
                         ),
                       ),
-                      SizedBox(width: 16),
+                      SizedBox(width: 26),
                       Icon(Icons.flight_land_outlined),
                       SizedBox(width: 4),
                       Expanded(
@@ -217,9 +244,9 @@ class _MyFlightsState extends State<MyFlights> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              request['trip_option'] == 'One Way'
-                                  ? Icon(Icons.location_on)
-                                  : Icon(Icons.autorenew),
+                              request['trip_option'] == 'Round Trip'
+                                  ? Icon(Icons.autorenew)
+                                  : Icon(Icons.location_on),
                               SizedBox(
                                 width: 8,
                               ),
