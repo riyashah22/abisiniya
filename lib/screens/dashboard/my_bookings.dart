@@ -21,18 +21,16 @@ class _MyBookingsState extends State<MyBookings> {
       isLoading = true;
     });
     final bookingList = await authServices.userBookings(context);
-    if (myBookings.isEmpty) {
-      myBookings = bookingList ?? [];
-      isLoading = false;
+    if (bookingList != null) {
+      setState(() {
+        myBookings = bookingList;
+        isLoading = false;
+      });
     } else {
       setState(() {
         isLoading = false;
       });
     }
-
-    setState(() {
-      myBookings = bookingList ?? [];
-    });
   }
 
   @override
