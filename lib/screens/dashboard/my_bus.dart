@@ -1,3 +1,4 @@
+import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,6 +28,34 @@ class _MyBusState extends State<MyBus> {
         myBus = vehicles;
         isLoading = false;
       });
+    }
+  }
+
+  void deleteBus(int busId) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Text("Deleting bus..."),
+            ],
+          ),
+        );
+      },
+    );
+    var result = await busServices.deleteBus(context, busId);
+
+    Navigator.pop(context);
+
+    if (result) {
+      showSuccessMessage(context,
+          "Bus Deleted Successfully.\nPlease Refresh the screen to view changes.");
+    } else {
+      showErrorMessage(context, "Something went wrong");
     }
   }
 
@@ -226,8 +255,23 @@ class _MyBusState extends State<MyBus> {
                   style: GoogleFonts.openSans(color: Colors.black)),
             ),
             ElevatedButton(
-              onPressed: () {
-                busServices.updateBus(
+              onPressed: () async {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return const AlertDialog(
+                      content: Row(
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(width: 16),
+                          Text("Updating bus..."),
+                        ],
+                      ),
+                    );
+                  },
+                );
+                var result = await busServices.updateBus(
                   context,
                   nameController.text,
                   int.parse(seaterController.text),
@@ -246,6 +290,30 @@ class _MyBusState extends State<MyBus> {
                   int.parse(priceController.text),
                   vehicle['id'].toString(),
                 );
+                Navigator.pop(context);
+                if (result) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Success"),
+                        content: Text(
+                            "Bus Updated Successfully.\nPlease Refresh the screen to view changes."),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  showErrorMessage(context, "Failed to update bus.");
+                }
               },
               child: Text('Save',
                   style: GoogleFonts.openSans(color: Colors.black)),
@@ -279,8 +347,7 @@ class _MyBusState extends State<MyBus> {
                     WidgetStatePropertyAll(Theme.of(context).primaryColor),
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(AddBusScreen.routeName);
+                Navigator.of(context).pushNamed(AddBusScreen.routeName);
               },
               child: Text(
                 'Add Bus',
@@ -447,8 +514,7 @@ class _MyBusState extends State<MyBus> {
                                   if (value == 'edit') {
                                     showEditBusDialog(vehicle);
                                   } else if (value == 'delete') {
-                                    busServices.deleteBus(
-                                        context, vehicle['id']);
+                                    deleteBus(vehicle['id']);
                                   }
                                 },
                                 itemBuilder: (BuildContext context) => [
