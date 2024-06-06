@@ -180,13 +180,13 @@ class _MyApartmentsState extends State<MyApartments> {
                                 "Apartment Updated Successfully.\nPlease Refresh the screen to view changes."),
                             actions: <Widget>[
                               TextButton(
-                                style: TextButton.styleFrom(
-                                    backgroundColor: CustomColors.primaryColor),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("OK"),
+                                child: Text(
+                                  "OK",
+                                ),
                               ),
                             ],
                           );
