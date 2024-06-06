@@ -538,7 +538,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
           ),
           const SizedBox(width: 8),
           Expanded(
-            flex: 3,
+            flex: 4,
             child: Text(
               title,
               style: GoogleFonts.raleway(
@@ -550,7 +550,7 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
           ),
           const SizedBox(width: 12),
           Expanded(
-            flex: 5,
+            flex: 6,
             child: Text(
               value,
               strutStyle: StrutStyle(fontSize: 12),

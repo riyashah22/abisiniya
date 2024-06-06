@@ -150,7 +150,7 @@ class _MyFlightsState extends State<MyFlights> {
                               ),
                             ),
                             Text(
-                              ' ${myFlights[0]['flight_request_id']}',
+                              ' ${request['flight_request_id']}',
                               style: GoogleFonts.openSans(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
