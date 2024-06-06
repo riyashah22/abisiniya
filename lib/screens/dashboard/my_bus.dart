@@ -348,8 +348,10 @@ class _MyBusState extends State<MyBus> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(left: 10),
-                                child: ClipOval(
+                                margin: EdgeInsets.only(left: 10, top: 8),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      8.0), // Adjust the radius as needed
                                   child: Image.network(
                                     vehicle['pictures'][0]['imageUrl'],
                                     height: height * 0.11,
