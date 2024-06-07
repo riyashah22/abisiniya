@@ -3,6 +3,7 @@ import 'package:abisiniya/models/apartment.dart';
 import 'package:abisiniya/provider/user.dart';
 import 'package:abisiniya/services/apartment_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
+import 'package:abisiniya/widgets/appbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,17 +71,7 @@ class _DetailApartmentScreenState extends State<DetailApartmentScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: const Color(0xff3e6837),
-        title: Text(
-          apartment.text,
-          style: const TextStyle(
-            color: Color(0xfff8fbf1),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      appBar: CustomAppbarSecondaryScreen(context, apartment.text),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(2),

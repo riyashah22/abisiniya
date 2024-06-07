@@ -947,8 +947,6 @@ class _HomeScreenState extends State<HomeScreen> {
       width: width * 0.40,
       margin: EdgeInsets.only(right: 16, bottom: 8),
       decoration: BoxDecoration(
-        border: Border.all(color: CustomColors.primaryColor, width: 1),
-        borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
           image: AssetImage(imagePath),
           fit: BoxFit.contain,

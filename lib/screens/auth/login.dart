@@ -2,6 +2,7 @@ import 'package:abisiniya/constants/error_handling.dart';
 import 'package:abisiniya/screens/auth/signup.dart';
 import 'package:abisiniya/services/auth_services.dart';
 import 'package:abisiniya/themes/custom_colors.dart';
+import 'package:abisiniya/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -56,9 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      appBar: CustomAppbarSecondaryScreen(context, ""),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),

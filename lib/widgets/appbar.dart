@@ -6,6 +6,9 @@ PreferredSizeWidget CustomAppbarSecondaryScreen(
     BuildContext context, String title) {
   return AppBar(
     centerTitle: true,
+    iconTheme: IconThemeData(
+      color: Colors.white, // Set the back arrow color to white
+    ),
     title: Text(
       title,
       style: GoogleFonts.openSans(

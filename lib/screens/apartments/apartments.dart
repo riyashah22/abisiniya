@@ -23,6 +23,7 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
   AuthServices authServices = AuthServices();
   TextEditingController searchController = TextEditingController();
   bool isLoading = true;
+  bool isPriceLowToHigh = false;
 
   Future<void> fetchApartments() async {
     try {
@@ -30,6 +31,9 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
           await apartmentServices.getAllApartments(context);
       setState(() {
         apartments = fetchedApartments;
+        if (isPriceLowToHigh) {
+          apartments.sort((a, b) => a.price.compareTo(b.price));
+        }
         isLoading = false;
       });
     } catch (e) {
@@ -64,7 +68,21 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
 
     setState(() {
       apartments = searchedApartments;
+      if (isPriceLowToHigh) {
+        apartments.sort((a, b) => a.price.compareTo(b.price));
+      }
       isLoading = false;
+    });
+  }
+
+  void onFilterChange(bool value) {
+    setState(() {
+      isPriceLowToHigh = value;
+      if (isPriceLowToHigh) {
+        apartments.sort((a, b) => a.price.compareTo(b.price));
+      } else {
+        fetchApartments();
+      }
     });
   }
 
@@ -137,6 +155,27 @@ class _ApartmentScreenState extends State<ApartmentScreen> {
                 IconButton(
                   icon: Icon(Icons.search),
                   onPressed: onSearch,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            // Filter switch
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Filter: Low to High',
+                  style: GoogleFonts.roboto(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: CustomColors.smokyBlackColor,
+                  ),
+                ),
+                Switch(
+                  value: isPriceLowToHigh,
+                  onChanged: onFilterChange,
                 ),
               ],
             ),
