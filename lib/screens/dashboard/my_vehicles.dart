@@ -76,6 +76,7 @@ class _MyVehiclesState extends State<MyVehicles> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Center(child: const Text('Update Vehicle')),
           content: SingleChildScrollView(
             child: Column(
